@@ -55,7 +55,7 @@ void screen_no_controller(display_context_t disp)
     graphics_draw_text_center(disp, 320, 230, "NO CONTROLLER INSERTED ON PORT #1");
 }
 
-void screen_game(display_context_t disp)
+void screen_game(display_context_t disp, bool gameover)
 {
     screen_common(disp);
 
@@ -68,6 +68,10 @@ void screen_game(display_context_t disp)
     graphics_draw_int_with_font(disp, 410+6, 46, font, game_score());
 
     game_draw(disp, 140, 90);
+
+    if (gameover) {
+        graphics_draw_text_center(disp, 320, 230, "GAME OVER");
+    }
 
     rdp_detach_display();
 }

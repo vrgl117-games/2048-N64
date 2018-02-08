@@ -37,10 +37,14 @@ int main()
     display_context_t disp = 0;
     screen_t screen = title;
     bool show_fps = false;
+    bool gameover = false;
 
     rdp_set_texture_flush(FLUSH_STRATEGY_NONE);
 
+
+
     while (true) {
+        rumble_stop(0);
 
         if (!(get_controllers_present() & CONTROLLER_1_INSERTED)) {
             screen_no_controller(disp);
@@ -50,8 +54,12 @@ int main()
                 show_fps = !show_fps;
             }
 
-            if (keys.direction != d_none)
-                game_play(keys.direction);
+            if (gameover && IS_DOWN(keys.start)) {
+                game_reset();
+                gameover = false;
+            } else if (!gameover && keys.direction != d_none) {
+                gameover = game_play(keys.direction);
+            }
 
             while (!(disp = display_lock()));
 
@@ -64,7 +72,7 @@ int main()
                     }
                     break;
                 case game:
-                    screen_game(disp);
+                    screen_game(disp, gameover);
                     break;
             }
 

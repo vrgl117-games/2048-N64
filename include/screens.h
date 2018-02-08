@@ -14,7 +14,7 @@
 typedef enum screens {title, game} screen_t;
 
 void screen_init();
-void screen_game(display_context_t disp);
+void screen_game(display_context_t disp, bool gameover);
 void screen_no_controller(display_context_t disp);
 void screen_title(display_context_t disp);
 void screen_timer_title();

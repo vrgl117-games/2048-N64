@@ -23,8 +23,9 @@ typedef enum direction {d_none, d_up, d_down, d_left, d_right} direction_t;
 
 int game_best();
 void game_init();
-void game_play(direction_t direction);
+bool game_play(direction_t direction);
 void game_draw(display_context_t disp, int grid_x, int grid_y);
 int game_score();
+void game_reset();
 
 #endif //__GAME_H__

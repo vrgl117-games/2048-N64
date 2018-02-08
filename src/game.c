@@ -6,6 +6,7 @@
  * of the Apache license.  See the LICENSE file for details.
  */
 
+#include <string.h>
 #include <stdlib.h>
 
 #include "colors.h"
@@ -54,101 +55,178 @@ void game_init() {
     colors[14] = COLOR_CELL_MORE_BG;
     colors[15] = COLOR_CELL_MORE_BG;
 
+    game_reset();
+    game.best = game.score;
+}
+
+void game_reset() {
+    memset(game.cells, 0, sizeof(int)*16);
+
     // init start position
     int r1 = rand()%15;
     int r2 = -1;
     do {
         r2 = rand()%15;
     } while (r1 == r2);
-    game.cells[r1] = 2;
-    game.cells[r2] = (rand()%10 == 0) ? 4: 2;
-    game.score = game.best = game.cells[r1] + game.cells[r2];
+    game.cells[r1] = (rand()%15 == 0) ? 4: 2;
+    game.cells[r2] = (rand()%15 == 0) ? 4: 2;
+    game.score = game.cells[r1] + game.cells[r2];
+
+     /*game.cells[0] = 4;
+    game.cells[4] = 4;
+    game.cells[8] = 4;
+    game.cells[12] = 4;
+
+    game.cells[1] = 0;
+    game.cells[5] = 0;
+    game.cells[9] = 4;
+    game.cells[13] = 4;
+
+    game.cells[2] = 0;
+    game.cells[6] = 4;
+    game.cells[10] = 0;
+    game.cells[14] = 4;*/
 }
 
-void game_play_up() {
- for (int x = 0; x < 4; x++) {
-        for (int y = 3; y > 0; y--) {
-            // above is empty
-            if (game.cells[x+(y-1)*4] == 0) {
-                game.cells[x+(y-1)*4] = game.cells[x+y*4];
+static inline  uint8_t move_vertical(int x, int dir, int from) {
+    uint8_t move = 0;
+
+    for (int i = 0, y = from, yy = from; i < 4; i++) {
+        if (game.cells[x+y*4] != 0) {
+            if (y != yy) {
+                game.cells[x+yy*4] = game.cells[x+y*4];
                 game.cells[x+y*4] = 0;
-            } else if (game.cells[x+(y-1)*4] ==  game.cells[x+y*4]) {
-                game.cells[x+(y-1)*4] = game.cells[x+y*4] * 2;
-                game.cells[x+y*4] = 0;
+                move = 1;
             }
+            yy+= dir;
         }
- }
+        y+= dir;
+    }
+    return move;
 }
 
-void game_play_down() {
- for (int x = 0; x < 4; x++) {
-        for (int y = 0; y < 3; y++) {
-            // above is empty
-            if (game.cells[x+(y+1)*4] == 0) {
-                game.cells[x+(y+1)*4] = game.cells[x+y*4];
-                game.cells[x+y*4] = 0;
-            } else if (game.cells[x+(y+1)*4] ==  game.cells[x+y*4]) {
-                game.cells[x+(y+1)*4] = game.cells[x+y*4] * 2;
-                game.cells[x+y*4] = 0;
+static inline  uint8_t game_play_vertical(int dir) {
+    int from = (dir == 1 ? 0 : 3);
+    uint8_t move = 0;
+
+    for (int x = 0; x < 4; x++) {
+        // move
+        move += move_vertical(x, dir, from);
+
+        // merge adjacent cells
+        for (int i = 0, y = from; i < 3; i++) {
+            if (game.cells[x+y*4] != 0 && game.cells[x+y*4] == game.cells[x+(y+dir)*4]) {
+                game.cells[x+y*4] *= 2;
+                game.cells[x+(y+dir)*4] = 0;
+                move = 2;
             }
+            y+= dir;
         }
- }
-}
 
-void game_play_left() {
- for (int x = 3; x > 0; x--) {
-        for (int y = 0; y < 4; y++) {
-            // left is empty
-            if (game.cells[(x-1)+y*4] == 0) {
-                game.cells[(x-1)+y*4] = game.cells[x+y*4];
-                game.cells[x+y*4] = 0;
-            } else if (game.cells[(x-1)+y*4] ==  game.cells[x+y*4]) {
-                game.cells[(x-1)+y*4] = game.cells[x+y*4] * 2;
-                game.cells[x+y*4] = 0;
-            }
+        // if we did merge, we might need to move again
+        if (move == 2) {
+            move_vertical(x, dir, from);
         }
     }
+
+    return move;
 }
 
-void game_play_right() {
- for (int x = 0; x < 3; x++) {
-        for (int y = 0; y < 4; y++) {
-            // left is empty
-            if (game.cells[(x+1)+y*4] == 0) {
-                game.cells[(x+1)+y*4] = game.cells[x+y*4];
+static inline uint8_t move_horiz(int y, int dir, int from) {
+    uint8_t move = 0;
+
+    for (int i = 0, x = from, xx = from; i < 4; i++) {
+        if (game.cells[x+y*4] != 0) {
+            if (x != xx) {
+                game.cells[xx+y*4] = game.cells[x+y*4];
                 game.cells[x+y*4] = 0;
-            } else if (game.cells[(x+1)+y*4] ==  game.cells[x+y*4]) {
-                game.cells[(x+1)+y*4] = game.cells[x+y*4] * 2;
-                game.cells[x+y*4] = 0;
+                move = 1;
             }
+            xx+= dir;
+        }
+        x+= dir;
+    }
+    return move;
+}
+
+static inline uint8_t game_play_horiz(int dir) {
+    int from = (dir == 1 ? 0 : 3);
+    uint8_t move = 0;
+
+    for (int y = 0; y < 4; y++) {
+        // move up
+        move += move_horiz(y, dir, from);
+
+        // merge adjacent cells
+        for (int i = 0, x = from; i < 3; i++) {
+            if (game.cells[x+y*4] != 0 && game.cells[x+y*4] == game.cells[(x+dir)+y*4]) {
+                game.cells[x+y*4] *= 2;
+                game.cells[(x+dir)+y*4] = 0;
+                move = 2;
+            }
+            x+= dir;
+        }
+
+        // if we did merge, we might need to move up again
+        if (move == 2) {
+            move_horiz(y, dir, from);
         }
     }
+
+    return move;
 }
 
-void game_play(direction_t direction)
+// TODO implement
+bool is_gameover() {
+    return false;
+}
+
+bool game_play(direction_t direction)
 {
+    uint8_t move = 10;
+
     if (direction == d_up) {
-        game_play_up();
+        move = game_play_vertical(1);
     } else if (direction == d_down) {
-        game_play_down();
+        move = game_play_vertical(-1);
     } else if (direction == d_left) {
-        game_play_left();
+        move = game_play_horiz(1);
     } else if (direction == d_right) {
-        game_play_right();
-    } else {
-        game.cells[direction] = (game.cells[direction] == 0 ? 2 : game.cells[direction] * 2);
+        move = game_play_horiz(-1);
     }
 
-    game.cells[rand()%15] = 2;
+    if (move == 0) {
+        rumble_start(0);
+        return false;
+    }
 
+
+    int nbEmpty = 0;
+    int empty[16] = {0};
     // compute score
     game.score = 0;
-    for (int i = 0; i < 16; i++)
+    for (int i = 0; i < 16; i++) {
+        if (game.cells[i] == 0) {
+            empty[nbEmpty] = i;
+            nbEmpty++;
+        }
         game.score += game.cells[i];
+    }
 
     if (game.score > game.best)
          game.best = game.score;
+
+    game.cells[empty[rand()%(nbEmpty)]] = (rand()%15 == 0) ? 4: 2;
+
+    // if there was only 1 empty cell, the grid is now full, is it game over ?
+    if (nbEmpty == 1) {
+        return is_gameover();
+    }
+
+    return false;
 }
+
+
 
 int game_score() {
     return game.score;
