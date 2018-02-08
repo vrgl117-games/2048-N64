@@ -16,7 +16,6 @@
 #include "graphics.h"
 #include "screens.h"
 
-
 int main()
 {
     init_interrupts();
@@ -33,7 +32,7 @@ int main()
 
     srand(timer_ticks() & 0x7FFFFFFF);
 
-    timer_link_t *timer_press_start =  new_timer(TIMER_TICKS(500000), TF_CONTINUOUS, screen_timer_title);
+    timer_link_t *timer_press_start = new_timer(TIMER_TICKS(500000), TF_CONTINUOUS, screen_timer_title);
     display_context_t disp = 0;
     screen_t screen = title;
     bool show_fps = false;
@@ -41,43 +40,53 @@ int main()
 
     rdp_set_texture_flush(FLUSH_STRATEGY_NONE);
 
-
-
-    while (true) {
+    while (true)
+    {
         rumble_stop(0);
 
-        if (!(get_controllers_present() & CONTROLLER_1_INSERTED)) {
+        if (!(get_controllers_present() & CONTROLLER_1_INSERTED))
+        {
             screen_no_controller(disp);
-        } else {
+        }
+        else
+        {
             control_t keys = controls_get_keys();
-            if (IS_DOWN(keys.Z)) {
+            if (IS_DOWN(keys.Z))
+            {
                 show_fps = !show_fps;
             }
 
-            if (gameover && IS_DOWN(keys.start)) {
+            if (gameover && IS_DOWN(keys.start))
+            {
                 game_reset();
                 gameover = false;
-            } else if (!gameover && keys.direction != d_none) {
+            }
+            else if (!gameover && keys.direction != d_none)
+            {
                 gameover = game_play(keys.direction);
             }
 
-            while (!(disp = display_lock()));
+            while (!(disp = display_lock()))
+                ;
 
-            switch (screen) {
-                case title:
-                    screen_title(disp);
-                    if (IS_DOWN(keys.start)) {
-                        delete_timer(timer_press_start);
-                        screen = game;
-                    }
-                    break;
-                case game:
-                    screen_game(disp, gameover);
-                    break;
+            switch (screen)
+            {
+            case title:
+                screen_title(disp);
+                if (IS_DOWN(keys.start))
+                {
+                    delete_timer(timer_press_start);
+                    screen = game;
+                }
+                break;
+            case game:
+                screen_game(disp, gameover);
+                break;
             }
 
             fps_frame();
-            if (show_fps) {
+            if (show_fps)
+            {
                 graphics_draw_textf_with_background(disp, 4, 4, "FPS: %d", fps_get());
             }
         }

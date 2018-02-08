@@ -16,7 +16,8 @@ inline void fps_frame()
     static uint8_t frame_count = 0;
 
     frame_count++;
-    if (fps_refresh) {
+    if (fps_refresh)
+    {
         fps = frame_count;
         frame_count = 0;
         fps_refresh = false;
@@ -27,7 +28,6 @@ uint8_t fps_get()
 {
     return fps;
 }
-
 
 void fps_timer()
 {

@@ -13,7 +13,8 @@ void *dfs_load(const char *const path)
 {
     int fp = dfs_open(path);
 
-    if (fp) {
+    if (fp)
+    {
         int size = dfs_size(fp);
         void *data = malloc(size);
         dfs_read(data, 1, size, fp);

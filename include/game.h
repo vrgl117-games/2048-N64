@@ -11,15 +11,19 @@
 
 #include <libdragon.h>
 
-typedef struct game {
+typedef struct game
+{
     int cells[16];
 
     uint16_t score;
     uint16_t best;
 } game_t;
 
-typedef enum direction {d_none, d_up, d_down, d_left, d_right} direction_t;
-
+typedef enum direction { d_none,
+                         d_up,
+                         d_down,
+                         d_left,
+                         d_right } direction_t;
 
 int game_best();
 void game_init();

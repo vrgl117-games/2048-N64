@@ -18,7 +18,8 @@ static game_t game;
 static sprite_t *sprites[16];
 static uint32_t colors[16];
 
-void game_init() {
+void game_init()
+{
 
     // init sprites
     sprites[1] = dfs_load("/gfx/2.sprite");
@@ -37,7 +38,7 @@ void game_init() {
     sprites[14] = dfs_load("/gfx/16384.sprite");
     sprites[15] = dfs_load("/gfx/32768.sprite");
 
-     // init colors
+    // init colors
     colors[0] = COLOR_CELL_EMPTY_BG;
     colors[1] = COLOR_CELL_2_BG;
     colors[2] = COLOR_CELL_4_BG;
@@ -59,20 +60,22 @@ void game_init() {
     game.best = game.score;
 }
 
-void game_reset() {
-    memset(game.cells, 0, sizeof(int)*16);
+void game_reset()
+{
+    memset(game.cells, 0, sizeof(int) * 16);
 
     // init start position
-    int r1 = rand()%15;
+    int r1 = rand() % 15;
     int r2 = -1;
-    do {
-        r2 = rand()%15;
+    do
+    {
+        r2 = rand() % 15;
     } while (r1 == r2);
-    game.cells[r1] = (rand()%15 == 0) ? 4: 2;
-    game.cells[r2] = (rand()%15 == 0) ? 4: 2;
+    game.cells[r1] = (rand() % 15 == 0) ? 4 : 2;
+    game.cells[r2] = (rand() % 15 == 0) ? 4 : 2;
     game.score = game.cells[r1] + game.cells[r2];
 
-     /*game.cells[0] = 4;
+    /*game.cells[0] = 4;
     game.cells[4] = 4;
     game.cells[8] = 4;
     game.cells[12] = 4;
@@ -88,43 +91,52 @@ void game_reset() {
     game.cells[14] = 4;*/
 }
 
-static inline  uint8_t move_vertical(int x, int dir, int from) {
+static inline uint8_t move_vertical(int x, int dir, int from)
+{
     uint8_t move = 0;
 
-    for (int i = 0, y = from, yy = from; i < 4; i++) {
-        if (game.cells[x+y*4] != 0) {
-            if (y != yy) {
-                game.cells[x+yy*4] = game.cells[x+y*4];
-                game.cells[x+y*4] = 0;
+    for (int i = 0, y = from, yy = from; i < 4; i++)
+    {
+        if (game.cells[x + y * 4] != 0)
+        {
+            if (y != yy)
+            {
+                game.cells[x + yy * 4] = game.cells[x + y * 4];
+                game.cells[x + y * 4] = 0;
                 move = 1;
             }
-            yy+= dir;
+            yy += dir;
         }
-        y+= dir;
+        y += dir;
     }
     return move;
 }
 
-static inline  uint8_t game_play_vertical(int dir) {
+static inline uint8_t game_play_vertical(int dir)
+{
     int from = (dir == 1 ? 0 : 3);
     uint8_t move = 0;
 
-    for (int x = 0; x < 4; x++) {
+    for (int x = 0; x < 4; x++)
+    {
         // move
         move += move_vertical(x, dir, from);
 
         // merge adjacent cells
-        for (int i = 0, y = from; i < 3; i++) {
-            if (game.cells[x+y*4] != 0 && game.cells[x+y*4] == game.cells[x+(y+dir)*4]) {
-                game.cells[x+y*4] *= 2;
-                game.cells[x+(y+dir)*4] = 0;
+        for (int i = 0, y = from; i < 3; i++)
+        {
+            if (game.cells[x + y * 4] != 0 && game.cells[x + y * 4] == game.cells[x + (y + dir) * 4])
+            {
+                game.cells[x + y * 4] *= 2;
+                game.cells[x + (y + dir) * 4] = 0;
                 move = 2;
             }
-            y+= dir;
+            y += dir;
         }
 
         // if we did merge, we might need to move again
-        if (move == 2) {
+        if (move == 2)
+        {
             move_vertical(x, dir, from);
         }
     }
@@ -132,43 +144,52 @@ static inline  uint8_t game_play_vertical(int dir) {
     return move;
 }
 
-static inline uint8_t move_horiz(int y, int dir, int from) {
+static inline uint8_t move_horiz(int y, int dir, int from)
+{
     uint8_t move = 0;
 
-    for (int i = 0, x = from, xx = from; i < 4; i++) {
-        if (game.cells[x+y*4] != 0) {
-            if (x != xx) {
-                game.cells[xx+y*4] = game.cells[x+y*4];
-                game.cells[x+y*4] = 0;
+    for (int i = 0, x = from, xx = from; i < 4; i++)
+    {
+        if (game.cells[x + y * 4] != 0)
+        {
+            if (x != xx)
+            {
+                game.cells[xx + y * 4] = game.cells[x + y * 4];
+                game.cells[x + y * 4] = 0;
                 move = 1;
             }
-            xx+= dir;
+            xx += dir;
         }
-        x+= dir;
+        x += dir;
     }
     return move;
 }
 
-static inline uint8_t game_play_horiz(int dir) {
+static inline uint8_t game_play_horiz(int dir)
+{
     int from = (dir == 1 ? 0 : 3);
     uint8_t move = 0;
 
-    for (int y = 0; y < 4; y++) {
+    for (int y = 0; y < 4; y++)
+    {
         // move up
         move += move_horiz(y, dir, from);
 
         // merge adjacent cells
-        for (int i = 0, x = from; i < 3; i++) {
-            if (game.cells[x+y*4] != 0 && game.cells[x+y*4] == game.cells[(x+dir)+y*4]) {
-                game.cells[x+y*4] *= 2;
-                game.cells[(x+dir)+y*4] = 0;
+        for (int i = 0, x = from; i < 3; i++)
+        {
+            if (game.cells[x + y * 4] != 0 && game.cells[x + y * 4] == game.cells[(x + dir) + y * 4])
+            {
+                game.cells[x + y * 4] *= 2;
+                game.cells[(x + dir) + y * 4] = 0;
                 move = 2;
             }
-            x+= dir;
+            x += dir;
         }
 
         // if we did merge, we might need to move up again
-        if (move == 2) {
+        if (move == 2)
+        {
             move_horiz(y, dir, from);
         }
     }
@@ -177,7 +198,8 @@ static inline uint8_t game_play_horiz(int dir) {
 }
 
 // TODO implement
-bool is_gameover() {
+bool is_gameover()
+{
     return false;
 }
 
@@ -185,28 +207,37 @@ bool game_play(direction_t direction)
 {
     uint8_t move = 10;
 
-    if (direction == d_up) {
+    if (direction == d_up)
+    {
         move = game_play_vertical(1);
-    } else if (direction == d_down) {
+    }
+    else if (direction == d_down)
+    {
         move = game_play_vertical(-1);
-    } else if (direction == d_left) {
+    }
+    else if (direction == d_left)
+    {
         move = game_play_horiz(1);
-    } else if (direction == d_right) {
+    }
+    else if (direction == d_right)
+    {
         move = game_play_horiz(-1);
     }
 
-    if (move == 0) {
+    if (move == 0)
+    {
         rumble_start(0);
         return false;
     }
-
 
     int nbEmpty = 0;
     int empty[16] = {0};
     // compute score
     game.score = 0;
-    for (int i = 0; i < 16; i++) {
-        if (game.cells[i] == 0) {
+    for (int i = 0; i < 16; i++)
+    {
+        if (game.cells[i] == 0)
+        {
             empty[nbEmpty] = i;
             nbEmpty++;
         }
@@ -214,80 +245,84 @@ bool game_play(direction_t direction)
     }
 
     if (game.score > game.best)
-         game.best = game.score;
+        game.best = game.score;
 
-    game.cells[empty[rand()%(nbEmpty)]] = (rand()%15 == 0) ? 4: 2;
+    game.cells[empty[rand() % (nbEmpty)]] = (rand() % 15 == 0) ? 4 : 2;
 
     // if there was only 1 empty cell, the grid is now full, is it game over ?
-    if (nbEmpty == 1) {
+    if (nbEmpty == 1)
+    {
         return is_gameover();
     }
 
     return false;
 }
 
-
-
-int game_score() {
+int game_score()
+{
     return game.score;
 }
 
-int game_best() {
+int game_best()
+{
     return game.best;
 }
 
-static inline uint8_t game_log2(int n) {
-    switch(n) {
-        case 2:
-            return 1;
-        case 4:
-            return 2;
-        case 8:
-            return 3;
-        case 16:
-            return 4;
-        case 32:
-            return 5;
-        case 64:
-            return 6;
-        case 128:
-            return 7;
-        case 256:
-            return 8;
-        case 512:
-            return 9;
-        case 1024:
-            return 10;
-        case 2048:
-            return 11;
-        case 4096:
-            return 12;
-        case 8192:
-            return 13;
-        case 16384:
-            return 14;
-        case 32768:
-            return 15;
+static inline uint8_t game_log2(int n)
+{
+    switch (n)
+    {
+    case 2:
+        return 1;
+    case 4:
+        return 2;
+    case 8:
+        return 3;
+    case 16:
+        return 4;
+    case 32:
+        return 5;
+    case 64:
+        return 6;
+    case 128:
+        return 7;
+    case 256:
+        return 8;
+    case 512:
+        return 9;
+    case 1024:
+        return 10;
+    case 2048:
+        return 11;
+    case 4096:
+        return 12;
+    case 8192:
+        return 13;
+    case 16384:
+        return 14;
+    case 32768:
+        return 15;
     }
     return 0;
 }
 
 void game_draw(display_context_t disp, int grid_x, int grid_y)
 {
-    rdp_draw_filled_rectangle_size(grid_x, grid_y, 360 , 360, COLOR_GRID_BG);
-    for (int x = 0; x < 4; x++) {
-        for (int y = 0; y < 4; y++) {
-            int xx = grid_x + 8 + (x*88);
-            int yy = grid_y + 8 + (y*88);
+    rdp_draw_filled_rectangle_size(grid_x, grid_y, 360, 360, COLOR_GRID_BG);
+    for (int x = 0; x < 4; x++)
+    {
+        for (int y = 0; y < 4; y++)
+        {
+            int xx = grid_x + 8 + (x * 88);
+            int yy = grid_y + 8 + (y * 88);
 
-            int score = game_log2(game.cells[x+y*4]);
-            rdp_draw_filled_rectangle_size(xx, yy, 80 , 80, colors[score]);
+            int score = game_log2(game.cells[x + y * 4]);
+            rdp_draw_filled_rectangle_size(xx, yy, 80, 80, colors[score]);
             sprite_t *sp = sprites[score];
-            if (sp != NULL) {
-                graphics_draw_sprite_trans(disp, xx + 40 - sp->width/2, yy + 40 - sp->height/2, sp);
+            if (sp != NULL)
+            {
+                graphics_draw_sprite_trans(disp, xx + 40 - sp->width / 2, yy + 40 - sp->height / 2, sp);
             }
         }
     }
 }
-
-

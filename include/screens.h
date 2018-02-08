@@ -11,7 +11,8 @@
 
 #include <libdragon.h>
 
-typedef enum screens {title, game} screen_t;
+typedef enum screens { title,
+                       game } screen_t;
 
 void screen_init();
 void screen_game(display_context_t disp, bool gameover);

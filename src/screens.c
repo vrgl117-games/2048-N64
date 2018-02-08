@@ -28,7 +28,8 @@ void screen_timer_title()
     tick++;
 }
 
-void screen_init() {
+void screen_init()
+{
     logo = dfs_load("/gfx/logo.sprite");
     best = dfs_load("/gfx/best.sprite");
     score = dfs_load("/gfx/score.sprite");
@@ -60,31 +61,32 @@ void screen_game(display_context_t disp, bool gameover)
     screen_common(disp);
 
     rdp_draw_filled_rectangle_with_border_size(300, 30, 90, 40, COLOR_CELL_EMPTY_BG, COLOR_GRID_BG);
-    graphics_draw_sprite_trans(disp, 300+6, 30, best);
-    graphics_draw_int_with_font(disp, 300+6, 46, font, game_best());
+    graphics_draw_sprite_trans(disp, 300 + 6, 30, best);
+    graphics_draw_int_with_font(disp, 300 + 6, 46, font, game_best());
 
     rdp_draw_filled_rectangle_with_border_size(410, 30, 90, 40, COLOR_CELL_EMPTY_BG, COLOR_GRID_BG);
-    graphics_draw_sprite_trans(disp, 410+6, 30, score);
-    graphics_draw_int_with_font(disp, 410+6, 46, font, game_score());
+    graphics_draw_sprite_trans(disp, 410 + 6, 30, score);
+    graphics_draw_int_with_font(disp, 410 + 6, 46, font, game_score());
 
     game_draw(disp, 140, 90);
 
-    if (gameover) {
+    if (gameover)
+    {
         graphics_draw_text_center(disp, 320, 230, "GAME OVER");
     }
 
     rdp_detach_display();
 }
 
-
 void screen_title(display_context_t disp)
 {
     screen_common(disp);
 
     // press start
-    if (tick % 2) {
+    if (tick % 2)
+    {
         sprite_t *press_start = dfs_load("/gfx/press_start.sprite");
-        graphics_draw_sprite_trans(disp,  320 - press_start->width / 2, 430, press_start);
+        graphics_draw_sprite_trans(disp, 320 - press_start->width / 2, 430, press_start);
         free(press_start);
     }
 
