@@ -11,6 +11,8 @@
 
 #include <libdragon.h>
 
+#define EXTRA_FRAMES 4
+
 typedef struct game
 {
     int cells[16];

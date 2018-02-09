@@ -8,6 +8,7 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "colors.h"
 #include "dfs.h"
@@ -71,8 +72,8 @@ void game_reset()
     {
         r2 = rand() % 15;
     } while (r1 == r2);
-    game.cells[r1] = (rand() % 15 == 0) ? 4 : 2;
-    game.cells[r2] = (rand() % 15 == 0) ? 4 : 2;
+    game.cells[r1] = ((rand() % 15 == 0) ? 40 : 22) + EXTRA_FRAMES;
+    game.cells[r2] = ((rand() % 15 == 0) ? 40 : 22) + EXTRA_FRAMES;
     game.score = game.cells[r1] + game.cells[r2];
 
     /*game.cells[0] = 2048;
@@ -245,6 +246,8 @@ bool game_play(direction_t direction)
     case d_right:
         move = game_play_horiz(-1);
         break;
+    default:
+        return false;
     }
 
     if (move == 0)
@@ -268,10 +271,12 @@ bool game_play(direction_t direction)
         game.score += game.cells[i];
     }
 
+    int new = ((rand() % 15 == 0) ? 40 : 20) + EXTRA_FRAMES;
+    game.cells[empty[rand() % (nbEmpty)]] = new;
+    game.score += new;
+
     if (game.score > game.best)
         game.best = game.score;
-
-    game.cells[empty[rand() % (nbEmpty)]] = (rand() % 15 == 0) ? 4 : 2;
 
     // if there was only 1 empty cell, the grid is now full, is it game over ?
     if (nbEmpty == 1)
@@ -341,9 +346,15 @@ void game_draw(display_context_t disp, int grid_x, int grid_y)
         {
             int xx = grid_x + 8 + (x * 88);
             int yy = grid_y + 8 + (y * 88);
-
-            int score = game_log2(game.cells[x + y * 4]);
-            rdp_draw_filled_rectangle_size(xx, yy, 80, 80, colors[score]);
+            int value = floor(game.cells[x + y * 4] / 10);
+            int score = game_log2(value);
+            int diff = game.cells[x + y * 4] - value * 10;
+            if (diff > 0)
+            {
+                game.cells[x + y * 4] -= 1;
+                score = 0;
+            }
+            rdp_draw_filled_rectangle_size(xx + diff * 4, yy + diff * 4, 80 - diff * 8, 80 - diff * 8, colors[score]);
             sprite_t *sp = sprites[score];
             if (sp != NULL)
             {
