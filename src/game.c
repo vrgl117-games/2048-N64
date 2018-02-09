@@ -75,20 +75,25 @@ void game_reset()
     game.cells[r2] = (rand() % 15 == 0) ? 4 : 2;
     game.score = game.cells[r1] + game.cells[r2];
 
-    /*game.cells[0] = 4;
-    game.cells[4] = 4;
-    game.cells[8] = 4;
-    game.cells[12] = 4;
+    /*game.cells[0] = 2048;
+    game.cells[4] = 4096;
+    game.cells[8] = 2048;
+    game.cells[12] = 4096;
 
-    game.cells[1] = 0;
-    game.cells[5] = 0;
-    game.cells[9] = 4;
-    game.cells[13] = 4;
+    game.cells[1] = 2048;
+    game.cells[5] = 8;
+    game.cells[9] = 4096;
+    game.cells[13] = 2048;
 
-    game.cells[2] = 0;
-    game.cells[6] = 4;
-    game.cells[10] = 0;
-    game.cells[14] = 4;*/
+    game.cells[2] = 2048;
+    game.cells[6] = 4096;
+    game.cells[10] = 8;
+    game.cells[14] = 16;
+
+    game.cells[3] = 0;
+    game.cells[7] = 128;
+    game.cells[11] = 32;
+    game.cells[15] = 64;*/
 }
 
 static inline uint8_t move_vertical(int x, int dir, int from)
@@ -197,10 +202,23 @@ static inline uint8_t game_play_horiz(int dir)
     return move;
 }
 
-// TODO implement
 bool is_gameover()
 {
-    return false;
+    for (int i = 0; i < 16; i++)
+    {
+        // (top 3 row) can merge with bottom one ?
+        if (i < 12 && game.cells[i] == game.cells[i + 4])
+        {
+            return false;
+        }
+
+        // (left 3 columns) can merge with right one ?
+        if (i % 4 != 3 && game.cells[i] == game.cells[i + 1])
+        {
+            return false;
+        }
+    }
+    return true;
 }
 
 bool game_play(direction_t direction)
@@ -232,6 +250,7 @@ bool game_play(direction_t direction)
 
     int nbEmpty = 0;
     int empty[16] = {0};
+
     // compute score
     game.score = 0;
     for (int i = 0; i < 16; i++)
