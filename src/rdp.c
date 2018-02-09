@@ -27,7 +27,6 @@ void rdp_draw_filled_rectangle_size(int x, int y, int width, int height, uint32_
 
 void rdp_draw_filled_rectangle_with_border_size(int x, int y, int width, int height, uint32_t color, uint32_t border_color)
 {
-
     rdp_enable_primitive_fill();
     rdp_set_fill_color((border_color & 0xFF000000) >> 24, (border_color & 0x00FF0000) >> 16, (border_color & 0x0000FF00) >> 8, (border_color & 0x000000FF));
     rdp_draw_filled_rectangle(x, y, x + width, y + height);

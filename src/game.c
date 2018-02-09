@@ -96,6 +96,7 @@ void game_reset()
     game.cells[15] = 64;*/
 }
 
+// return > 0 if player was able to move
 static inline uint8_t move_vertical(int x, int dir, int from)
 {
     uint8_t move = 0;
@@ -117,6 +118,7 @@ static inline uint8_t move_vertical(int x, int dir, int from)
     return move;
 }
 
+// return > 0 if player was able to play (move and/or merge)
 static inline uint8_t game_play_vertical(int dir)
 {
     int from = (dir == 1 ? 0 : 3);
@@ -149,6 +151,7 @@ static inline uint8_t game_play_vertical(int dir)
     return move;
 }
 
+// return > 0 if player was able to move
 static inline uint8_t move_horiz(int y, int dir, int from)
 {
     uint8_t move = 0;
@@ -170,6 +173,7 @@ static inline uint8_t move_horiz(int y, int dir, int from)
     return move;
 }
 
+// return > 0 if player was able to play (move and/or merge)
 static inline uint8_t game_play_horiz(int dir)
 {
     int from = (dir == 1 ? 0 : 3);
@@ -202,7 +206,8 @@ static inline uint8_t game_play_horiz(int dir)
     return move;
 }
 
-bool is_gameover()
+// return true if gameover
+static inline bool is_gameover()
 {
     for (int i = 0; i < 16; i++)
     {
@@ -221,25 +226,25 @@ bool is_gameover()
     return true;
 }
 
+// return true if gameover
 bool game_play(direction_t direction)
 {
     uint8_t move = 10;
 
-    if (direction == d_up)
+    switch (direction)
     {
+    case d_up:
         move = game_play_vertical(1);
-    }
-    else if (direction == d_down)
-    {
+        break;
+    case d_down:
         move = game_play_vertical(-1);
-    }
-    else if (direction == d_left)
-    {
+        break;
+    case d_left:
         move = game_play_horiz(1);
-    }
-    else if (direction == d_right)
-    {
+        break;
+    case d_right:
         move = game_play_horiz(-1);
+        break;
     }
 
     if (move == 0)
@@ -277,11 +282,13 @@ bool game_play(direction_t direction)
     return false;
 }
 
+// return current score
 int game_score()
 {
     return game.score;
 }
 
+// return best score
 int game_best()
 {
     return game.best;
