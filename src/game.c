@@ -135,7 +135,7 @@ static inline uint8_t game_play_vertical(int dir)
         {
             if (game.cells[x + y * 4] != 0 && game.cells[x + y * 4] == game.cells[x + (y + dir) * 4])
             {
-                game.cells[x + y * 4] *= 2;
+                game.cells[x + y * 4] = game.cells[x + y * 4] * 2 + 5 + EXTRA_FRAMES;
                 game.cells[x + (y + dir) * 4] = 0;
                 move = 2;
             }
@@ -190,7 +190,7 @@ static inline uint8_t game_play_horiz(int dir)
         {
             if (game.cells[x + y * 4] != 0 && game.cells[x + y * 4] == game.cells[(x + dir) + y * 4])
             {
-                game.cells[x + y * 4] *= 2;
+                game.cells[x + y * 4] = game.cells[x + y * 4] * 2 + 5 + EXTRA_FRAMES;
                 game.cells[(x + dir) + y * 4] = 0;
                 move = 2;
             }
@@ -346,15 +346,34 @@ void game_draw(display_context_t disp, int grid_x, int grid_y)
         {
             int xx = grid_x + 8 + (x * 88);
             int yy = grid_y + 8 + (y * 88);
+
+            // actual score to be displayed
             int value = floor(game.cells[x + y * 4] / 10);
             int score = game_log2(value);
+
+            // diff == 0 -> no animation
+            // diff < 5 -> start small and grow
+            // diff == 5 -> no animation
+            // diff < 9 -> start big and reduce
             int diff = game.cells[x + y * 4] - value * 10;
-            if (diff > 0)
+            switch (diff)
             {
+            case 5:
+                game.cells[x + y * 4] = value * 10;
+            case 0:
+                rdp_draw_filled_rectangle_size(xx, yy, 80, 80, colors[score]);
+                break;
+            case 1 ... 4:
+                rdp_draw_filled_rectangle_size(xx + diff * 4, yy + diff * 4, 80 - diff * 8, 80 - diff * 8, colors[score]);
                 game.cells[x + y * 4] -= 1;
                 score = 0;
+                break;
+            case 6 ... 9:
+                rdp_draw_filled_rectangle_size(xx - diff * 1, yy - diff * 1, 80 + diff * 2, 80 + diff * 2, colors[score]);
+                game.cells[x + y * 4] -= 1;
+                break;
             }
-            rdp_draw_filled_rectangle_size(xx + diff * 4, yy + diff * 4, 80 - diff * 8, 80 - diff * 8, colors[score]);
+
             sprite_t *sp = sprites[score];
             if (sp != NULL)
             {
