@@ -3,7 +3,7 @@
  * Copyright (C) 2018 Victor Vieux
  *
  * This software may be modified and distributed under the terms
- * of the Apache license.  See the LICENSE file for details.
+ * of the Apache license. See the LICENSE file for details.
  */
 
 #include <string.h>
@@ -87,30 +87,30 @@ control_t controls_get_keys()
         keys.down = UP;
     }
 
-    if (held.C_left || held.left || held.x < 0)
+    if (held.C_left || held.left || held.x < -20)
     {
         keys.left = HELD;
     }
-    else if (down.C_left || down.left || down.x < 0)
+    else if (down.C_left || down.left || down.x < -20)
     {
         keys.direction = d_left;
         keys.left = DOWN;
     }
-    else if (up.C_left || up.left || down.x < 0)
+    else if (up.C_left || up.left || down.x < -20)
     {
         keys.left = UP;
     }
 
-    if (held.C_right || held.right || held.x > 0)
+    if (held.C_right || held.right || held.x > 20)
     {
         keys.right = HELD;
     }
-    else if (down.C_right || down.right || down.x > 0)
+    else if (down.C_right || down.right || down.x > 20)
     {
         keys.direction = d_right;
         keys.right = DOWN;
     }
-    else if (up.C_right || up.right || down.x > 0)
+    else if (up.C_right || up.right || down.x > 20)
     {
         keys.right = UP;
     }
