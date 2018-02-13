@@ -3,7 +3,7 @@
  * Copyright (C) 2018 Victor Vieux
  *
  * This software may be modified and distributed under the terms
- * of the Apache license.  See the LICENSE file for details.
+ * of the Apache license. See the LICENSE file for details.
  */
 
 #include <string.h>
@@ -74,27 +74,27 @@ void game_reset()
     } while (r1 == r2);
     game.cells[r1] = ((rand() % 15 == 0) ? 40 : 22) + EXTRA_FRAMES;
     game.cells[r2] = ((rand() % 15 == 0) ? 40 : 22) + EXTRA_FRAMES;
-    game.score = game.cells[r1] + game.cells[r2];
+    game.score = game.cells[r1] / 10 + game.cells[r2] / 10;
 
-    /*game.cells[0] = 2048;
-    game.cells[4] = 4096;
-    game.cells[8] = 2048;
-    game.cells[12] = 4096;
+    game.cells[0] = 20480;
+    game.cells[4] = 40960;
+    game.cells[8] = 20480;
+    game.cells[12] = 40960;
 
-    game.cells[1] = 2048;
-    game.cells[5] = 8;
-    game.cells[9] = 4096;
-    game.cells[13] = 2048;
+    game.cells[1] = 20480;
+    game.cells[5] = 80;
+    game.cells[9] = 40960;
+    game.cells[13] = 20480;
 
-    game.cells[2] = 2048;
-    game.cells[6] = 4096;
+    game.cells[2] = 20480;
+    game.cells[6] = 40960;
     game.cells[10] = 8;
-    game.cells[14] = 16;
+    game.cells[14] = 160;
 
     game.cells[3] = 0;
-    game.cells[7] = 128;
-    game.cells[11] = 32;
-    game.cells[15] = 64;*/
+    game.cells[7] = 1280;
+    game.cells[11] = 320;
+    game.cells[15] = 640;
 }
 
 // return > 0 if player was able to move
@@ -268,12 +268,12 @@ bool game_play(direction_t direction)
             empty[nbEmpty] = i;
             nbEmpty++;
         }
-        game.score += game.cells[i];
+        game.score += game.cells[i] / 10;
     }
 
     int new = ((rand() % 15 == 0) ? 40 : 20) + EXTRA_FRAMES;
     game.cells[empty[rand() % (nbEmpty)]] = new;
-    game.score += new;
+    game.score += new / 10;
 
     if (game.score > game.best)
         game.best = game.score;
@@ -352,7 +352,7 @@ void game_draw(display_context_t disp, int grid_x, int grid_y)
             int score = game_log2(value);
 
             // diff == 0 -> no animation
-            // diff < 5 -> start small and grow
+            // diff < 5 -> start small and grow and hide score
             // diff == 5 -> no animation
             // diff < 9 -> start big and reduce
             int diff = game.cells[x + y * 4] - value * 10;

@@ -3,10 +3,11 @@
  * Copyright (C) 2018 Victor Vieux
  *
  * This software may be modified and distributed under the terms
- * of the Apache license.  See the LICENSE file for details.
+ * of the Apache license. See the LICENSE file for details.
  */
 
 #include <stdlib.h>
+#include <string.h>
 
 #include "colors.h"
 #include "controls.h"
@@ -14,6 +15,7 @@
 #include "fps.h"
 #include "game.h"
 #include "graphics.h"
+#include "menus.h"
 #include "screens.h"
 
 int main()
@@ -32,11 +34,12 @@ int main()
 
     srand(timer_ticks() & 0x7FFFFFFF);
 
-    timer_link_t *timer_press_start = new_timer(TIMER_TICKS(500000), TF_CONTINUOUS, screen_timer_title);
+    timer_link_t *timer_press_start = new_timer(TIMER_TICKS(50000), TF_CONTINUOUS, screen_timer_title);
     display_context_t disp = 0;
     screen_t screen = title;
     bool show_fps = false;
-    bool gameover = false;
+
+    menu_t menu;
 
     rdp_set_texture_flush(FLUSH_STRATEGY_NONE);
 
@@ -56,16 +59,6 @@ int main()
                 show_fps = !show_fps;
             }
 
-            if (gameover && IS_DOWN(keys.start))
-            {
-                game_reset();
-                gameover = false;
-            }
-            else if (!gameover && keys.direction != d_none)
-            {
-                gameover = game_play(keys.direction);
-            }
-
             while (!(disp = display_lock()))
                 ;
 
@@ -80,7 +73,36 @@ int main()
                 }
                 break;
             case game:
-                screen_game(disp, gameover);
+                if (menu.visible)
+                {
+                    int pressed = menu_press(&menu, keys);
+                    if (pressed != -1 && strcmp(menu.options[pressed], "restart") == 0)
+                    {
+                        game_reset();
+                    }
+                }
+                else if (IS_DOWN(keys.start))
+                {
+                    menu.title = "pause";
+                    menu.options_size = 2;
+                    menu.options[0] = "continue";
+                    menu.options[1] = "restart";
+                    menu.default_option = 0;
+                    menu.visible = true;
+                }
+                else if (keys.direction != d_none)
+                {
+                    if (game_play(keys.direction))
+                    {
+                        menu.title = "game_over";
+                        menu.options_size = 1;
+                        menu.options[0] = "restart";
+                        menu.default_option = 0;
+                        menu.visible = true;
+                    }
+                }
+
+                screen_game(disp, &menu);
                 break;
             }
 

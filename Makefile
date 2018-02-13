@@ -36,7 +36,17 @@ sprites:
 	sh misc/gfx.sh
 	mkdir -p filesystem/gfx/
 	$(MKSPRITE) 16 1 1 resources/gfx/logo.png filesystem/gfx/logo.sprite
+	$(MKSPRITE) 16 1 1 resources/gfx/logo_2.png filesystem/gfx/logo_2.sprite
+	$(MKSPRITE) 16 1 1 resources/gfx/logo_0.png filesystem/gfx/logo_0.sprite
+	$(MKSPRITE) 16 1 1 resources/gfx/logo_4.png filesystem/gfx/logo_4.sprite
+	$(MKSPRITE) 16 1 1 resources/gfx/logo_8.png filesystem/gfx/logo_8.sprite
+	$(MKSPRITE) 16 1 1 resources/gfx/game_over.png filesystem/gfx/game_over.sprite
 	$(MKSPRITE) 16 1 1 resources/gfx/press_start.png filesystem/gfx/press_start.sprite
+	$(MKSPRITE) 16 1 1 resources/gfx/continue.png filesystem/gfx/continue.sprite
+	$(MKSPRITE) 16 1 1 resources/gfx/continue_selec.png filesystem/gfx/continue_selec.sprite
+	$(MKSPRITE) 16 1 1 resources/gfx/restart.png filesystem/gfx/restart.sprite
+	$(MKSPRITE) 16 1 1 resources/gfx/restart_selec.png filesystem/gfx/restart_selec.sprite
+	$(MKSPRITE) 16 1 1 resources/gfx/pause.png filesystem/gfx/pause.sprite
 	$(MKSPRITE) 16 1 1 resources/gfx/2.png filesystem/gfx/2.sprite
 	$(MKSPRITE) 16 1 1 resources/gfx/4.png filesystem/gfx/4.sprite
 	$(MKSPRITE) 16 1 1 resources/gfx/8.png filesystem/gfx/8.sprite

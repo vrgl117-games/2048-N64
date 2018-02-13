@@ -3,7 +3,7 @@
  * Copyright (C) 2018 Victor Vieux
  *
  * This software may be modified and distributed under the terms
- * of the Apache license.  See the LICENSE file for details.
+ * of the Apache license. See the LICENSE file for details.
  */
 
 #include <stdlib.h>
@@ -20,6 +20,7 @@
 static volatile uint8_t tick = 0;
 static sprite_t *font;
 static sprite_t *logo;
+static sprite_t *logo_2, *logo_0, *logo_4, *logo_8;
 static sprite_t *best;
 static sprite_t *score;
 
@@ -31,6 +32,10 @@ void screen_timer_title()
 void screen_init()
 {
     logo = dfs_load("/gfx/logo.sprite");
+    logo_2 = dfs_load("/gfx/logo_2.sprite");
+    logo_0 = dfs_load("/gfx/logo_0.sprite");
+    logo_4 = dfs_load("/gfx/logo_4.sprite");
+    logo_8 = dfs_load("/gfx/logo_8.sprite");
     best = dfs_load("/gfx/best.sprite");
     score = dfs_load("/gfx/score.sprite");
     font = dfs_load("/gfx/font.sprite");
@@ -56,7 +61,7 @@ void screen_no_controller(display_context_t disp)
     graphics_draw_text_center(disp, 320, 230, "NO CONTROLLER INSERTED ON PORT #1");
 }
 
-void screen_game(display_context_t disp, bool gameover)
+void screen_game(display_context_t disp, menu_t *menu)
 {
     screen_common(disp);
 
@@ -69,10 +74,9 @@ void screen_game(display_context_t disp, bool gameover)
     graphics_draw_int_with_font(disp, 410 + 6, 46, font, game_score());
 
     game_draw(disp, 140, 90);
-
-    if (gameover)
+    if (menu != NULL)
     {
-        graphics_draw_text_center(disp, 320, 230, "GAME OVER");
+        menu_draw(disp, menu);
     }
 
     rdp_detach_display();
@@ -83,10 +87,10 @@ void screen_title(display_context_t disp)
     screen_common(disp);
 
     // press start
-    if (tick % 2)
+    if (tick % 20 < 10)
     {
         sprite_t *press_start = dfs_load("/gfx/press_start.sprite");
-        graphics_draw_sprite_trans(disp, 320 - press_start->width / 2, 430, press_start);
+        graphics_draw_sprite_trans(disp, 320 - press_start->width / 2, 330, press_start);
         free(press_start);
     }
 

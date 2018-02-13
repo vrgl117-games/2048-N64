@@ -9,11 +9,12 @@ convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 48 la
 convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 48 label:8  resources/gfx/logo_8.png
 
 convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 36 label:"Press Start"  resources/gfx/press_start.png
-convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 36 label:"Game Over"  resources/gfx/game_over.png
-convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 36 label:"Continue"  resources/gfx/continue.png
-convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 36 label:"> Continue <"  resources/gfx/continue_selec.png
-convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 36 label:"Restart"  resources/gfx/restart.png
-convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 36 label:"> Restart <"  resources/gfx/restart_selec.png
+convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 24 label:"Game Over"  resources/gfx/game_over.png
+convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 24 label:"Pause"  resources/gfx/pause.png
+convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 18 label:"Continue"  resources/gfx/continue.png
+convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 18 label:"> Continue <"  resources/gfx/continue_selec.png
+convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 18 label:"Restart"  resources/gfx/restart.png
+convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 18 label:"> Restart <"  resources/gfx/restart_selec.png
 
 
 
