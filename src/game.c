@@ -72,10 +72,11 @@ void game_reset()
     {
         r2 = rand() % 15;
     } while (r1 == r2);
-    game.cells[r1] = ((rand() % 15 == 0) ? 40 : 22) + EXTRA_FRAMES;
-    game.cells[r2] = ((rand() % 15 == 0) ? 40 : 22) + EXTRA_FRAMES;
+    game.cells[r1] = ((rand() % 10 == 0) ? 40 : 22) + EXTRA_FRAMES;
+    game.cells[r2] = ((rand() % 10 == 0) ? 40 : 22) + EXTRA_FRAMES;
     game.score = game.cells[r1] / 10 + game.cells[r2] / 10;
 
+    /*
     game.cells[0] = 20480;
     game.cells[4] = 40960;
     game.cells[8] = 20480;
@@ -95,6 +96,7 @@ void game_reset()
     game.cells[7] = 1280;
     game.cells[11] = 320;
     game.cells[15] = 640;
+    */
 }
 
 // return > 0 if player was able to move
@@ -271,7 +273,7 @@ bool game_play(direction_t direction)
         game.score += game.cells[i] / 10;
     }
 
-    int new = ((rand() % 15 == 0) ? 40 : 20) + EXTRA_FRAMES;
+    int new = ((rand() % 10 == 0) ? 40 : 20) + EXTRA_FRAMES;
     game.cells[empty[rand() % (nbEmpty)]] = new;
     game.score += new / 10;
 
