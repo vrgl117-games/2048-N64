@@ -32,41 +32,13 @@ OBJS := $(SRCS:.c=.o)
 $(PROG_NAME).elf : $(OBJS)
 	$(LD) -o $@ $^ $(LINK_FLAGS)
 
-sprites:
-	sh misc/gfx.sh
-	mkdir -p filesystem/gfx/
-	$(MKSPRITE) 16 1 1 resources/gfx/logo.png filesystem/gfx/logo.sprite
-	$(MKSPRITE) 16 1 1 resources/gfx/logo_2.png filesystem/gfx/logo_2.sprite
-	$(MKSPRITE) 16 1 1 resources/gfx/logo_0.png filesystem/gfx/logo_0.sprite
-	$(MKSPRITE) 16 1 1 resources/gfx/logo_4.png filesystem/gfx/logo_4.sprite
-	$(MKSPRITE) 16 1 1 resources/gfx/logo_8.png filesystem/gfx/logo_8.sprite
-	$(MKSPRITE) 16 1 1 resources/gfx/game_over.png filesystem/gfx/game_over.sprite
-	$(MKSPRITE) 16 1 1 resources/gfx/press_start.png filesystem/gfx/press_start.sprite
-	$(MKSPRITE) 16 1 1 resources/gfx/continue.png filesystem/gfx/continue.sprite
-	$(MKSPRITE) 16 1 1 resources/gfx/continue_selec.png filesystem/gfx/continue_selec.sprite
-	$(MKSPRITE) 16 1 1 resources/gfx/restart.png filesystem/gfx/restart.sprite
-	$(MKSPRITE) 16 1 1 resources/gfx/restart_selec.png filesystem/gfx/restart_selec.sprite
-	$(MKSPRITE) 16 1 1 resources/gfx/pause.png filesystem/gfx/pause.sprite
-	$(MKSPRITE) 16 1 1 resources/gfx/2.png filesystem/gfx/2.sprite
-	$(MKSPRITE) 16 1 1 resources/gfx/4.png filesystem/gfx/4.sprite
-	$(MKSPRITE) 16 1 1 resources/gfx/8.png filesystem/gfx/8.sprite
-	$(MKSPRITE) 16 1 1 resources/gfx/16.png filesystem/gfx/16.sprite
-	$(MKSPRITE) 16 1 1 resources/gfx/32.png filesystem/gfx/32.sprite
-	$(MKSPRITE) 16 1 1 resources/gfx/64.png filesystem/gfx/64.sprite
-	$(MKSPRITE) 16 1 1 resources/gfx/128.png filesystem/gfx/128.sprite
-	$(MKSPRITE) 16 1 1 resources/gfx/256.png filesystem/gfx/256.sprite
-	$(MKSPRITE) 16 1 1 resources/gfx/512.png filesystem/gfx/512.sprite
-	$(MKSPRITE) 16 1 1 resources/gfx/1024.png filesystem/gfx/1024.sprite
-	$(MKSPRITE) 16 1 1 resources/gfx/2048.png filesystem/gfx/2048.sprite
-	$(MKSPRITE) 16 1 1 resources/gfx/4096.png filesystem/gfx/4096.sprite
-	$(MKSPRITE) 16 1 1 resources/gfx/8192.png filesystem/gfx/8192.sprite
-	$(MKSPRITE) 16 1 1 resources/gfx/16384.png filesystem/gfx/16384.sprite
-	$(MKSPRITE) 16 1 1 resources/gfx/32768.png filesystem/gfx/32768.sprite
+PNGS := $(wildcard resources/gfx/*.png)
+SPRITES := $(subst .png,.sprite,$(subst resources/,filesystem/,$(PNGS)))
+filesystem/gfx/%.sprite: resources/gfx/%.png
+	$(MKSPRITE) 16 1 1 $< $@
+
+sprites: $(SPRITES)
 	$(MKSPRITE) 16 10 1 resources/gfx/font.png filesystem/gfx/font.sprite
-	$(MKSPRITE) 16 1 1 resources/gfx/best.png filesystem/gfx/best.sprite
-	$(MKSPRITE) 16 1 1 resources/gfx/score.png filesystem/gfx/score.sprite
-
-
 
 #sounds:
 #	mkdir -p filesystem/sfx/
@@ -81,6 +53,9 @@ $(PROG_NAME).dfs: sprites #sounds
 
 cen64:
 	$(CEN64_DIR)/cen64 $(CEN64_DIR)/pifdata.bin $(PROG_NAME).z64
+
+flashair:
+	curl -X POST -d @$(PROG_NAME).z64 http://flashair/upload.cgi
 
 clean:
 	rm -f *.z64 *.elf src/*.o *.bin *.dfs

@@ -34,9 +34,9 @@ int main()
 
     srand(timer_ticks() & 0x7FFFFFFF);
 
-    timer_link_t *timer_press_start = new_timer(TIMER_TICKS(50000), TF_CONTINUOUS, screen_timer_title);
+    timer_link_t *timer_press_start = new_timer(TIMER_TICKS(500000), TF_CONTINUOUS, screen_timer_title);
     display_context_t disp = 0;
-    screen_t screen = title;
+    screen_t screen = intro;
     bool show_fps = false;
 
     menu_t menu;
@@ -64,6 +64,12 @@ int main()
 
             switch (screen)
             {
+            case intro:
+                if (screen_intro(disp))
+                {
+                    screen = title;
+                }
+                break;
             case title:
                 screen_title(disp);
                 if (IS_DOWN(keys.start))

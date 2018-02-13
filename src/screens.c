@@ -20,7 +20,6 @@
 static volatile uint8_t tick = 0;
 static sprite_t *font;
 static sprite_t *logo;
-static sprite_t *logo_2, *logo_0, *logo_4, *logo_8;
 static sprite_t *best;
 static sprite_t *score;
 
@@ -32,10 +31,6 @@ void screen_timer_title()
 void screen_init()
 {
     logo = dfs_load("/gfx/logo.sprite");
-    logo_2 = dfs_load("/gfx/logo_2.sprite");
-    logo_0 = dfs_load("/gfx/logo_0.sprite");
-    logo_4 = dfs_load("/gfx/logo_4.sprite");
-    logo_8 = dfs_load("/gfx/logo_8.sprite");
     best = dfs_load("/gfx/best.sprite");
     score = dfs_load("/gfx/score.sprite");
     font = dfs_load("/gfx/font.sprite");
@@ -50,6 +45,31 @@ static inline void screen_common(display_context_t disp)
 
     // logo
     graphics_draw_sprite_trans(disp, 140, 18, logo);
+}
+
+// return true when the animation is done.
+bool screen_intro(display_context_t disp)
+{
+    if (tick > 0 && tick <= 9)
+    {
+        sprite_t *intro = dfs_loadf("/gfx/vrgl117_%d.sprite", tick);
+        graphics_draw_sprite(disp, 320 - intro->width / 2, 240 - intro->height / 2, intro);
+        free(intro);
+    }
+    else if (tick == 10)
+    {
+        sprite_t *intro = dfs_load("/gfx/vrgl117.sprite");
+        graphics_draw_sprite(disp, 320 - intro->width / 2, 240 - intro->height / 2, intro);
+        free(intro);
+    }
+    else if (tick > 10 && tick <= 19)
+    {
+        sprite_t *intro = dfs_loadf("/gfx/vrgl117_%d.sprite", 19 - tick);
+        graphics_draw_sprite(disp, 320 - intro->width / 2, 240 - intro->height / 2, intro);
+        free(intro);
+    }
+
+    return (tick == 20);
 }
 
 void screen_no_controller(display_context_t disp)
@@ -87,7 +107,7 @@ void screen_title(display_context_t disp)
     screen_common(disp);
 
     // press start
-    if (tick % 20 < 10)
+    if (tick % 2 == 0)
     {
         sprite_t *press_start = dfs_load("/gfx/press_start.sprite");
         graphics_draw_sprite_trans(disp, 320 - press_start->width / 2, 330, press_start);

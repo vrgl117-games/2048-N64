@@ -13,10 +13,12 @@
 
 #include "menus.h"
 
-typedef enum screens { title,
+typedef enum screens { intro,
+                       title,
                        game } screen_t;
 
 void screen_init();
+bool screen_intro(display_context_t disp);
 void screen_game(display_context_t disp, menu_t *menu);
 void screen_no_controller(display_context_t disp);
 void screen_title(display_context_t disp);
