@@ -32,6 +32,7 @@ void game_init();
 bool game_play(direction_t direction);
 void game_draw(display_context_t disp, int grid_x, int grid_y);
 int game_score();
+void game_random();
 void game_reset();
 
 #endif //__GAME_H__

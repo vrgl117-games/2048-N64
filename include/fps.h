@@ -11,8 +11,9 @@
 
 #include <libdragon.h>
 
+void fps_draw(display_context_t disp);
 void fps_frame();
-uint8_t fps_get();
+void fps_switch();
 void fps_timer();
 
 #endif // __FPS_H__

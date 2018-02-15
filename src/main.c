@@ -29,15 +29,15 @@ int main()
     timer_init();
     screen_init();
     game_init();
+    game_random();
 
     new_timer(TIMER_TICKS(1000000), TF_CONTINUOUS, fps_timer);
 
     srand(timer_ticks() & 0x7FFFFFFF);
 
-    timer_link_t *timer_press_start = new_timer(TIMER_TICKS(500000), TF_CONTINUOUS, screen_timer_title);
+    timer_link_t *timer_press_start = new_timer(TIMER_TICKS(50000), TF_CONTINUOUS, screen_timer_title);
     display_context_t disp = 0;
     screen_t screen = intro;
-    bool show_fps = false;
 
     menu_t menu;
 
@@ -56,7 +56,7 @@ int main()
             control_t keys = controls_get_keys();
             if (IS_DOWN(keys.Z))
             {
-                show_fps = !show_fps;
+                fps_switch();
             }
 
             while (!(disp = display_lock()))
@@ -76,6 +76,7 @@ int main()
                 {
                     delete_timer(timer_press_start);
                     screen = game;
+                    game_reset();
                 }
                 break;
             case game:
@@ -113,10 +114,7 @@ int main()
             }
 
             fps_frame();
-            if (show_fps)
-            {
-                graphics_draw_textf_with_background(disp, 4, 4, "FPS: %d", fps_get());
-            }
+            fps_draw(disp);
         }
         display_show(disp);
     }

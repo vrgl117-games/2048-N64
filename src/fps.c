@@ -7,9 +7,19 @@
  */
 
 #include "fps.h"
+#include "graphics.h"
 
 static volatile bool fps_refresh = false;
 static volatile uint8_t fps;
+static bool show;
+
+void fps_draw(display_context_t disp)
+{
+    if (show)
+    {
+        graphics_draw_textf_with_background(disp, 4, 4, "FPS: %d", fps);
+    }
+}
 
 inline void fps_frame()
 {
@@ -24,9 +34,9 @@ inline void fps_frame()
     }
 }
 
-uint8_t fps_get()
+void fps_switch()
 {
-    return fps;
+    show = !show;
 }
 
 void fps_timer()

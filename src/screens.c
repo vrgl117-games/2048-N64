@@ -17,7 +17,7 @@
 #include "rdp.h"
 #include "screens.h"
 
-static volatile uint8_t tick = 0;
+static volatile int tick = 0;
 static sprite_t *font;
 static sprite_t *logo;
 static sprite_t *best;
@@ -50,26 +50,32 @@ static inline void screen_common(display_context_t disp)
 // return true when the animation is done.
 bool screen_intro(display_context_t disp)
 {
+    rdp_attach(disp);
+
+    rdp_draw_filled_rectangle_size(0, 0, 640, 480, COLOR_BLACK);
+
+    rdp_detach_display();
+
     if (tick > 0 && tick <= 9)
     {
         sprite_t *intro = dfs_loadf("/gfx/vrgl117_%d.sprite", tick);
         graphics_draw_sprite(disp, 320 - intro->width / 2, 240 - intro->height / 2, intro);
         free(intro);
     }
-    else if (tick == 10)
+    else if (tick >= 10 && tick <= 30)
     {
         sprite_t *intro = dfs_load("/gfx/vrgl117.sprite");
         graphics_draw_sprite(disp, 320 - intro->width / 2, 240 - intro->height / 2, intro);
         free(intro);
     }
-    else if (tick > 10 && tick <= 19)
+    else if (tick > 30 && tick < 39)
     {
-        sprite_t *intro = dfs_loadf("/gfx/vrgl117_%d.sprite", 19 - tick);
+        sprite_t *intro = dfs_loadf("/gfx/vrgl117_%d.sprite", 39 - tick);
         graphics_draw_sprite(disp, 320 - intro->width / 2, 240 - intro->height / 2, intro);
         free(intro);
     }
 
-    return (tick == 20);
+    return (tick >= 42);
 }
 
 void screen_no_controller(display_context_t disp)
@@ -105,14 +111,19 @@ void screen_game(display_context_t disp, menu_t *menu)
 void screen_title(display_context_t disp)
 {
     screen_common(disp);
+    rdp_detach_display();
 
+    if (tick % 17 == 0)
+    {
+        game_random();
+        tick++;
+    }
     // press start
-    if (tick % 2 == 0)
+    if (tick % 14 > 7)
     {
         sprite_t *press_start = dfs_load("/gfx/press_start.sprite");
-        graphics_draw_sprite_trans(disp, 320 - press_start->width / 2, 330, press_start);
+        graphics_draw_sprite_trans(disp, 306, 30, press_start);
         free(press_start);
     }
-
-    rdp_detach_display();
+    game_draw(disp, 140, 90);
 }

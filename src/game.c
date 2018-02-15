@@ -66,37 +66,67 @@ void game_reset()
     memset(game.cells, 0, sizeof(int) * 16);
 
     // init start position
-    int r1 = rand() % 15;
+    int r1 = rand() % 16;
     int r2 = -1;
     do
     {
-        r2 = rand() % 15;
+        r2 = rand() % 16;
     } while (r1 == r2);
     game.cells[r1] = ((rand() % 10 == 0) ? 40 : 22) + EXTRA_FRAMES;
     game.cells[r2] = ((rand() % 10 == 0) ? 40 : 22) + EXTRA_FRAMES;
     game.score = game.cells[r1] / 10 + game.cells[r2] / 10;
+}
 
-    /*
-    game.cells[0] = 20480;
-    game.cells[4] = 40960;
-    game.cells[8] = 20480;
-    game.cells[12] = 40960;
+static inline int game_pow2(int n)
+{
+    switch (n)
+    {
+    case 1:
+        return 0;
+    case 2:
+        return 0;
+    case 3:
+        return 0;
+    case 4:
+        return 2;
+    case 5:
+        return 2;
+    case 6:
+        return 2;
+    case 7:
+        return 4;
+    case 8:
+        return 4;
+    case 9:
+        return 8;
+    case 10:
+        return 16;
+    }
+    return 0;
+}
 
-    game.cells[1] = 20480;
-    game.cells[5] = 80;
-    game.cells[9] = 40960;
-    game.cells[13] = 20480;
+void game_random()
+{
+    int old = -1;
+    for (int i = 0; i < 16; i++)
+    {
+        if (game.cells[i] == 20480)
+        {
+            game.cells[i] = 4;
+            old = i;
+        }
+        else
+        {
+            game.cells[i] = 0;
+        }
+    }
 
-    game.cells[2] = 20480;
-    game.cells[6] = 40960;
-    game.cells[10] = 8;
-    game.cells[14] = 160;
-
-    game.cells[3] = 0;
-    game.cells[7] = 1280;
-    game.cells[11] = 320;
-    game.cells[15] = 640;
-    */
+    int new = -1;
+    do
+    {
+        new = rand() % 16;
+    } while (old == new);
+    game.cells[new] = 20484;
 }
 
 // return > 0 if player was able to move
@@ -371,7 +401,7 @@ void game_draw(display_context_t disp, int grid_x, int grid_y)
                 score = 0;
                 break;
             case 6 ... 9:
-                rdp_draw_filled_rectangle_size(xx - diff * 1, yy - diff * 1, 80 + diff * 2, 80 + diff * 2, colors[score]);
+                rdp_draw_filled_rectangle_size(xx - diff, yy - diff, 80 + diff * 2, 80 + diff * 2, colors[score]);
                 game.cells[x + y * 4] -= 1;
                 break;
             }
