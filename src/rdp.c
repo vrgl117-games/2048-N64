@@ -11,6 +11,9 @@
 
 #include "rdp.h"
 
+extern uint32_t __width;
+extern uint32_t __height;
+
 void rdp_attach(display_context_t disp)
 {
     rdp_attach_display(disp);
@@ -24,6 +27,11 @@ int rdp_draw_int_map(int x, int y, map_t *font, int n)
 
     rdp_draw_sprite_with_texture(font->sprites[n % 10], x, y);
     return x + 11;
+}
+
+void rdp_draw_filled_fullscreen(uint32_t color)
+{
+    rdp_draw_filled_rectangle_size(0, 0, __width, __height, color);
 }
 
 void rdp_draw_filled_rectangle_size(int x, int y, int width, int height, uint32_t color)

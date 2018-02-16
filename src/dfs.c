@@ -12,6 +12,15 @@
 
 #include "dfs.h"
 
+void dfs_free_map(map_t *map)
+{
+    int i = 0;
+    for (; map->sprites[i] != 0; i++)
+        free(map->sprites[i]);
+    free(map->sprites[i]);
+    free(map);
+}
+
 void *dfs_load(const char *const path)
 {
     int fp = dfs_open(path);

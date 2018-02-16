@@ -11,7 +11,8 @@
 
 #include <libdragon.h>
 
-#define EXTRA_FRAMES 4
+#define POP 4
+#define MERGE 9
 
 typedef struct game
 {
@@ -21,6 +22,10 @@ typedef struct game
     uint16_t best;
 } game_t;
 
+typedef enum status { game_none,
+                      game_over,
+                      game_win } status_t;
+
 typedef enum direction { d_none,
                          d_up,
                          d_down,
@@ -29,7 +34,7 @@ typedef enum direction { d_none,
 
 int game_best();
 void game_init();
-bool game_play(direction_t direction);
+status_t game_play(direction_t direction);
 void game_draw(display_context_t disp, int grid_x, int grid_y);
 int game_score();
 void game_random();

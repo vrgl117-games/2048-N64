@@ -17,9 +17,7 @@
 void menu_draw(display_context_t disp, menu_t *menu)
 {
     if (!menu->visible)
-    {
         return;
-    }
 
     int w = 200;
     int h = 80 + 30 * menu->options_size;
@@ -49,13 +47,9 @@ int menu_press(menu_t *menu, control_t keys)
         return menu->default_option;
     }
     if (IS_DOWN(keys.up) && menu->selected_option != 0)
-    {
         menu->selected_option--;
-    }
     if (IS_DOWN(keys.down) && menu->selected_option != menu->options_size - 1)
-    {
         menu->selected_option++;
-    }
     if (IS_DOWN(keys.A))
     {
         int selected = menu->selected_option;

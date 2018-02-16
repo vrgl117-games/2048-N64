@@ -5,13 +5,14 @@ font='misc/font/clearsans-1.00/TTF/ClearSans-Bold.ttf'
 convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 48 label:2048 -crop 64x32 resources/gfx/logo-%02d.png
 convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 36 label:"Press Start" -crop 64x32 resources/gfx/press_start-%02d.png
 convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 24 label:"Game Over"  resources/gfx/game_over.png
+convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 24 label:"You Win!"  resources/gfx/you_win.png
 convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 24 label:"Pause"  resources/gfx/pause.png
 convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 18 label:"Continue"  resources/gfx/continue.png
 convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 18 label:"> Continue <"  resources/gfx/continue_selec.png
 convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 18 label:"Restart"  resources/gfx/restart.png
 convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 18 label:"> Restart <"  resources/gfx/restart_selec.png
 
-
+convert -background "#ffffff00" -fill "#F9F6F2ff" -font "$font" -pointsize 24 label:"NO CONTROLLER INSERTED ON PORT #1" resources/gfx/no_controller.png
 
 convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 36 label:2 -crop 64x32 resources/gfx/2-%02d.png
 convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 36 label:4 -crop 64x32 resources/gfx/4-%02d.png

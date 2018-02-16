@@ -72,8 +72,8 @@ void game_reset()
     {
         r2 = rand() % 16;
     } while (r1 == r2);
-    game.cells[r1] = ((rand() % 10 == 0) ? 40 : 22) + EXTRA_FRAMES;
-    game.cells[r2] = ((rand() % 10 == 0) ? 40 : 22) + EXTRA_FRAMES;
+    game.cells[r1] = ((rand() % 10 == 0) ? 40 : 20) + POP;
+    game.cells[r2] = ((rand() % 10 == 0) ? 40 : 20) + POP;
     game.score = game.cells[r1] / 10 + game.cells[r2] / 10;
 }
 
@@ -116,9 +116,7 @@ void game_random()
             old = i;
         }
         else
-        {
             game.cells[i] = 0;
-        }
     }
 
     int new = -1;
@@ -167,7 +165,7 @@ static inline uint8_t game_play_vertical(int dir)
         {
             if (game.cells[x + y * 4] != 0 && game.cells[x + y * 4] == game.cells[x + (y + dir) * 4])
             {
-                game.cells[x + y * 4] = game.cells[x + y * 4] * 2 + 5 + EXTRA_FRAMES;
+                game.cells[x + y * 4] = game.cells[x + y * 4] * 2 + MERGE;
                 game.cells[x + (y + dir) * 4] = 0;
                 move = 2;
             }
@@ -176,9 +174,7 @@ static inline uint8_t game_play_vertical(int dir)
 
         // if we did merge, we might need to move again
         if (move == 2)
-        {
             move_vertical(x, dir, from);
-        }
     }
 
     return move;
@@ -222,7 +218,7 @@ static inline uint8_t game_play_horiz(int dir)
         {
             if (game.cells[x + y * 4] != 0 && game.cells[x + y * 4] == game.cells[(x + dir) + y * 4])
             {
-                game.cells[x + y * 4] = game.cells[x + y * 4] * 2 + 5 + EXTRA_FRAMES;
+                game.cells[x + y * 4] = game.cells[x + y * 4] * 2 + MERGE;
                 game.cells[(x + dir) + y * 4] = 0;
                 move = 2;
             }
@@ -231,9 +227,7 @@ static inline uint8_t game_play_horiz(int dir)
 
         // if we did merge, we might need to move up again
         if (move == 2)
-        {
             move_horiz(y, dir, from);
-        }
     }
 
     return move;
@@ -246,22 +240,18 @@ static inline bool is_gameover()
     {
         // (top 3 row) can merge with bottom one ?
         if (i < 12 && game.cells[i] == game.cells[i + 4])
-        {
             return false;
-        }
 
         // (left 3 columns) can merge with right one ?
         if (i % 4 != 3 && game.cells[i] == game.cells[i + 1])
-        {
             return false;
-        }
     }
     return true;
 }
 
-// return true if gameover
-bool game_play(direction_t direction)
+status_t game_play(direction_t direction)
 {
+    status_t status = game_none;
     uint8_t move = 10;
 
     switch (direction)
@@ -295,15 +285,18 @@ bool game_play(direction_t direction)
     game.score = 0;
     for (int i = 0; i < 16; i++)
     {
+        int score = game.cells[i] / 10;
         if (game.cells[i] == 0)
         {
             empty[nbEmpty] = i;
             nbEmpty++;
         }
-        game.score += game.cells[i] / 10;
+        else if (score == 2048)
+            status = game_win;
+        game.score += score;
     }
 
-    int new = ((rand() % 10 == 0) ? 40 : 20) + EXTRA_FRAMES;
+    int new = ((rand() % 10 == 0) ? 40 : 20) + POP;
     game.cells[empty[rand() % (nbEmpty)]] = new;
     game.score += new / 10;
 
@@ -311,12 +304,10 @@ bool game_play(direction_t direction)
         game.best = game.score;
 
     // if there was only 1 empty cell, the grid is now full, is it game over ?
-    if (nbEmpty == 1)
-    {
-        return is_gameover();
-    }
+    if (nbEmpty == 1 && is_gameover())
+        status = game_over;
 
-    return false;
+    return status;
 }
 
 // return current score
@@ -408,9 +399,7 @@ void game_draw(display_context_t disp, int grid_x, int grid_y)
 
             map_t *map = maps[score];
             if (map != NULL)
-            {
                 rdp_draw_sprite_with_texture_map(map, xx + 40 - map->width / 2, yy + 40 - map->height / 2);
-            }
         }
     }
 }

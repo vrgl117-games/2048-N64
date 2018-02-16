@@ -47,16 +47,12 @@ int main()
         rumble_stop(0);
 
         if (!(get_controllers_present() & CONTROLLER_1_INSERTED))
-        {
             screen_no_controller(disp);
-        }
         else
         {
             control_t keys = controls_get_keys();
             if (IS_DOWN(keys.Z))
-            {
                 fps_switch();
-            }
 
             while (!(disp = display_lock()))
                 ;
@@ -65,9 +61,7 @@ int main()
             {
             case intro:
                 if (screen_intro(disp))
-                {
                     screen = title;
-                }
                 break;
             case title:
                 screen_title(disp);
@@ -83,9 +77,7 @@ int main()
                 {
                     int pressed = menu_press(&menu, keys);
                     if (pressed != -1 && strcmp(menu.options[pressed], "restart") == 0)
-                    {
                         game_reset();
-                    }
                 }
                 else if (IS_DOWN(keys.start))
                 {
@@ -98,13 +90,25 @@ int main()
                 }
                 else if (keys.direction != d_none)
                 {
-                    if (game_play(keys.direction))
+                    switch (game_play(keys.direction))
                     {
+                    case game_win:
+                        menu.title = "you_win";
+                        menu.options_size = 2;
+                        menu.options[0] = "continue";
+                        menu.options[1] = "restart";
+                        menu.default_option = 0;
+                        menu.visible = true;
+                        break;
+                    case game_over:
                         menu.title = "game_over";
                         menu.options_size = 1;
                         menu.options[0] = "restart";
                         menu.default_option = 0;
                         menu.visible = true;
+                        break;
+                    case game_none:
+                        break;
                     }
                 }
 

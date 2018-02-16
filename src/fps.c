@@ -16,9 +16,7 @@ static bool show;
 void fps_draw(display_context_t disp)
 {
     if (show)
-    {
         graphics_draw_textf_with_background(disp, 4, 4, "FPS: %d", fps);
-    }
 }
 
 inline void fps_frame()
