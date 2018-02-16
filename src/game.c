@@ -16,28 +16,28 @@
 #include "rdp.h"
 
 static game_t game;
-static sprite_t *sprites[16];
+static map_t *maps[16];
 static uint32_t colors[16];
 
 void game_init()
 {
 
     // init sprites
-    sprites[1] = dfs_load("/gfx/2.sprite");
-    sprites[2] = dfs_load("/gfx/4.sprite");
-    sprites[3] = dfs_load("/gfx/8.sprite");
-    sprites[4] = dfs_load("/gfx/16.sprite");
-    sprites[5] = dfs_load("/gfx/32.sprite");
-    sprites[6] = dfs_load("/gfx/64.sprite");
-    sprites[7] = dfs_load("/gfx/128.sprite");
-    sprites[8] = dfs_load("/gfx/256.sprite");
-    sprites[9] = dfs_load("/gfx/512.sprite");
-    sprites[10] = dfs_load("/gfx/1024.sprite");
-    sprites[11] = dfs_load("/gfx/2048.sprite");
-    sprites[12] = dfs_load("/gfx/4096.sprite");
-    sprites[13] = dfs_load("/gfx/8192.sprite");
-    sprites[14] = dfs_load("/gfx/16384.sprite");
-    sprites[15] = dfs_load("/gfx/32768.sprite");
+    maps[1] = dfs_load_map("/gfx/2-%02d.sprite", 2, 1);
+    maps[2] = dfs_load_map("/gfx/4-%02d.sprite", 2, 1);
+    maps[3] = dfs_load_map("/gfx/8-%02d.sprite", 2, 1);
+    maps[4] = dfs_load_map("/gfx/16-%02d.sprite", 2, 1);
+    maps[5] = dfs_load_map("/gfx/32-%02d.sprite", 2, 1);
+    maps[6] = dfs_load_map("/gfx/64-%02d.sprite", 2, 1);
+    maps[7] = dfs_load_map("/gfx/128-%02d.sprite", 2, 1);
+    maps[8] = dfs_load_map("/gfx/256-%02d.sprite", 2, 1);
+    maps[9] = dfs_load_map("/gfx/512-%02d.sprite", 2, 1);
+    maps[10] = dfs_load_map("/gfx/1024-%02d.sprite", 4, 2);
+    maps[11] = dfs_load_map("/gfx/2048-%02d.sprite", 4, 2);
+    maps[12] = dfs_load_map("/gfx/4096-%02d.sprite", 4, 2);
+    maps[13] = dfs_load_map("/gfx/8192-%02d.sprite", 4, 2);
+    maps[14] = dfs_load_map("/gfx/16384-%02d.sprite", 4, 2);
+    maps[15] = dfs_load_map("/gfx/32768-%02d.sprite", 4, 2);
 
     // init colors
     colors[0] = COLOR_CELL_EMPTY_BG;
@@ -406,10 +406,10 @@ void game_draw(display_context_t disp, int grid_x, int grid_y)
                 break;
             }
 
-            sprite_t *sp = sprites[score];
-            if (sp != NULL)
+            map_t *map = maps[score];
+            if (map != NULL)
             {
-                graphics_draw_sprite_trans(disp, xx + 40 - sp->width / 2, yy + 40 - sp->height / 2, sp);
+                rdp_draw_sprite_with_texture_map(map, xx + 40 - map->width / 2, yy + 40 - map->height / 2);
             }
         }
     }

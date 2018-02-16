@@ -27,7 +27,6 @@ void *dfs_load(const char *const path)
 
     return NULL;
 }
-
 void *dfs_loadf(const char *const format, ...)
 {
     char buffer[256];
@@ -37,4 +36,26 @@ void *dfs_loadf(const char *const format, ...)
     va_end(args);
 
     return dfs_load(buffer);
+}
+
+map_t *dfs_load_map(const char *const path, int slices, int mod)
+{
+    char buffer[256];
+
+    map_t *data = malloc(sizeof(map_t *));
+    data->sprites = malloc((slices + 1) * sizeof(sprite_t *));
+    data->mod = mod;
+
+    for (int i = 0; i < slices; i++)
+    {
+        sprintf(buffer, path, i);
+
+        data->sprites[i] = dfs_load(buffer);
+        if (i % mod == 0)
+            data->height += data->sprites[i]->height;
+        if (i < mod)
+            data->width += data->sprites[i]->width;
+    }
+    data->sprites[slices] = 0;
+    return data;
 }

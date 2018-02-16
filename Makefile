@@ -37,19 +37,8 @@ SPRITES := $(subst .png,.sprite,$(subst resources/,filesystem/,$(PNGS)))
 filesystem/gfx/%.sprite: resources/gfx/%.png
 	$(MKSPRITE) 16 1 1 $< $@
 
-sprites: $(SPRITES)
-	$(MKSPRITE) 16 10 1 resources/gfx/font.png filesystem/gfx/font.sprite
-
-#sounds:
-#	mkdir -p filesystem/sfx/
-#	sox resources/sfx/A.wav -b 16 -e signed-integer -B -r 44100 filesystem/sfx/A.raw remix -
-#	sox resources/sfx/B.aiff -b 16 -e signed-integer -B -r 44100 filesystem/sfx/B.raw remix -
-#	sox resources/sfx/C.aiff -b 16 -e signed-integer -B -r 44100 filesystem/sfx/C.raw remix -
-#	sox resources/sfx/start.aiff -b 16 -e signed-integer -B -r 44100 filesystem/sfx/start.raw remix -
-
-$(PROG_NAME).dfs: sprites #sounds
+$(PROG_NAME).dfs: $(SPRITES)
 	$(MKDFSPATH) $@ ./filesystem/
-
 
 cen64:
 	$(CEN64_DIR)/cen64 $(CEN64_DIR)/pifdata.bin $(PROG_NAME).z64

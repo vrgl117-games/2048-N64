@@ -11,7 +11,18 @@
 
 #include <libdragon.h>
 
+typedef struct map
+{
+    sprite_t **sprites;
+
+    int height;
+    int width;
+
+    int mod;
+} map_t;
+
 void *dfs_load(const char *const path);
 void *dfs_loadf(const char *const format, ...);
+map_t *dfs_load_map(const char *const path, int slices, int mod);
 
 #endif //__FILESYSTEM_H__

@@ -14,6 +14,5 @@
 
 void graphics_draw_text_center(display_context_t disp, int x, int y, const char *const msg);
 void graphics_draw_textf_with_background(display_context_t disp, int x, int y, const char *const format, ...);
-int graphics_draw_int_with_font(display_context_t disp, int x, int y, sprite_t *font, int n);
 
 #endif //__GRAPHICS_H__

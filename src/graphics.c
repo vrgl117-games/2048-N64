@@ -29,12 +29,3 @@ void graphics_draw_text_center(display_context_t disp, int x, int y, const char 
 {
     graphics_draw_text(disp, x - strlen(msg) * 6 / 2, y, msg);
 }
-
-int graphics_draw_int_with_font(display_context_t disp, int x, int y, sprite_t *font, int n)
-{
-    if (n >= 10)
-        x = graphics_draw_int_with_font(disp, x, y, font, n / 10);
-
-    graphics_draw_sprite_trans_stride(disp, x, y, font, n % 10);
-    return x + 11;
-}

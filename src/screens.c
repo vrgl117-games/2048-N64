@@ -18,10 +18,11 @@
 #include "screens.h"
 
 static volatile int tick = 0;
-static sprite_t *font;
-static sprite_t *logo;
+static map_t *font;
+static map_t *logo;
 static sprite_t *best;
 static sprite_t *score;
+static map_t *press_start;
 
 void screen_timer_title()
 {
@@ -30,21 +31,20 @@ void screen_timer_title()
 
 void screen_init()
 {
-    logo = dfs_load("/gfx/logo.sprite");
+    logo = dfs_load_map("/gfx/logo-%02d.sprite", 6, 2);
     best = dfs_load("/gfx/best.sprite");
     score = dfs_load("/gfx/score.sprite");
-    font = dfs_load("/gfx/font.sprite");
+    font = dfs_load_map("/gfx/font%d.sprite", 10, 1);
+    press_start = dfs_load_map("/gfx/press_start-%02d.sprite", 6, 3);
 }
 
 static inline void screen_common(display_context_t disp)
 {
     rdp_attach(disp);
 
-    // background
     rdp_draw_filled_rectangle_size(0, 0, 640, 480, COLOR_BG);
 
-    // logo
-    graphics_draw_sprite_trans(disp, 140, 18, logo);
+    rdp_draw_sprite_with_texture_map(logo, 140, 18);
 }
 
 // return true when the animation is done.
@@ -92,12 +92,12 @@ void screen_game(display_context_t disp, menu_t *menu)
     screen_common(disp);
 
     rdp_draw_filled_rectangle_with_border_size(300, 30, 90, 40, COLOR_CELL_EMPTY_BG, COLOR_GRID_BG);
-    graphics_draw_sprite_trans(disp, 300 + 6, 30, best);
-    graphics_draw_int_with_font(disp, 300 + 6, 46, font, game_best());
+    rdp_draw_sprite_with_texture(best, 306, 30);
+    rdp_draw_int_map(306, 46, font, game_best());
 
     rdp_draw_filled_rectangle_with_border_size(410, 30, 90, 40, COLOR_CELL_EMPTY_BG, COLOR_GRID_BG);
-    graphics_draw_sprite_trans(disp, 410 + 6, 30, score);
-    graphics_draw_int_with_font(disp, 410 + 6, 46, font, game_score());
+    rdp_draw_sprite_with_texture(score, 416, 30);
+    rdp_draw_int_map(416, 46, font, game_score());
 
     game_draw(disp, 140, 90);
     if (menu != NULL)
@@ -111,7 +111,6 @@ void screen_game(display_context_t disp, menu_t *menu)
 void screen_title(display_context_t disp)
 {
     screen_common(disp);
-    rdp_detach_display();
 
     if (tick % 17 == 0)
     {
@@ -121,9 +120,9 @@ void screen_title(display_context_t disp)
     // press start
     if (tick % 14 > 7)
     {
-        sprite_t *press_start = dfs_load("/gfx/press_start.sprite");
-        graphics_draw_sprite_trans(disp, 306, 30, press_start);
-        free(press_start);
+        rdp_draw_sprite_with_texture_map(press_start, 306, 30);
     }
     game_draw(disp, 140, 90);
+
+    rdp_detach_display();
 }
