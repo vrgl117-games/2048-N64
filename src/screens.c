@@ -120,7 +120,7 @@ void screen_title(display_context_t disp)
     if (tick % 14 > 7)
     {
         map_t *press_start = dfs_load_map("/gfx/press_start-%02d.sprite", 6, 3);
-        rdp_draw_sprite_with_texture_map(press_start, 306, 30);
+        rdp_draw_sprite_with_texture_map(press_start, 318, 26);
         dfs_free_map(press_start);
     }
     game_draw(disp, 140, 90);

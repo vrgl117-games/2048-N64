@@ -21,7 +21,6 @@ static uint32_t colors[16];
 
 void game_init()
 {
-
     // init sprites
     maps[1] = dfs_load_map("/gfx/2-%02d.sprite", 2, 1);
     maps[2] = dfs_load_map("/gfx/4-%02d.sprite", 2, 1);
@@ -77,42 +76,14 @@ void game_reset()
     game.score = game.cells[r1] / 10 + game.cells[r2] / 10;
 }
 
-static inline int game_pow2(int n)
-{
-    switch (n)
-    {
-    case 1:
-        return 0;
-    case 2:
-        return 0;
-    case 3:
-        return 0;
-    case 4:
-        return 2;
-    case 5:
-        return 2;
-    case 6:
-        return 2;
-    case 7:
-        return 4;
-    case 8:
-        return 4;
-    case 9:
-        return 8;
-    case 10:
-        return 16;
-    }
-    return 0;
-}
-
 void game_random()
 {
     int old = -1;
     for (int i = 0; i < 16; i++)
     {
-        if (game.cells[i] == 20480)
+        if (game.cells[i] == 2048 * 10)
         {
-            game.cells[i] = 4;
+            game.cells[i] = POP;
             old = i;
         }
         else
@@ -124,7 +95,7 @@ void game_random()
     {
         new = rand() % 16;
     } while (old == new);
-    game.cells[new] = 20484;
+    game.cells[new] = 2048 * 10 + POP;
 }
 
 // return > 0 if player was able to move
