@@ -14,10 +14,9 @@
 
 void dfs_free_map(map_t *map)
 {
-    int i = 0;
-    for (; map->sprites[i] != 0; i++)
+    for (int i = 0; map->sprites[i] != 0; i++)
         free(map->sprites[i]);
-    free(map->sprites[i]);
+    free(map->sprites);
     free(map);
 }
 
@@ -51,7 +50,7 @@ map_t *dfs_load_map(const char *const path, int slices, int mod)
 {
     char buffer[256];
 
-    map_t *data = malloc(sizeof(map_t *));
+    map_t *data = malloc(sizeof(map_t));
     data->sprites = malloc((slices + 1) * sizeof(sprite_t *));
     data->mod = mod;
 
