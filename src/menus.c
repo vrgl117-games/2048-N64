@@ -26,13 +26,13 @@ void menu_draw(display_context_t disp, menu_t *menu)
 
     if (menu->title != NULL)
     {
-        sprite_t *title = dfs_loadf("/gfx/%s.sprite", menu->title);
+        sprite_t *title = dfs_loadf("/gfx/32/%s.sprite", menu->title);
         graphics_draw_sprite_trans(disp, 320 - title->width / 2, 240 - h / 2 + 10, title);
         free(title);
     }
     for (int i = 0; i < menu->options_size; i++)
     {
-        sprite_t *option = dfs_loadf((i == menu->selected_option ? "/gfx/%s_selec.sprite" : "/gfx/%s.sprite"), menu->options[i]);
+        sprite_t *option = dfs_loadf((i == menu->selected_option ? "/gfx/32/%s_selec.sprite" : "/gfx/32/%s.sprite"), menu->options[i]);
         graphics_draw_sprite_trans(disp, 320 - option->width / 2, 240 - h / 2 + 75 + 30 * i, option);
         free(option);
     }

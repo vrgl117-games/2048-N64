@@ -32,25 +32,16 @@ OBJS := $(SRCS:.c=.o)
 $(PROG_NAME).elf : $(OBJS)
 	$(LD) -o $@ $^ $(LINK_FLAGS)
 
-PNGS := $(wildcard resources/gfx/*.png)
+PNGS := $(wildcard resources/gfx/*/*.png)
 SPRITES := $(subst .png,.sprite,$(subst resources/,filesystem/,$(PNGS)))
-filesystem/gfx/%.sprite: resources/gfx/%.png
+filesystem/gfx/16/%.sprite: resources/gfx/16/%.png
 	$(MKSPRITE) 16 1 1 $< $@
 
-$(PROG_NAME).dfs: sprites
-	$(MKDFSPATH) $@ ./filesystem/
+filesystem/gfx/32/%.sprite: resources/gfx/32/%.png
+	$(MKSPRITE) 32 1 1 $< $@
 
-sprites: $(SPRITES)
-	$(MKSPRITE) 32 1 1 resources/gfx/vrgl117.png filesystem/gfx/vrgl117.sprite
-	$(MKSPRITE) 32 1 1 resources/gfx/vrgl117_1.png filesystem/gfx/vrgl117_1.sprite
-	$(MKSPRITE) 32 1 1 resources/gfx/vrgl117_2.png filesystem/gfx/vrgl117_2.sprite
-	$(MKSPRITE) 32 1 1 resources/gfx/vrgl117_3.png filesystem/gfx/vrgl117_3.sprite
-	$(MKSPRITE) 32 1 1 resources/gfx/vrgl117_4.png filesystem/gfx/vrgl117_4.sprite
-	$(MKSPRITE) 32 1 1 resources/gfx/vrgl117_5.png filesystem/gfx/vrgl117_5.sprite
-	$(MKSPRITE) 32 1 1 resources/gfx/vrgl117_6.png filesystem/gfx/vrgl117_6.sprite
-	$(MKSPRITE) 32 1 1 resources/gfx/vrgl117_7.png filesystem/gfx/vrgl117_7.sprite
-	$(MKSPRITE) 32 1 1 resources/gfx/vrgl117_8.png filesystem/gfx/vrgl117_8.sprite
-	$(MKSPRITE) 32 1 1 resources/gfx/vrgl117_9.png filesystem/gfx/vrgl117_9.sprite
+$(PROG_NAME).dfs: $(SPRITES)
+	$(MKDFSPATH) $@ ./filesystem/
 
 cen64:
 	$(CEN64_DIR)/cen64 $(CEN64_DIR)/pifdata.bin $(PROG_NAME).z64

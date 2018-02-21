@@ -30,10 +30,10 @@ void screen_timer_title()
 
 void screen_init()
 {
-    logo = dfs_load_map("/gfx/logo-%02d.sprite", 6, 2);
-    best = dfs_load("/gfx/best.sprite");
-    score = dfs_load("/gfx/score.sprite");
-    font = dfs_load_map("/gfx/font%d.sprite", 10, 1);
+    logo = dfs_load_map("/gfx/16/logo-%02d.sprite", 6, 2);
+    best = dfs_load("/gfx/16/best.sprite");
+    score = dfs_load("/gfx/16/score.sprite");
+    font = dfs_load_map("/gfx/16/font%d.sprite", 10, 1);
 }
 
 // return true when the animation is done.
@@ -49,13 +49,13 @@ bool screen_intro(display_context_t disp)
     switch (tick)
     {
     case 1 ... 9:
-        intro = dfs_loadf("/gfx/vrgl117_%d.sprite", tick);
+        intro = dfs_loadf("/gfx/32/vrgl117_%d.sprite", tick);
         break;
     case 10 ... 30:
-        intro = dfs_load("/gfx/vrgl117.sprite");
+        intro = dfs_load("/gfx/32/vrgl117.sprite");
         break;
     case 31 ... 39:
-        intro = dfs_loadf("/gfx/vrgl117_%d.sprite", 40 - tick);
+        intro = dfs_loadf("/gfx/32/vrgl117_%d.sprite", 40 - tick);
         break;
     }
 
@@ -76,7 +76,7 @@ void screen_no_controller(display_context_t disp)
 
     rdp_detach_display();
 
-    sprite_t *no_controller = dfs_load("/gfx/no_controller.sprite");
+    sprite_t *no_controller = dfs_load("/gfx/32/no_controller.sprite");
     graphics_draw_sprite(disp, 320 - no_controller->width / 2, 240 - no_controller->height / 2, intro);
     free(no_controller);
 }
@@ -120,7 +120,7 @@ void screen_title(display_context_t disp)
     // press start
     if (tick % 14 > 7)
     {
-        map_t *press_start = dfs_load_map("/gfx/press_start-%02d.sprite", 6, 3);
+        map_t *press_start = dfs_load_map("/gfx/16/press_start-%02d.sprite", 6, 3);
         rdp_draw_sprite_with_texture_map(press_start, 318, 26);
         dfs_free_map(press_start);
     }
