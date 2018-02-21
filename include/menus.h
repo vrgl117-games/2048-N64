@@ -23,6 +23,8 @@ typedef struct menu
 
     int selected_option;
     int default_option;
+
+    int current_y;
 } menu_t;
 
 void menu_draw(display_context_t disp, menu_t *menu);

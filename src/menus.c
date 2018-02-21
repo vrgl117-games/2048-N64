@@ -22,20 +22,26 @@ void menu_draw(display_context_t disp, menu_t *menu)
     int w = 200;
     int h = 80 + 30 * menu->options_size;
 
-    rdp_draw_filled_rectangle_with_border_size(320 - w / 2, 240 - h / 2, w, h, COLOR_GRID_BG, COLOR_CELL_MORE_BG);
+    rdp_draw_filled_rectangle_with_border_size(320 - w / 2, menu->current_y, w, h, COLOR_GRID_BG, COLOR_CELL_MORE_BG);
 
     if (menu->title != NULL)
     {
         sprite_t *title = dfs_loadf("/gfx/32/%s.sprite", menu->title);
-        graphics_draw_sprite_trans(disp, 320 - title->width / 2, 240 - h / 2 + 10, title);
+        graphics_draw_sprite_trans(disp, 320 - title->width / 2, menu->current_y + 10, title);
         free(title);
     }
     for (int i = 0; i < menu->options_size; i++)
     {
         sprite_t *option = dfs_loadf((i == menu->selected_option ? "/gfx/32/%s_selec.sprite" : "/gfx/32/%s.sprite"), menu->options[i]);
-        graphics_draw_sprite_trans(disp, 320 - option->width / 2, 240 - h / 2 + 75 + 30 * i, option);
+        graphics_draw_sprite_trans(disp, 320 - option->width / 2, menu->current_y + 75 + 30 * i, option);
         free(option);
     }
+
+    if (menu->current_y != 240 - h / 2)
+        menu->current_y += 15;
+
+    if (menu->current_y >= 480)
+        menu->visible = false;
 }
 
 int menu_press(menu_t *menu, control_t keys)
@@ -43,7 +49,7 @@ int menu_press(menu_t *menu, control_t keys)
     if (IS_DOWN(keys.start) || IS_DOWN(keys.B))
     {
         menu->selected_option = 0;
-        menu->visible = false;
+        menu->current_y++;
         return menu->default_option;
     }
     if (IS_DOWN(keys.up) && menu->selected_option != 0)
@@ -54,7 +60,7 @@ int menu_press(menu_t *menu, control_t keys)
     {
         int selected = menu->selected_option;
         menu->selected_option = 0;
-        menu->visible = false;
+        menu->current_y++;
         return selected;
     }
     return -1;

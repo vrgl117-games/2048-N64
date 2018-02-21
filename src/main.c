@@ -87,6 +87,7 @@ int main()
                     menu.options[1] = "restart";
                     menu.default_option = 0;
                     menu.visible = true;
+                    menu.current_y = -100;
                 }
                 else if (keys.direction != d_none)
                 {
@@ -99,6 +100,7 @@ int main()
                         menu.options[1] = "restart";
                         menu.default_option = 0;
                         menu.visible = true;
+                        menu.current_y = -100;
                         break;
                     case game_over:
                         menu.title = "game_over";
@@ -106,6 +108,7 @@ int main()
                         menu.options[0] = "restart";
                         menu.default_option = 0;
                         menu.visible = true;
+                        menu.current_y = -100;
                         break;
                     case game_none:
                         break;
