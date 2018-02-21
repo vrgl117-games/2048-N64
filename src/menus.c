@@ -50,7 +50,7 @@ int menu_press(menu_t *menu, control_t keys)
     {
         menu->selected_option = 0;
         menu->current_y++;
-        return menu->default_option;
+        return 0;
     }
     if (IS_DOWN(keys.up) && menu->selected_option != 0)
         menu->selected_option--;
@@ -59,7 +59,6 @@ int menu_press(menu_t *menu, control_t keys)
     if (IS_DOWN(keys.A))
     {
         int selected = menu->selected_option;
-        menu->selected_option = 0;
         menu->current_y++;
         return selected;
     }

@@ -22,7 +22,6 @@ typedef struct menu
     int options_size;
 
     int selected_option;
-    int default_option;
 
     int current_y;
 } menu_t;

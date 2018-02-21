@@ -85,7 +85,7 @@ int main()
                     menu.options_size = 2;
                     menu.options[0] = "continue";
                     menu.options[1] = "restart";
-                    menu.default_option = 0;
+                    menu.selected_option = 0;
                     menu.visible = true;
                     menu.current_y = -100;
                 }
@@ -98,7 +98,7 @@ int main()
                         menu.options_size = 2;
                         menu.options[0] = "continue";
                         menu.options[1] = "restart";
-                        menu.default_option = 0;
+                        menu.selected_option = 0;
                         menu.visible = true;
                         menu.current_y = -100;
                         break;
@@ -106,7 +106,7 @@ int main()
                         menu.title = "game_over";
                         menu.options_size = 1;
                         menu.options[0] = "restart";
-                        menu.default_option = 0;
+                        menu.selected_option = 0;
                         menu.visible = true;
                         menu.current_y = -100;
                         break;
