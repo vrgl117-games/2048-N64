@@ -80,5 +80,6 @@ void rdp_draw_sprite_with_texture_map(map_t *map, int x, int y)
 
 void rdp_enable_texture_copy()
 {
-    rdp_texture_copy(ATOMIC_PRIM | ALPHA_DITHER_SEL_NO_DITHER | RGB_DITHER_SEL_NO_DITHER);
+    // 16bits:  rdp_texture_copy(ATOMIC_PRIM | ALPHA_DITHER_SEL_NO_DITHER | RGB_DITHER_SEL_NO_DITHER);
+    rdp_texture_cycle(0, 0, ATOMIC_PRIM | ALPHA_DITHER_SEL_NO_DITHER | RGB_DITHER_SEL_NO_DITHER);
 }

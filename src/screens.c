@@ -44,22 +44,23 @@ bool screen_intro(display_context_t disp)
     rdp_draw_filled_fullscreen(COLOR_BLACK);
 
     rdp_detach_display();
+    sprite_t *intro = NULL;
 
-    if (tick > 0 && tick <= 9)
+    switch (tick)
     {
-        sprite_t *intro = dfs_loadf("/gfx/vrgl117_%d.sprite", tick);
-        graphics_draw_sprite(disp, 320 - intro->width / 2, 240 - intro->height / 2, intro);
-        free(intro);
+    case 1 ... 9:
+        intro = dfs_loadf("/gfx/vrgl117_%d.sprite", tick);
+        break;
+    case 10 ... 30:
+        intro = dfs_load("/gfx/vrgl117.sprite");
+        break;
+    case 31 ... 39:
+        intro = dfs_loadf("/gfx/vrgl117_%d.sprite", 40 - tick);
+        break;
     }
-    else if (tick >= 10 && tick <= 30)
+
+    if (intro != NULL)
     {
-        sprite_t *intro = dfs_load("/gfx/vrgl117.sprite");
-        graphics_draw_sprite(disp, 320 - intro->width / 2, 240 - intro->height / 2, intro);
-        free(intro);
-    }
-    else if (tick > 30 && tick < 39)
-    {
-        sprite_t *intro = dfs_loadf("/gfx/vrgl117_%d.sprite", 39 - tick);
         graphics_draw_sprite(disp, 320 - intro->width / 2, 240 - intro->height / 2, intro);
         free(intro);
     }

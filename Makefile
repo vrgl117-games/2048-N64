@@ -37,8 +37,20 @@ SPRITES := $(subst .png,.sprite,$(subst resources/,filesystem/,$(PNGS)))
 filesystem/gfx/%.sprite: resources/gfx/%.png
 	$(MKSPRITE) 16 1 1 $< $@
 
-$(PROG_NAME).dfs: $(SPRITES)
+$(PROG_NAME).dfs: sprites
 	$(MKDFSPATH) $@ ./filesystem/
+
+sprites: $(SPRITES)
+	$(MKSPRITE) 32 1 1 resources/gfx/vrgl117.png filesystem/gfx/vrgl117.sprite
+	$(MKSPRITE) 32 1 1 resources/gfx/vrgl117_1.png filesystem/gfx/vrgl117_1.sprite
+	$(MKSPRITE) 32 1 1 resources/gfx/vrgl117_2.png filesystem/gfx/vrgl117_2.sprite
+	$(MKSPRITE) 32 1 1 resources/gfx/vrgl117_3.png filesystem/gfx/vrgl117_3.sprite
+	$(MKSPRITE) 32 1 1 resources/gfx/vrgl117_4.png filesystem/gfx/vrgl117_4.sprite
+	$(MKSPRITE) 32 1 1 resources/gfx/vrgl117_5.png filesystem/gfx/vrgl117_5.sprite
+	$(MKSPRITE) 32 1 1 resources/gfx/vrgl117_6.png filesystem/gfx/vrgl117_6.sprite
+	$(MKSPRITE) 32 1 1 resources/gfx/vrgl117_7.png filesystem/gfx/vrgl117_7.sprite
+	$(MKSPRITE) 32 1 1 resources/gfx/vrgl117_8.png filesystem/gfx/vrgl117_8.sprite
+	$(MKSPRITE) 32 1 1 resources/gfx/vrgl117_9.png filesystem/gfx/vrgl117_9.sprite
 
 cen64:
 	$(CEN64_DIR)/cen64 $(CEN64_DIR)/pifdata.bin $(PROG_NAME).z64
