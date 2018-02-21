@@ -63,6 +63,7 @@ void game_init()
 void game_reset()
 {
     memset(game.cells, 0, sizeof(int) * 16);
+    game.won = false;
 
     // init start position
     int r1 = rand() % 16;
@@ -262,8 +263,11 @@ status_t game_play(direction_t direction)
             empty[nbEmpty] = i;
             nbEmpty++;
         }
-        else if (score == 2048)
+        else if (!game.won && score == 2048)
+        {
             status = game_win;
+            game.won = true;
+        }
         game.score += score;
     }
 

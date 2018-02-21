@@ -20,6 +20,8 @@ typedef struct game
 
     uint16_t score;
     uint16_t best;
+
+    bool won;
 } game_t;
 
 typedef enum status { game_none,
