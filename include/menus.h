@@ -13,9 +13,13 @@
 
 #include "controls.h"
 
+#define MAX_WIDTH 240
+#define MAX_HEIGHT (80 + 30 * menu->options_size + (menu->text != NULL ? 100 : 0))
+
 typedef struct menu
 {
     bool visible;
+    bool closing;
 
     char *title;
     char *text;
@@ -24,7 +28,9 @@ typedef struct menu
 
     int selected_option;
 
-    int current_y;
+    int width;
+    int height;
+
 } menu_t;
 
 void menu_draw(display_context_t disp, menu_t *menu);

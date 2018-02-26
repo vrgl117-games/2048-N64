@@ -88,7 +88,6 @@ int main()
                             menu.options_size = 1;
                             menu.options[0] = "back";
                             menu.selected_option = 0;
-                            menu.current_y = 135;
                         }
 
                         if (strcmp(menu.options[pressed], "back") == 0)
@@ -100,7 +99,6 @@ int main()
                             menu.options[1] = "restart";
                             menu.options[2] = "about";
                             menu.selected_option = 2;
-                            menu.current_y = 155;
                         }
                     }
                 }
@@ -114,7 +112,8 @@ int main()
                     menu.options[2] = "about";
                     menu.selected_option = 0;
                     menu.visible = true;
-                    menu.current_y = -100;
+                    menu.width = 0;
+                    menu.height = 0;
                 }
                 else if (keys.direction != d_none)
                 {
@@ -128,7 +127,8 @@ int main()
                         menu.options[1] = "restart";
                         menu.selected_option = 0;
                         menu.visible = true;
-                        menu.current_y = -100;
+                        menu.width = 0;
+                        menu.height = 0;
                         break;
                     case game_over:
                         menu.title = "title_game_over";
@@ -137,7 +137,8 @@ int main()
                         menu.options[0] = "restart";
                         menu.selected_option = 0;
                         menu.visible = true;
-                        menu.current_y = -100;
+                        menu.width = 0;
+                        menu.height = 0;
                         break;
                     case game_none:
                         break;

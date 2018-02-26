@@ -6,8 +6,9 @@
  * of the Apache license. See the LICENSE file for details.
  */
 
-#include <stdio.h>
 #include <malloc.h>
+#include <stdio.h>
+#include <string.h>
 
 #include "colors.h"
 #include "dfs.h"
@@ -19,37 +20,66 @@ void menu_draw(display_context_t disp, menu_t *menu)
     if (!menu->visible)
         return;
 
-    int w = 240;
-    int h = 80 + 30 * menu->options_size + (menu->text != NULL ? 100 : 0);
+    int w_step = 24;
+    int h_step = 24;
 
-    rdp_draw_filled_rectangle_with_border_size(320 - w / 2, menu->current_y, w, h, COLOR_GRID_BG, COLOR_CELL_MORE_BG);
-
-    if (menu->title != NULL)
+    if (menu->closing)
     {
-        sprite_t *title = dfs_loadf("/gfx/32/%s.sprite", menu->title);
-        graphics_draw_sprite_trans(disp, 320 - title->width / 2, menu->current_y + 10, title);
-        free(title);
-    }
+        menu->width -= w_step;
+        menu->height -= h_step;
 
-    if (menu->text != NULL)
+        if (menu->width <= 0 && menu->height <= 0)
+        {
+            menu->closing = false;
+            menu->visible = false;
+            return;
+        }
+    }
+    else
     {
-        sprite_t *text = dfs_loadf("/gfx/32/%s.sprite", menu->text);
-        graphics_draw_sprite_trans(disp, 320 - text->width / 2, menu->current_y + 75, text);
-        free(text);
-    }
+        if (menu->width < MAX_WIDTH)
+        {
+            menu->width += w_step;
+            if (menu->width > MAX_WIDTH)
+                menu->width = MAX_WIDTH;
+        }
+        if (menu->width > MAX_WIDTH)
+            menu->width -= w_step;
 
-    for (int i = 0; i < menu->options_size; i++)
+        if (menu->height < MAX_HEIGHT)
+        {
+            menu->height += h_step;
+            if (menu->height > MAX_HEIGHT)
+                menu->height = MAX_HEIGHT;
+        }
+        if (menu->height > MAX_HEIGHT)
+            menu->height -= h_step;
+    }
+    rdp_draw_filled_rectangle_with_border_size(320 - menu->width / 2, 240 - menu->height / 2, menu->width, menu->height, COLOR_GRID_BG, COLOR_CELL_MORE_BG);
+
+    if (menu->width >= MAX_WIDTH && menu->height >= MAX_HEIGHT)
     {
-        sprite_t *option = dfs_loadf((i == menu->selected_option ? "/gfx/32/%s_selec.sprite" : "/gfx/32/%s.sprite"), menu->options[i]);
-        graphics_draw_sprite_trans(disp, 320 - option->width / 2, menu->current_y + (menu->text != NULL ? 100 : 0) + 75 + 30 * i, option);
-        free(option);
+        if (menu->title != NULL)
+        {
+            sprite_t *title = dfs_loadf("/gfx/32/%s.sprite", menu->title);
+            graphics_draw_sprite_trans(disp, 320 - title->width / 2, 240 - menu->height / 2 + 10, title);
+            free(title);
+        }
+
+        if (menu->text != NULL)
+        {
+            sprite_t *text = dfs_loadf("/gfx/32/%s.sprite", menu->text);
+            graphics_draw_sprite_trans(disp, 320 - text->width / 2, 240 - menu->height / 2 + 75, text);
+            free(text);
+        }
+
+        for (int i = 0; i < menu->options_size; i++)
+        {
+            sprite_t *option = dfs_loadf((i == menu->selected_option ? "/gfx/32/%s_selec.sprite" : "/gfx/32/%s.sprite"), menu->options[i]);
+            graphics_draw_sprite_trans(disp, 320 - option->width / 2, 240 - menu->height / 2 + (menu->text != NULL ? 100 : 0) + 75 + 30 * i, option);
+            free(option);
+        }
     }
-
-    if (menu->current_y != 240 - h / 2)
-        menu->current_y += 15;
-
-    if (menu->current_y >= 480)
-        menu->visible = false;
 }
 
 int menu_press(menu_t *menu, control_t keys)
@@ -57,7 +87,7 @@ int menu_press(menu_t *menu, control_t keys)
     if (IS_DOWN(keys.start) || IS_DOWN(keys.B))
     {
         menu->selected_option = 0;
-        menu->current_y++;
+        menu->closing = true;
         return 0;
     }
     if (IS_DOWN(keys.up))
@@ -67,7 +97,8 @@ int menu_press(menu_t *menu, control_t keys)
     if (IS_DOWN(keys.A))
     {
         int selected = menu->selected_option;
-        menu->current_y++;
+        if (strcmp(menu->options[selected], "about") != 0 && strcmp(menu->options[selected], "back") != 0)
+            menu->closing = true;
         return selected;
     }
     return -1;
