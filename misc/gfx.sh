@@ -10,13 +10,19 @@ convert -background "#ffffff00" -fill "#EEE4DAff" -font "$font" -pointsize 14 la
 convert -background "#ffffff00" -fill "#EEE4DAff" -font "$font" -pointsize 14 label:BEST resources/gfx/16/best.png
 
 #menu
-convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 24 label:"Game Over" resources/gfx/32/game_over.png
-convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 24 label:"You Win!" resources/gfx/32/you_win.png
-convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 24 label:"Pause" resources/gfx/32/pause.png
+convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 24 label:"Game Over" resources/gfx/32/title_game_over.png
+convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 24 label:"You Win!" resources/gfx/32/title_you_win.png
+convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 24 label:"Pause" resources/gfx/32/title_pause.png
+convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 24 label:"About" resources/gfx/32/title_about.png
 convert -background "#ffffff00" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Continue" resources/gfx/32/continue.png
 convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 18 label:"Continue" resources/gfx/32/continue_selec.png
 convert -background "#ffffff00" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Restart" resources/gfx/32/restart.png
 convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 18 label:"Restart" resources/gfx/32/restart_selec.png
+convert -background "#ffffff00" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"About" resources/gfx/32/about.png
+convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 18 label:"About" resources/gfx/32/about_selec.png
+convert -background "#ffffff00" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Back" resources/gfx/32/back.png
+convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 18 label:"Back" resources/gfx/32/back_selec.png
+convert -background "#ffffff00" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Original game created by\nGabriele Cirulli, N64\nversion by vrgl117." resources/gfx/32/text_about.png
 
 #screen
 convert -background "#ffffff00" -fill "#F9F6F2ff" -font "$font" -pointsize 24 label:"NO CONTROLLER INSERTED ON PORT #1" resources/gfx/32/no_controller.png

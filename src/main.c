@@ -76,15 +76,42 @@ int main()
                 if (menu.visible)
                 {
                     int pressed = menu_press(&menu, keys);
-                    if (pressed != -1 && strcmp(menu.options[pressed], "restart") == 0)
-                        game_reset();
+                    if (pressed != -1)
+                    {
+                        if (strcmp(menu.options[pressed], "restart") == 0)
+                            game_reset();
+
+                        if (strcmp(menu.options[pressed], "about") == 0)
+                        {
+                            menu.title = "title_about";
+                            menu.text = "text_about";
+                            menu.options_size = 1;
+                            menu.options[0] = "back";
+                            menu.selected_option = 0;
+                            menu.current_y = 135;
+                        }
+
+                        if (strcmp(menu.options[pressed], "back") == 0)
+                        {
+                            menu.title = "title_pause";
+                            menu.text = NULL;
+                            menu.options_size = 3;
+                            menu.options[0] = "continue";
+                            menu.options[1] = "restart";
+                            menu.options[2] = "about";
+                            menu.selected_option = 2;
+                            menu.current_y = 155;
+                        }
+                    }
                 }
                 else if (IS_DOWN(keys.start))
                 {
-                    menu.title = "pause";
-                    menu.options_size = 2;
+                    menu.title = "title_pause";
+                    menu.text = NULL;
+                    menu.options_size = 3;
                     menu.options[0] = "continue";
                     menu.options[1] = "restart";
+                    menu.options[2] = "about";
                     menu.selected_option = 0;
                     menu.visible = true;
                     menu.current_y = -100;
@@ -94,7 +121,8 @@ int main()
                     switch (game_play(keys.direction))
                     {
                     case game_win:
-                        menu.title = "you_win";
+                        menu.title = "title_you_win";
+                        menu.text = NULL;
                         menu.options_size = 2;
                         menu.options[0] = "continue";
                         menu.options[1] = "restart";
@@ -103,7 +131,8 @@ int main()
                         menu.current_y = -100;
                         break;
                     case game_over:
-                        menu.title = "game_over";
+                        menu.title = "title_game_over";
+                        menu.text = NULL;
                         menu.options_size = 1;
                         menu.options[0] = "restart";
                         menu.selected_option = 0;

@@ -18,7 +18,8 @@ typedef struct menu
     bool visible;
 
     char *title;
-    char *options[2];
+    char *text;
+    char *options[3];
     int options_size;
 
     int selected_option;
