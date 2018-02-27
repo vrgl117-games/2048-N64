@@ -35,7 +35,7 @@ int main()
 
     srand(timer_ticks() & 0x7FFFFFFF);
 
-    timer_link_t *timer_press_start = new_timer(TIMER_TICKS(50000), TF_CONTINUOUS, screen_timer_title);
+    new_timer(TIMER_TICKS(50000), TF_CONTINUOUS, screen_timer_title);
     display_context_t disp = 0;
     screen_t screen = intro;
 
@@ -64,12 +64,37 @@ int main()
                     screen = title;
                 break;
             case title:
-                screen_title(disp);
-                if (IS_DOWN(keys.start))
+                screen_title(disp, &menu);
+                if (menu.visible)
                 {
-                    delete_timer(timer_press_start);
-                    screen = game;
-                    game_reset();
+                    int pressed = menu_press(&menu, keys);
+                    if (pressed != -1)
+                    {
+                        if (strcmp(menu.options[pressed], "easy") == 0)
+                            game_set_difficulty(game_easy);
+
+                        if (strcmp(menu.options[pressed], "normal") == 0)
+                            game_set_difficulty(game_normal);
+
+                        if (strcmp(menu.options[pressed], "hard") == 0)
+                            game_set_difficulty(game_hard);
+
+                        screen = game;
+                        game_reset();
+                    }
+                }
+                else if (IS_DOWN(keys.start))
+                {
+                    menu.title = "title_difficulty";
+                    menu.text = NULL;
+                    menu.options_size = 3;
+                    menu.options[0] = "easy";
+                    menu.options[1] = "normal";
+                    menu.options[2] = "hard";
+                    menu.selected_option = 1;
+                    menu.visible = true;
+                    menu.width = 0;
+                    menu.height = 0;
                 }
                 break;
             case game:

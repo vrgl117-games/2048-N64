@@ -13,6 +13,7 @@ convert -background "#ffffff00" -fill "#EEE4DAff" -font "$font" -pointsize 14 la
 convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 24 label:"Game Over" resources/gfx/32/title_game_over.png
 convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 24 label:"You Win!" resources/gfx/32/title_you_win.png
 convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 24 label:"Pause" resources/gfx/32/title_pause.png
+convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 24 label:"Difficulty" resources/gfx/32/title_difficulty.png
 convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 24 label:"About" resources/gfx/32/title_about.png
 convert -background "#ffffff00" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Continue" resources/gfx/32/continue.png
 convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 18 label:"Continue" resources/gfx/32/continue_selec.png
@@ -22,6 +23,12 @@ convert -background "#ffffff00" -fill "#776E65ff" -font "$fontr" -pointsize 18 l
 convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 18 label:"About" resources/gfx/32/about_selec.png
 convert -background "#ffffff00" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Back" resources/gfx/32/back.png
 convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 18 label:"Back" resources/gfx/32/back_selec.png
+convert -background "#ffffff00" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Easy" resources/gfx/32/easy.png
+convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 18 label:"Easy" resources/gfx/32/easy_selec.png
+convert -background "#ffffff00" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Normal" resources/gfx/32/normal.png
+convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 18 label:"Normal" resources/gfx/32/normal_selec.png
+convert -background "#ffffff00" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Hard" resources/gfx/32/hard.png
+convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 18 label:"Hard" resources/gfx/32/hard_selec.png
 convert -background "#ffffff00" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Original game created by\nGabriele Cirulli, N64\nversion by vrgl117." resources/gfx/32/text_about.png
 
 #screen
@@ -54,7 +61,7 @@ convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 18 la
 convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 18 label:6 resources/gfx/16/font6.png
 convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 18 label:7 resources/gfx/16/font7.png
 convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 18 label:8 resources/gfx/16/font8.png
-convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 18 label:0 resources/gfx/16/font9.png
+convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 18 label:9 resources/gfx/16/font9.png
 
 #logo
 convert -brightness-contrast -10 resources/gfx/32/vrgl117.png resources/gfx/32/vrgl117_9.png

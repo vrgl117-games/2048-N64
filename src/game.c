@@ -19,8 +19,32 @@ static game_t game;
 static map_t *maps[16];
 static uint32_t colors[16];
 
+int game_new_cell()
+{
+    int r = rand() % 10;
+
+    switch (game.difficulty)
+    {
+    case game_easy:
+        return 20 + POP;
+    case game_normal:
+        if (r == 0)
+            return 40 + POP;
+        return 20 + POP;
+    case game_hard:
+        if (r == 0)
+            return 80 + POP;
+        if (r == 1 || r == 2)
+            return 40 + POP;
+        return 20 + POP;
+    }
+    return -1;
+}
+
 void game_init()
 {
+    game.difficulty = game_normal;
+
     // init sprites
     maps[1] = dfs_load_map("/gfx/16/2-%02d.sprite", 2, 1);
     maps[2] = dfs_load_map("/gfx/16/4-%02d.sprite", 2, 1);
@@ -72,8 +96,8 @@ void game_reset()
     {
         r2 = rand() % 16;
     } while (r1 == r2);
-    game.cells[r1] = ((rand() % 10 == 0) ? 40 : 20) + POP;
-    game.cells[r2] = ((rand() % 10 == 0) ? 40 : 20) + POP;
+    game.cells[r1] = game_new_cell();
+    game.cells[r2] = game_new_cell();
     game.score = game.cells[r1] / 10 + game.cells[r2] / 10;
 }
 
@@ -271,7 +295,7 @@ status_t game_play(direction_t direction)
         game.score += score;
     }
 
-    int new = ((rand() % 10 == 0) ? 40 : 20) + POP;
+    int new = game_new_cell();
     game.cells[empty[rand() % (nbEmpty)]] = new;
     game.score += new / 10;
 
@@ -377,4 +401,9 @@ void game_draw(display_context_t disp, int grid_x, int grid_y)
                 rdp_draw_sprite_with_texture_map(map, xx + 40 - map->width / 2, yy + 40 - map->height / 2);
         }
     }
+}
+
+void game_set_difficulty(difficulty_t difficulty)
+{
+    game.difficulty = difficulty;
 }
