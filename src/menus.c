@@ -90,10 +90,16 @@ int menu_press(menu_t *menu, control_t keys)
         menu->closing = true;
         return 0;
     }
+
     if (IS_DOWN(keys.up))
-        menu->selected_option = (menu->selected_option - 1) % menu->options_size;
+    {
+        menu->selected_option--;
+        if (menu->selected_option == -1)
+            menu->selected_option = menu->options_size - 1;
+    }
     if (IS_DOWN(keys.down))
         menu->selected_option = (menu->selected_option + 1) % menu->options_size;
+
     if (IS_DOWN(keys.A))
     {
         int selected = menu->selected_option;
