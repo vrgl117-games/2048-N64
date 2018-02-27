@@ -88,5 +88,19 @@ control_t controls_get_keys()
     else if (down.start)
         keys.start = UP;
 
+    if (held.L)
+        keys.L = HELD;
+    else if (down.L)
+        keys.L = DOWN;
+    else if (down.L)
+        keys.L = UP;
+
+    if (held.R)
+        keys.R = HELD;
+    else if (down.R)
+        keys.R = DOWN;
+    else if (down.R)
+        keys.R = UP;
+
     return keys;
 }

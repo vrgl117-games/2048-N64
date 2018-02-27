@@ -22,6 +22,8 @@ typedef struct
     uint8_t left;
     uint8_t right;
     uint8_t start;
+    uint8_t L;
+    uint8_t R;
 
     direction_t direction;
 

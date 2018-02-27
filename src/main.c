@@ -51,7 +51,7 @@ int main()
         else
         {
             control_t keys = controls_get_keys();
-            if (IS_DOWN(keys.Z))
+            if (IS_DOWN(keys.Z) && IS_DOWN(keys.L) && IS_DOWN(keys.R))
                 fps_switch();
 
             while (!(disp = display_lock()))
