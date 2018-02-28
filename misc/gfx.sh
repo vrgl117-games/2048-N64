@@ -8,6 +8,7 @@ convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 48 la
 convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 36 label:"Press Start" -crop 64x32 resources/gfx/16/press_start-%02d.png
 convert -background "#ffffff00" -fill "#EEE4DAff" -font "$font" -pointsize 14 label:SCORE resources/gfx/16/score.png
 convert -background "#ffffff00" -fill "#EEE4DAff" -font "$font" -pointsize 14 label:BEST resources/gfx/16/best.png
+convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 10 label:"version: 0.9" resources/gfx/32/version.png
 
 #menu
 convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 24 label:"Game Over" resources/gfx/32/title_game_over.png

@@ -127,4 +127,11 @@ void screen_title(display_context_t disp, bool press_start)
     game_draw(disp, 140, 90);
 
     rdp_detach_display();
+
+    if (press_start)
+    {
+        sprite_t *version = dfs_load("/gfx/32/version.sprite");
+        graphics_draw_sprite_trans(disp, 640 - version->width - 6, 480 - version->height - 6, version);
+        free(version);
+    }
 }

@@ -85,13 +85,13 @@ int main()
 
     while (true)
     {
-
         rumble_stop(0);
 
         if (!(get_controllers_present() & CONTROLLER_1_INSERTED))
             screen_no_controller(disp);
         else
         {
+
             control_t keys = controls_get_keys();
             fps_check(keys);
             konami_check(keys);
