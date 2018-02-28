@@ -81,7 +81,7 @@ void screen_no_controller(display_context_t disp)
     free(no_controller);
 }
 
-void screen_game(display_context_t disp, menu_t *menu)
+void screen_game(display_context_t disp)
 {
     rdp_attach(disp);
 
@@ -98,13 +98,11 @@ void screen_game(display_context_t disp, menu_t *menu)
     rdp_draw_int_map(416, 46, font, game_score());
 
     game_draw(disp, 140, 90);
-    if (menu != NULL)
-        menu_draw(disp, menu);
 
     rdp_detach_display();
 }
 
-void screen_title(display_context_t disp, menu_t *menu)
+void screen_title(display_context_t disp, bool press_start)
 {
     rdp_attach(disp);
 
@@ -118,7 +116,7 @@ void screen_title(display_context_t disp, menu_t *menu)
         tick++;
     }
 
-    if (!menu->visible && tick % 14 > 7)
+    if (press_start && tick % 14 > 7)
     {
         map_t *press_start = dfs_load_map("/gfx/16/press_start-%02d.sprite", 6, 3);
         rdp_draw_sprite_with_texture_map(press_start, 318, 26);
@@ -126,9 +124,6 @@ void screen_title(display_context_t disp, menu_t *menu)
     }
 
     game_draw(disp, 140, 90);
-
-    if (menu != NULL)
-        menu_draw(disp, menu);
 
     rdp_detach_display();
 }

@@ -18,6 +18,50 @@
 #include "menus.h"
 #include "screens.h"
 
+static screen_t screen = intro;
+static menu_t menu;
+
+static inline void option_easy()
+{
+    game_set_difficulty(game_easy);
+    game_reset();
+    screen = game;
+}
+
+static inline void option_normal()
+{
+    game_set_difficulty(game_normal);
+    game_reset();
+    screen = game;
+}
+
+static inline void option_hard()
+{
+    game_set_difficulty(game_hard);
+    game_reset();
+    screen = game;
+}
+static inline void option_about();
+static inline void option_back()
+{
+    menu.title = "title_pause";
+    menu.text = NULL;
+    menu.options_size = 3;
+    menu.options[0] = (option_t){.text = "continue", .action = NULL, .close = true};
+    menu.options[1] = (option_t){.text = "restart", .action = game_reset, .close = true};
+    menu.options[2] = (option_t){.text = "about", .action = option_about, .close = false};
+    menu.selected_option = 2;
+}
+
+static inline void option_about()
+{
+    menu.title = "title_about";
+    menu.text = "text_about";
+    menu.options_size = 1;
+    menu.options[0] = (option_t){.text = "back", .action = option_back, .close = false};
+    menu.selected_option = 0;
+}
+
 int main()
 {
     init_interrupts();
@@ -37,9 +81,6 @@ int main()
 
     new_timer(TIMER_TICKS(50000), TF_CONTINUOUS, screen_timer_title);
     display_context_t disp = 0;
-    screen_t screen = intro;
-
-    menu_t menu;
 
     while (true)
     {
@@ -64,77 +105,34 @@ int main()
                     screen = title;
                 break;
             case title:
-                screen_title(disp, &menu);
                 if (menu.visible)
-                {
-                    int pressed = menu_press(&menu, keys);
-                    if (pressed != -1)
-                    {
-                        if (strcmp(menu.options[pressed], "easy") == 0)
-                            game_set_difficulty(game_easy);
-
-                        if (strcmp(menu.options[pressed], "normal") == 0)
-                            game_set_difficulty(game_normal);
-
-                        if (strcmp(menu.options[pressed], "hard") == 0)
-                            game_set_difficulty(game_hard);
-
-                        screen = game;
-                        game_reset();
-                    }
-                }
+                    menu_press(&menu, keys);
                 else if (IS_DOWN(keys.start))
                 {
                     menu.title = "title_difficulty";
                     menu.text = NULL;
                     menu.options_size = 3;
-                    menu.options[0] = "easy";
-                    menu.options[1] = "normal";
-                    menu.options[2] = "hard";
+                    menu.options[0] = (option_t){.text = "easy", .action = option_easy, .close = true};
+                    menu.options[1] = (option_t){.text = "normal", .action = option_normal, .close = true};
+                    menu.options[2] = (option_t){.text = "hard", .action = option_hard, .close = true};
                     menu.selected_option = 1;
                     menu.visible = true;
                     menu.width = 0;
                     menu.height = 0;
                 }
+                screen_title(disp, !menu.visible);
                 break;
             case game:
                 if (menu.visible)
-                {
-                    int pressed = menu_press(&menu, keys);
-                    if (pressed != -1)
-                    {
-                        if (strcmp(menu.options[pressed], "restart") == 0)
-                            game_reset();
-
-                        if (strcmp(menu.options[pressed], "about") == 0)
-                        {
-                            menu.title = "title_about";
-                            menu.text = "text_about";
-                            menu.options_size = 1;
-                            menu.options[0] = "back";
-                            menu.selected_option = 0;
-                        }
-
-                        if (strcmp(menu.options[pressed], "back") == 0)
-                        {
-                            menu.title = "title_pause";
-                            menu.text = NULL;
-                            menu.options_size = 3;
-                            menu.options[0] = "continue";
-                            menu.options[1] = "restart";
-                            menu.options[2] = "about";
-                            menu.selected_option = 2;
-                        }
-                    }
-                }
+                    menu_press(&menu, keys);
                 else if (IS_DOWN(keys.start))
                 {
                     menu.title = "title_pause";
                     menu.text = NULL;
                     menu.options_size = 3;
-                    menu.options[0] = "continue";
-                    menu.options[1] = "restart";
-                    menu.options[2] = "about";
+                    menu.options[0] = (option_t){.text = "continue", .action = NULL, .close = true};
+                    menu.options[1] = (option_t){.text = "restart", .action = game_reset, .close = true};
+                    menu.options[2] = (option_t){.text = "about", .action = option_about, .close = true};
                     menu.selected_option = 0;
                     menu.visible = true;
                     menu.width = 0;
@@ -148,8 +146,8 @@ int main()
                         menu.title = "title_you_win";
                         menu.text = NULL;
                         menu.options_size = 2;
-                        menu.options[0] = "continue";
-                        menu.options[1] = "restart";
+                        menu.options[0] = (option_t){.text = "continue", .action = NULL, .close = true};
+                        menu.options[1] = (option_t){.text = "restart", .action = game_reset, .close = true};
                         menu.selected_option = 0;
                         menu.visible = true;
                         menu.width = 0;
@@ -159,7 +157,7 @@ int main()
                         menu.title = "title_game_over";
                         menu.text = NULL;
                         menu.options_size = 1;
-                        menu.options[0] = "restart";
+                        menu.options[0] = (option_t){.text = "restart", .action = game_reset, .close = true};
                         menu.selected_option = 0;
                         menu.visible = true;
                         menu.width = 0;
@@ -170,9 +168,12 @@ int main()
                     }
                 }
 
-                screen_game(disp, &menu);
+                screen_game(disp);
                 break;
             }
+
+            // display menu
+            menu_draw(disp, &menu);
 
             fps_frame();
             fps_draw(disp);

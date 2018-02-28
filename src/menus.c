@@ -55,7 +55,9 @@ void menu_draw(display_context_t disp, menu_t *menu)
         if (menu->height > MAX_HEIGHT)
             menu->height -= h_step;
     }
+    rdp_attach(disp);
     rdp_draw_filled_rectangle_with_border_size(320 - menu->width / 2, 240 - menu->height / 2, menu->width, menu->height, COLOR_GRID_BG, COLOR_CELL_MORE_BG);
+    rdp_detach_display();
 
     if (menu->width >= MAX_WIDTH && menu->height >= MAX_HEIGHT)
     {
@@ -75,20 +77,21 @@ void menu_draw(display_context_t disp, menu_t *menu)
 
         for (int i = 0; i < menu->options_size; i++)
         {
-            sprite_t *option = dfs_loadf((i == menu->selected_option ? "/gfx/32/%s_selec.sprite" : "/gfx/32/%s.sprite"), menu->options[i]);
+            sprite_t *option = dfs_loadf((i == menu->selected_option ? "/gfx/32/%s_selec.sprite" : "/gfx/32/%s.sprite"), menu->options[i].text);
             graphics_draw_sprite_trans(disp, 320 - option->width / 2, 240 - menu->height / 2 + (menu->text != NULL ? 100 : 0) + 75 + 30 * i, option);
             free(option);
         }
     }
 }
 
-int menu_press(menu_t *menu, control_t keys)
+void menu_press(menu_t *menu, control_t keys)
 {
     if (IS_DOWN(keys.start) || IS_DOWN(keys.B))
     {
-        menu->selected_option = 0;
-        menu->closing = true;
-        return 0;
+        action_t action = menu->options[0].action;
+        if (action != NULL)
+            action();
+        menu->closing = menu->options[0].close;
     }
 
     if (IS_DOWN(keys.up))
@@ -102,10 +105,9 @@ int menu_press(menu_t *menu, control_t keys)
 
     if (IS_DOWN(keys.A))
     {
-        int selected = menu->selected_option;
-        if (strcmp(menu->options[selected], "about") != 0 && strcmp(menu->options[selected], "back") != 0)
-            menu->closing = true;
-        return selected;
+        action_t action = menu->options[menu->selected_option].action;
+        if (action != NULL)
+            action();
+        menu->closing = menu->options[menu->selected_option].close;
     }
-    return -1;
 }
