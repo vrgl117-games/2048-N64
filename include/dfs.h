@@ -14,6 +14,7 @@
 typedef struct map
 {
     sprite_t **sprites;
+    int slices;
 
     int height;
     int width;

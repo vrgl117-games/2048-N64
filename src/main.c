@@ -15,6 +15,7 @@
 #include "fps.h"
 #include "game.h"
 #include "graphics.h"
+#include "konami.h"
 #include "menus.h"
 #include "screens.h"
 
@@ -92,8 +93,8 @@ int main()
         else
         {
             control_t keys = controls_get_keys();
-            if (IS_DOWN(keys.Z) && IS_DOWN(keys.L) && IS_DOWN(keys.R))
-                fps_switch();
+            fps_check(keys);
+            konami_check(keys);
 
             while (!(disp = display_lock()))
                 ;

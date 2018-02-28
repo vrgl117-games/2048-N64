@@ -33,12 +33,12 @@
 #define SAMPLE_TYPE 0x00200000000000
 
 void rdp_attach(display_context_t disp);
-int rdp_draw_int_map(int x, int y, map_t *font, int n);
+int rdp_draw_int_map(int x, int y, map_t *font, int n, int flags);
 void rdp_draw_filled_fullscreen(uint32_t color);
 void rdp_draw_filled_rectangle_size(int x, int y, int width, int height, uint32_t color);
 void rdp_draw_filled_rectangle_with_border_size(int x, int y, int width, int height, uint32_t color, uint32_t border_color);
-void rdp_draw_sprite_with_texture(sprite_t *sp, int x, int y);
-void rdp_draw_sprite_with_texture_map(map_t *map, int x, int y);
+void rdp_draw_sprite_with_texture(sprite_t *sp, int x, int y, int flags);
+void rdp_draw_sprite_with_texture_map(map_t *map, int x, int y, int flags);
 void rdp_enable_texture_copy();
 
 #endif //__RDP_H__

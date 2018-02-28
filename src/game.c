@@ -13,6 +13,7 @@
 #include "colors.h"
 #include "dfs.h"
 #include "game.h"
+#include "konami.h"
 #include "rdp.h"
 
 static game_t game;
@@ -253,16 +254,16 @@ status_t game_play(direction_t direction)
     switch (direction)
     {
     case d_up:
-        move = game_play_vertical(1);
+        move = game_play_vertical(konami_enabled() ? -1 : 1);
         break;
     case d_down:
-        move = game_play_vertical(-1);
+        move = game_play_vertical(konami_enabled() ? 1 : -1);
         break;
     case d_left:
-        move = game_play_horiz(1);
+        move = game_play_horiz(konami_enabled() ? -1 : 1);
         break;
     case d_right:
-        move = game_play_horiz(-1);
+        move = game_play_horiz(konami_enabled() ? 1 : -1);
         break;
     default:
         return false;
@@ -361,6 +362,7 @@ static inline uint8_t game_log2(int n)
 
 void game_draw(display_context_t disp, int grid_x, int grid_y)
 {
+    int flags = (konami_enabled() ? 3 : 0);
     rdp_draw_filled_rectangle_size(grid_x, grid_y, 360, 360, COLOR_GRID_BG);
     for (int x = 0; x < 4; x++)
     {
@@ -398,7 +400,7 @@ void game_draw(display_context_t disp, int grid_x, int grid_y)
 
             map_t *map = maps[score];
             if (map != NULL)
-                rdp_draw_sprite_with_texture_map(map, xx + 40 - map->width / 2, yy + 40 - map->height / 2);
+                rdp_draw_sprite_with_texture_map(map, xx + 40 - map->width / 2, yy + 40 - map->height / 2, flags);
         }
     }
 }

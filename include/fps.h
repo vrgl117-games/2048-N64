@@ -11,9 +11,11 @@
 
 #include <libdragon.h>
 
+#include "controls.h"
+
+void fps_check(control_t keys);
 void fps_draw(display_context_t disp);
 void fps_frame();
-void fps_switch();
 void fps_timer();
 
 #endif // __FPS_H__

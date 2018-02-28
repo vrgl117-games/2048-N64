@@ -14,6 +14,7 @@
 #include "fps.h"
 #include "game.h"
 #include "graphics.h"
+#include "konami.h"
 #include "rdp.h"
 #include "screens.h"
 
@@ -87,15 +88,15 @@ void screen_game(display_context_t disp)
 
     rdp_draw_filled_fullscreen(COLOR_BG);
 
-    rdp_draw_sprite_with_texture_map(logo, 140, 18);
+    rdp_draw_sprite_with_texture_map(logo, 140, 18, (konami_enabled() ? 3 : 0));
 
     rdp_draw_filled_rectangle_with_border_size(300, 30, 90, 40, COLOR_CELL_EMPTY_BG, COLOR_GRID_BG);
-    rdp_draw_sprite_with_texture(best, 306, 30);
-    rdp_draw_int_map(306, 46, font, game_best());
+    rdp_draw_sprite_with_texture(best, 306, 30, (konami_enabled() ? 3 : 0));
+    rdp_draw_int_map(306, 46, font, game_best(), (konami_enabled() ? 3 : 0));
 
     rdp_draw_filled_rectangle_with_border_size(410, 30, 90, 40, COLOR_CELL_EMPTY_BG, COLOR_GRID_BG);
-    rdp_draw_sprite_with_texture(score, 416, 30);
-    rdp_draw_int_map(416, 46, font, game_score());
+    rdp_draw_sprite_with_texture(score, 416, 30, (konami_enabled() ? 3 : 0));
+    rdp_draw_int_map(416, 46, font, game_score(), (konami_enabled() ? 3 : 0));
 
     game_draw(disp, 140, 90);
 
@@ -108,7 +109,7 @@ void screen_title(display_context_t disp, bool press_start)
 
     rdp_draw_filled_fullscreen(COLOR_BG);
 
-    rdp_draw_sprite_with_texture_map(logo, 140, 18);
+    rdp_draw_sprite_with_texture_map(logo, 140, 18, (konami_enabled() ? 3 : 0));
 
     if (tick % 17 == 0)
     {
@@ -119,7 +120,7 @@ void screen_title(display_context_t disp, bool press_start)
     if (press_start && tick % 14 > 7)
     {
         map_t *press_start = dfs_load_map("/gfx/16/press_start-%02d.sprite", 6, 3);
-        rdp_draw_sprite_with_texture_map(press_start, 318, 26);
+        rdp_draw_sprite_with_texture_map(press_start, 318, 26, (konami_enabled() ? 3 : 0));
         dfs_free_map(press_start);
     }
 

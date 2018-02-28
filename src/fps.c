@@ -13,6 +13,11 @@ static volatile bool fps_refresh = false;
 static volatile uint8_t fps;
 static bool show;
 
+void fps_check(control_t keys)
+{
+    if (IS_DOWN(keys.Z) && IS_DOWN(keys.L) && IS_DOWN(keys.R))
+        show = !show;
+}
 void fps_draw(display_context_t disp)
 {
     if (show)
@@ -30,11 +35,6 @@ inline void fps_frame()
         frame_count = 0;
         fps_refresh = false;
     }
-}
-
-void fps_switch()
-{
-    show = !show;
 }
 
 void fps_timer()
