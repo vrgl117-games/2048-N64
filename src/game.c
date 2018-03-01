@@ -266,13 +266,13 @@ status_t game_play(direction_t direction)
         move = game_play_horiz(konami_enabled() ? 1 : -1);
         break;
     default:
-        return false;
+        return status;
     }
 
     if (move == 0)
     {
         rumble_start(0);
-        return false;
+        return status;
     }
 
     int nbEmpty = 0;

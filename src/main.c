@@ -54,7 +54,6 @@ int main()
             screen_no_controller(disp);
         else
         {
-
             control_t keys = controls_get_keys();
             fps_check(keys);
             konami_check(keys);
@@ -78,31 +77,22 @@ int main()
                     }
                 }
                 else if (IS_DOWN(keys.start))
-                {
                     menu = menu_difficulty;
-                }
+
                 screen_title(disp, !menu.visible);
                 break;
             case game:
                 if (menu.visible)
                     menu_press(&menu, keys);
                 else if (IS_DOWN(keys.start))
-                {
                     menu = menu_pause;
-                }
-                else if (keys.direction != d_none)
+                else
                 {
-                    switch (game_play(keys.direction))
-                    {
-                    case game_win:
+                    status_t status = game_play(keys.direction);
+                    if (status == game_win)
                         menu = menu_you_win;
-                        break;
-                    case game_over:
+                    if (status == game_over)
                         menu = menu_game_over;
-                        break;
-                    case game_none:
-                        break;
-                    }
                 }
 
                 screen_game(disp);
@@ -112,12 +102,16 @@ int main()
             // display menu
             menu_draw(disp, &menu);
 
+            // increment fps counter
             fps_frame();
+
+            // display fps
             fps_draw(disp);
         }
         display_show(disp);
     }
 
+    // cleanup, never called
     timer_close();
     rdp_close();
     display_close();

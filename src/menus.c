@@ -135,6 +135,15 @@ bool menu_press(menu_t *m, control_t keys)
         action_t action = m->options[0].action;
         if (action != NULL)
             action();
+        else if (m->options[m->selected_option].next != NULL)
+        {
+            int w = menu.width;
+            int h = menu.height;
+            menu = *m->options[m->selected_option].next;
+            menu.width = w;
+            menu.height = h;
+            menu.selected_option = menu.options_size - 1;
+        }
         m->closing = m->options[0].close;
         return true;
     }
