@@ -12,8 +12,52 @@
 
 #include "colors.h"
 #include "dfs.h"
+#include "game.h"
 #include "menus.h"
 #include "rdp.h"
+#include "screens.h"
+
+extern menu_t menu;
+
+/* menus */
+menu_t menu_about;
+
+menu_t menu_pause = {
+    .title = "title_pause",
+    .options_size = 3,
+    .options = {{.text = "continue", .action = NULL, .close = true}, {.text = "restart", .action = game_reset, .close = true}, {.text = "about", .next = &menu_about, .close = false}},
+    .visible = true,
+};
+
+menu_t menu_about = {
+    .title = "title_about",
+    .text = "text_about",
+    .options_size = 1,
+    .options = {{.text = "back", .next = &menu_pause, .close = false}},
+    .visible = true,
+};
+
+menu_t menu_you_win = {
+    .title = "title_you_win",
+    .options_size = 2,
+    .options = {{.text = "continue", .action = NULL, .close = true}, {.text = "restart", .action = game_reset, .close = true}},
+    .visible = true,
+};
+
+menu_t menu_game_over = {
+    .title = "title_game_over",
+    .options_size = 1,
+    .options = {{.text = "restart", .action = game_reset, .close = true}},
+    .visible = true,
+};
+
+menu_t menu_difficulty = {
+    .title = "title_difficulty",
+    .options_size = 3,
+    .options = {{.text = "easy", .action = game_set_difficulty_easy, .close = true}, {.text = "normal", .action = game_set_difficulty_normal, .close = true}, {.text = "hard", .action = game_set_difficulty_hard, .close = true}},
+    .selected_option = 1,
+    .visible = true,
+};
 
 void menu_draw(display_context_t disp, menu_t *menu)
 {
@@ -84,30 +128,44 @@ void menu_draw(display_context_t disp, menu_t *menu)
     }
 }
 
-void menu_press(menu_t *menu, control_t keys)
+bool menu_press(menu_t *m, control_t keys)
 {
     if (IS_DOWN(keys.start) || IS_DOWN(keys.B))
     {
-        action_t action = menu->options[0].action;
+        action_t action = m->options[0].action;
         if (action != NULL)
             action();
-        menu->closing = menu->options[0].close;
+        m->closing = m->options[0].close;
+        return true;
     }
 
     if (IS_DOWN(keys.up))
     {
-        menu->selected_option--;
-        if (menu->selected_option == -1)
-            menu->selected_option = menu->options_size - 1;
+        m->selected_option--;
+        if (m->selected_option == -1)
+            m->selected_option = m->options_size - 1;
     }
     if (IS_DOWN(keys.down))
-        menu->selected_option = (menu->selected_option + 1) % menu->options_size;
+        m->selected_option = (m->selected_option + 1) % m->options_size;
 
     if (IS_DOWN(keys.A))
     {
-        action_t action = menu->options[menu->selected_option].action;
+        m->closing = m->options[m->selected_option].close;
+
+        action_t action = m->options[m->selected_option].action;
         if (action != NULL)
             action();
-        menu->closing = menu->options[menu->selected_option].close;
+        else if (m->options[m->selected_option].next != NULL)
+        {
+            int w = menu.width;
+            int h = menu.height;
+            menu = *m->options[m->selected_option].next;
+            menu.width = w;
+            menu.height = h;
+            menu.selected_option = menu.options_size - 1;
+        }
+        return true;
     }
+
+    return false;
 }

@@ -17,16 +17,18 @@
 #define MAX_HEIGHT (80 + 30 * menu->options_size + (menu->text != NULL ? 100 : 0))
 
 typedef void (*action_t)(void);
+typedef struct menu menu_t;
 
 typedef struct option
 {
     char *text;
     action_t action;
+    menu_t *next;
     bool close;
 
 } option_t;
 
-typedef struct menu
+struct menu
 {
     bool visible;
     bool closing;
@@ -40,12 +42,9 @@ typedef struct menu
 
     int width;
     int height;
-
-    struct menu *previous;
-
-} menu_t;
+};
 
 void menu_draw(display_context_t disp, menu_t *menu);
-void menu_press(menu_t *menu, control_t keys);
+bool menu_press(menu_t *m, control_t keys);
 
 #endif //__MENUS_H__

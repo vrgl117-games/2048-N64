@@ -405,7 +405,17 @@ void game_draw(display_context_t disp, int grid_x, int grid_y)
     }
 }
 
-void game_set_difficulty(difficulty_t difficulty)
+void game_set_difficulty_easy()
 {
-    game.difficulty = difficulty;
+    game.difficulty = game_easy;
+}
+
+void game_set_difficulty_normal()
+{
+    game.difficulty = game_normal;
+}
+
+void game_set_difficulty_hard()
+{
+    game.difficulty = game_hard;
 }

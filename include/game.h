@@ -47,7 +47,9 @@ typedef enum direction {
 
 int game_best();
 void game_init();
-void game_set_difficulty(difficulty_t difficulty);
+void game_set_difficulty_easy();
+void game_set_difficulty_normal();
+void game_set_difficulty_hard();
 status_t game_play(direction_t direction);
 void game_draw(display_context_t disp, int grid_x, int grid_y);
 int game_score();
