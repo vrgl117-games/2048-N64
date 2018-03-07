@@ -38,7 +38,7 @@ filesystem/gfx/16/%.sprite: resources/gfx/16/%.png
 	$(MKSPRITE) 16 1 1 $< $@
 
 filesystem/gfx/32/%.sprite: resources/gfx/32/%.png
-	$(MKSPRITE) 32 1 1 $< $@
+	$(MKSPRITE) 16 1 1 $< $@
 
 $(PROG_NAME).dfs: $(SPRITES)
 	$(MKDFSPATH) $@ ./filesystem/
@@ -47,7 +47,7 @@ cen64:
 	$(CEN64_DIR)/cen64 $(CEN64_DIR)/pifdata.bin $(PROG_NAME).z64
 
 flashair:
-	curl -X POST -d @$(PROG_NAME).z64 http://flashair/upload.cgi
+	curl -X POST -F 'file=@$(PROG_NAME).z64' http://vieux_flashair/upload.cgi
 
 clean:
 	rm -f *.z64 *.elf src/*.o *.bin *.dfs

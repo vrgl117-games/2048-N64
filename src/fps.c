@@ -11,7 +11,7 @@
 
 static volatile bool fps_refresh = false;
 static volatile uint8_t fps;
-static bool show;
+static bool show = false;
 
 void fps_check(control_t keys)
 {

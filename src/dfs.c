@@ -9,6 +9,7 @@
 #include <malloc.h>
 #include <stdarg.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "dfs.h"
 
@@ -53,8 +54,8 @@ map_t *dfs_load_map(const char *const path, int slices, int mod)
 {
     char buffer[256];
 
-    map_t *data = malloc(sizeof(map_t));
-    data->sprites = malloc(slices * sizeof(sprite_t *));
+    map_t *data = calloc(1, sizeof(map_t));
+    data->sprites = calloc(slices, sizeof(sprite_t *));
     data->mod = mod;
 
     for (int i = 0; i < slices; i++)
@@ -67,7 +68,6 @@ map_t *dfs_load_map(const char *const path, int slices, int mod)
         if (i < mod)
             data->width += data->sprites[i]->width;
     }
-    data->sprites[slices] = 0;
     data->slices = slices;
     return data;
 }
