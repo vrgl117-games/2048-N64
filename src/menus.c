@@ -53,6 +53,7 @@ menu_t menu_game_over = {
 
 menu_t menu_difficulty = {
     .title = "title_difficulty",
+    .text = "text_help",
     .options_size = 3,
     .options = {{.text = "easy", .action = game_set_difficulty_easy, .close = true}, {.text = "normal", .action = game_set_difficulty_normal, .close = true}, {.text = "hard", .action = game_set_difficulty_hard, .close = true}},
     .selected_option = 1,

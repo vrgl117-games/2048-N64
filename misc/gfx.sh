@@ -30,7 +30,8 @@ convert -background "#ffffff00" -fill "#776E65ff" -font "$fontr" -pointsize 18 l
 convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 18 label:"Normal" resources/gfx/32/normal_selec.png
 convert -background "#ffffff00" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Hard" resources/gfx/32/hard.png
 convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 18 label:"Hard" resources/gfx/32/hard_selec.png
-convert -background "#ffffff00" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Original game created by\nGabriele Cirulli, N64\nversion by vrgl117." resources/gfx/32/text_about.png
+convert -background "#ffffff00" -fill "#776E65ff" -font "$fontr" -pointsize 18 -gravity Center label:"Original game created\nby Gabriele Cirulli,\nN64 version by vrgl117." resources/gfx/32/text_about.png
+convert -background "#ffffff00" -fill "#776E65ff" -font "$fontr" -pointsize 18 -gravity Center label:"Join the numbers\nand get to the\n2048 tile!" resources/gfx/32/text_help.png
 
 #screen
 convert -background "#ffffff00" -fill "#F9F6F2ff" -font "$font" -pointsize 24 label:"NO CONTROLLER INSERTED ON PORT #1" resources/gfx/32/no_controller.png
@@ -65,12 +66,12 @@ convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 18 la
 convert -background "#ffffff00" -fill "#776E65ff" -font "$font" -pointsize 18 label:9 resources/gfx/16/font9.png
 
 #logo
-convert -brightness-contrast -10 resources/gfx/32/vrgl117.png resources/gfx/32/vrgl117_9.png
-convert -brightness-contrast -20 resources/gfx/32/vrgl117.png resources/gfx/32/vrgl117_8.png
-convert -brightness-contrast -30 resources/gfx/32/vrgl117.png resources/gfx/32/vrgl117_7.png
-convert -brightness-contrast -40 resources/gfx/32/vrgl117.png resources/gfx/32/vrgl117_6.png
-convert -brightness-contrast -50 resources/gfx/32/vrgl117.png resources/gfx/32/vrgl117_5.png
-convert -brightness-contrast -60 resources/gfx/32/vrgl117.png resources/gfx/32/vrgl117_4.png
-convert -brightness-contrast -70 resources/gfx/32/vrgl117.png resources/gfx/32/vrgl117_3.png
-convert -brightness-contrast -80 resources/gfx/32/vrgl117.png resources/gfx/32/vrgl117_2.png
-convert -brightness-contrast -90 resources/gfx/32/vrgl117.png resources/gfx/32/vrgl117_1.png
+convert -brightness-contrast -10 resources/gfx/32/intro.png resources/gfx/32/intro_9.png
+convert -brightness-contrast -20 resources/gfx/32/intro.png resources/gfx/32/intro_8.png
+convert -brightness-contrast -30 resources/gfx/32/intro.png resources/gfx/32/intro_7.png
+convert -brightness-contrast -40 resources/gfx/32/intro.png resources/gfx/32/intro_6.png
+convert -brightness-contrast -50 resources/gfx/32/intro.png resources/gfx/32/intro_5.png
+convert -brightness-contrast -60 resources/gfx/32/intro.png resources/gfx/32/intro_4.png
+convert -brightness-contrast -70 resources/gfx/32/intro.png resources/gfx/32/intro_3.png
+convert -brightness-contrast -80 resources/gfx/32/intro.png resources/gfx/32/intro_2.png
+convert -brightness-contrast -90 resources/gfx/32/intro.png resources/gfx/32/intro_1.png

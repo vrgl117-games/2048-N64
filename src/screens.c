@@ -52,13 +52,13 @@ bool screen_intro(display_context_t disp)
     switch (anim)
     {
     case 1 ... 9:
-        intro = dfs_loadf("/gfx/32/vrgl117_%d.sprite", anim);
+        intro = dfs_loadf("/gfx/32/intro_%d.sprite", anim);
         break;
     case 10 ... 30:
-        intro = dfs_load("/gfx/32/vrgl117.sprite");
+        intro = dfs_load("/gfx/32/intro.sprite");
         break;
     case 31 ... 39:
-        intro = dfs_loadf("/gfx/32/vrgl117_%d.sprite", 40 - anim);
+        intro = dfs_loadf("/gfx/32/intro_%d.sprite", 40 - anim);
         break;
     }
 
