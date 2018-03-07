@@ -246,12 +246,12 @@ static inline bool is_gameover()
     return true;
 }
 
-status_t game_play(direction_t direction)
+status_t game_play(control_t keys)
 {
     status_t status = game_none;
     uint8_t move = 10;
 
-    switch (direction)
+    switch (keys.direction)
     {
     case d_up:
         move = game_play_vertical(konami_enabled() ? -1 : 1);
@@ -271,7 +271,8 @@ status_t game_play(direction_t direction)
 
     if (move == 0)
     {
-        rumble_start(0);
+        if (keys.rumble)
+            rumble_start(0);
         return status;
     }
 

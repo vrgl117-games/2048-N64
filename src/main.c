@@ -48,19 +48,20 @@ int main()
 
     while (true)
     {
-        rumble_stop(0);
+        control_t keys = controls_get_keys();
+        fps_check(keys);
+        konami_check(keys);
 
-        if (!(get_controllers_present() & CONTROLLER_1_INSERTED))
+        if (keys.rumble)
+            rumble_stop(0);
+
+        while (!(disp = display_lock()))
+            ;
+
+        if (!keys.plugged)
             screen_no_controller(disp);
         else
         {
-            control_t keys = controls_get_keys();
-            fps_check(keys);
-            konami_check(keys);
-
-            while (!(disp = display_lock()))
-                ;
-
             switch (screen)
             {
             case intro:
@@ -76,7 +77,7 @@ int main()
                         screen = game;
                     }
                 }
-                else if (IS_DOWN(keys.start))
+                else if (keys.start)
                     menu = menu_difficulty;
 
                 screen_title(disp, !menu.visible);
@@ -84,11 +85,11 @@ int main()
             case game:
                 if (menu.visible)
                     menu_press(&menu, keys);
-                else if (IS_DOWN(keys.start))
+                else if (keys.start)
                     menu = menu_pause;
                 else
                 {
-                    status_t status = game_play(keys.direction);
+                    status_t status = game_play(keys);
                     if (status == game_win)
                         menu = menu_you_win;
                     if (status == game_over)

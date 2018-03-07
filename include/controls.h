@@ -10,33 +10,33 @@
 #define __CONTROLS_H__
 
 #include <libdragon.h>
-#include "game.h"
+
+typedef enum direction {
+    d_none,
+    d_up,
+    d_down,
+    d_left,
+    d_right
+} direction_t;
 
 typedef struct
 {
-    uint8_t Z;
-    uint8_t A;
-    uint8_t B;
-    uint8_t up;
-    uint8_t down;
-    uint8_t left;
-    uint8_t right;
-    uint8_t start;
-    uint8_t L;
-    uint8_t R;
+    bool Z;
+    bool A;
+    bool B;
+    bool start;
+    bool L;
+    bool R;
+
+    bool pressed;
+    bool plugged;
+    bool rumble;
 
     direction_t direction;
 
 } control_t;
 
-#define HELD 1
-#define DOWN 2
-#define UP 3
-
-#define IS_HELD(K) (K == HELD)
-#define IS_DOWN(K) (K == DOWN)
-#define IS_UP(K) (K == UP)
-#define IS_PRESSED(K) (IS_HELD(K) || IS_DOWN(K))
+#define JOYSTICK_THRESHOLD 80
 
 control_t controls_get_keys();
 

@@ -40,6 +40,8 @@ void screen_init()
 // return true when the animation is done.
 bool screen_intro(display_context_t disp)
 {
+    static int anim = 0;
+
     rdp_attach(disp);
 
     rdp_draw_filled_fullscreen(COLOR_BLACK);
@@ -47,16 +49,16 @@ bool screen_intro(display_context_t disp)
     rdp_detach_display();
     sprite_t *intro = NULL;
 
-    switch (tick)
+    switch (anim)
     {
     case 1 ... 9:
-        intro = dfs_loadf("/gfx/32/vrgl117_%d.sprite", tick);
+        intro = dfs_loadf("/gfx/32/vrgl117_%d.sprite", anim);
         break;
     case 10 ... 30:
         intro = dfs_load("/gfx/32/vrgl117.sprite");
         break;
     case 31 ... 39:
-        intro = dfs_loadf("/gfx/32/vrgl117_%d.sprite", 40 - tick);
+        intro = dfs_loadf("/gfx/32/vrgl117_%d.sprite", 40 - anim);
         break;
     }
 
@@ -66,7 +68,8 @@ bool screen_intro(display_context_t disp)
         free(intro);
     }
 
-    return (tick >= 42);
+    anim++;
+    return (anim >= 42);
 }
 
 void screen_no_controller(display_context_t disp)
@@ -78,7 +81,7 @@ void screen_no_controller(display_context_t disp)
     rdp_detach_display();
 
     sprite_t *no_controller = dfs_load("/gfx/32/no_controller.sprite");
-    graphics_draw_sprite(disp, 320 - no_controller->width / 2, 240 - no_controller->height / 2, intro);
+    graphics_draw_sprite_trans(disp, 320 - no_controller->width / 2, 240 - no_controller->height / 2, no_controller);
     free(no_controller);
 }
 

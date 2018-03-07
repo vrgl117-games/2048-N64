@@ -13,94 +13,78 @@
 control_t controls_get_keys()
 {
     controller_scan();
-    struct SI_condat held = get_keys_held().c[0];
-    struct SI_condat up = get_keys_up().c[0];
     struct SI_condat down = get_keys_down().c[0];
 
-    control_t keys;
+    control_t keys = {0};
     memset(&keys, 0, sizeof(control_t));
 
-    if (held.Z)
-        keys.Z = HELD;
-    else if (down.Z)
-        keys.Z = DOWN;
-    else if (up.Z)
-        keys.Z = UP;
+    if (!(get_controllers_present() & CONTROLLER_1_INSERTED))
+        return keys;
 
-    if (held.A)
-        keys.A = HELD;
-    else if (down.A)
-        keys.A = DOWN;
-    else if (up.A)
-        keys.A = UP;
+    keys.plugged = true;
 
-    if (held.B)
-        keys.B = HELD;
-    else if (down.B)
-        keys.B = DOWN;
-    else if (up.B)
-        keys.B = UP;
+    if ((get_accessories_present() & CONTROLLER_1_INSERTED) && identify_accessory(0) == ACCESSORY_RUMBLEPAK)
+        keys.rumble = true;
 
-    if (held.C_up || held.up || held.y > 0)
-        keys.up = HELD;
-    else if (down.C_up || down.up || down.y > 0)
+    if (down.Z)
+    {
+        keys.Z = true;
+        keys.pressed = true;
+    }
+
+    if (down.A)
+    {
+        keys.A = true;
+        keys.pressed = true;
+    }
+
+    if (down.B)
+    {
+        keys.B = true;
+        keys.pressed = true;
+    }
+
+    if (down.C_up || down.up || down.y > 0)
     {
         keys.direction = d_up;
-        keys.up = DOWN;
+        keys.pressed = true;
     }
-    else if (up.C_up || up.up || up.y > 0)
-        keys.up = UP;
 
-    if (held.C_down || held.down || held.y < 0)
-        keys.down = HELD;
-    else if (down.C_up || down.down || down.y < 0)
+    if (down.C_up || down.down || down.y < 0)
     {
         keys.direction = d_down;
-        keys.down = DOWN;
+        keys.pressed = true;
     }
-    else if (up.C_down || up.down || down.y < 0)
-        keys.down = UP;
 
-    if (held.C_left || held.left || held.x < -20)
-        keys.left = HELD;
-    else if (down.C_left || down.left || down.x < -20)
+    if (down.C_left || down.left || down.x < -JOYSTICK_THRESHOLD)
     {
         keys.direction = d_left;
-        keys.left = DOWN;
+        keys.pressed = true;
     }
-    else if (up.C_left || up.left || down.x < -20)
-        keys.left = UP;
 
-    if (held.C_right || held.right || held.x > 20)
-        keys.right = HELD;
-    else if (down.C_right || down.right || down.x > 20)
+    if (down.C_right || down.right || down.x > JOYSTICK_THRESHOLD)
     {
         keys.direction = d_right;
-        keys.right = DOWN;
+        keys.pressed = true;
     }
-    else if (up.C_right || up.right || down.x > 20)
-        keys.right = UP;
 
-    if (held.start)
-        keys.start = HELD;
-    else if (down.start)
-        keys.start = DOWN;
-    else if (up.start)
-        keys.start = UP;
+    if (down.start)
+    {
+        keys.start = true;
+        keys.pressed = true;
+    }
 
-    if (held.L)
-        keys.L = HELD;
-    else if (down.L)
-        keys.L = DOWN;
-    else if (up.L)
-        keys.L = UP;
+    if (down.L)
+    {
+        keys.L = true;
+        keys.pressed = true;
+    }
 
-    if (held.R)
-        keys.R = HELD;
-    else if (down.R)
-        keys.R = DOWN;
-    else if (up.R)
-        keys.R = UP;
+    if (down.R)
+    {
+        keys.R = true;
+        keys.pressed = true;
+    }
 
     return keys;
 }

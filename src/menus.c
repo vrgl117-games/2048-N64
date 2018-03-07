@@ -130,7 +130,7 @@ void menu_draw(display_context_t disp, menu_t *menu)
 
 bool menu_press(menu_t *m, control_t keys)
 {
-    if (IS_DOWN(keys.start) || IS_DOWN(keys.B))
+    if (keys.start || keys.B)
     {
         action_t action = m->options[0].action;
         if (action != NULL)
@@ -148,16 +148,16 @@ bool menu_press(menu_t *m, control_t keys)
         return true;
     }
 
-    if (IS_DOWN(keys.up))
+    if (keys.direction == d_up)
     {
         m->selected_option--;
         if (m->selected_option == -1)
             m->selected_option = m->options_size - 1;
     }
-    if (IS_DOWN(keys.down))
+    if (keys.direction == d_down)
         m->selected_option = (m->selected_option + 1) % m->options_size;
 
-    if (IS_DOWN(keys.A))
+    if (keys.A)
     {
         m->closing = m->options[m->selected_option].close;
 

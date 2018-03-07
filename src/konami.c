@@ -15,32 +15,28 @@ void konami_check(control_t keys)
 {
     static int i = 0;
 
-    switch (KONAMI_CODE[i])
+    if (keys.pressed)
     {
-    case 'u':
-        if (IS_DOWN(keys.up))
+        if (KONAMI_CODE[i] == 'u' && keys.direction == d_up)
             i++;
-    case 'd':
-        if (IS_DOWN(keys.down))
+        else if (KONAMI_CODE[i] == 'd' && keys.direction == d_down)
             i++;
-    case 'l':
-        if (IS_DOWN(keys.left))
+        else if (KONAMI_CODE[i] == 'l' && keys.direction == d_left)
             i++;
-    case 'r':
-        if (IS_DOWN(keys.right))
+        else if (KONAMI_CODE[i] == 'r' && keys.direction == d_right)
             i++;
-    case 'b':
-        if (IS_DOWN(keys.B))
+        else if (KONAMI_CODE[i] == 'a' && keys.A)
             i++;
-    case 'a':
-        if (IS_DOWN(keys.A))
+        else if (KONAMI_CODE[i] == 'b' && keys.B)
             i++;
-    }
+        else
+            i = 0;
 
-    if (i == 10)
-    {
-        konami = !konami;
-        i = 0;
+        if (i == 10)
+        {
+            konami = !konami;
+            i = 0;
+        }
     }
 }
 

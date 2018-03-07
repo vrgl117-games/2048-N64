@@ -11,6 +11,8 @@
 
 #include <libdragon.h>
 
+#include "controls.h"
+
 #define POP 4
 #define MERGE 9
 
@@ -37,20 +39,12 @@ typedef enum status {
     game_win
 } status_t;
 
-typedef enum direction {
-    d_none,
-    d_up,
-    d_down,
-    d_left,
-    d_right
-} direction_t;
-
 int game_best();
 void game_init();
 void game_set_difficulty_easy();
 void game_set_difficulty_normal();
 void game_set_difficulty_hard();
-status_t game_play(direction_t direction);
+status_t game_play(control_t keys);
 void game_draw(display_context_t disp, int grid_x, int grid_y);
 int game_score();
 void game_random();
