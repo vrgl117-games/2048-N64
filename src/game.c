@@ -47,21 +47,21 @@ void game_init()
     game.difficulty = game_normal;
 
     // init sprites
-    maps[1] = dfs_load_map("/gfx/16/2-%02d.sprite", 2, 1);
-    maps[2] = dfs_load_map("/gfx/16/4-%02d.sprite", 2, 1);
-    maps[3] = dfs_load_map("/gfx/16/8-%02d.sprite", 2, 1);
-    maps[4] = dfs_load_map("/gfx/16/16-%02d.sprite", 2, 1);
-    maps[5] = dfs_load_map("/gfx/16/32-%02d.sprite", 2, 1);
-    maps[6] = dfs_load_map("/gfx/16/64-%02d.sprite", 2, 1);
-    maps[7] = dfs_load_map("/gfx/16/128-%02d.sprite", 2, 1);
-    maps[8] = dfs_load_map("/gfx/16/256-%02d.sprite", 2, 1);
-    maps[9] = dfs_load_map("/gfx/16/512-%02d.sprite", 2, 1);
-    maps[10] = dfs_load_map("/gfx/16/1024-%02d.sprite", 4, 2);
-    maps[11] = dfs_load_map("/gfx/16/2048-%02d.sprite", 4, 2);
-    maps[12] = dfs_load_map("/gfx/16/4096-%02d.sprite", 4, 2);
-    maps[13] = dfs_load_map("/gfx/16/8192-%02d.sprite", 4, 2);
-    maps[14] = dfs_load_map("/gfx/16/16384-%02d.sprite", 4, 2);
-    maps[15] = dfs_load_map("/gfx/16/32768-%02d.sprite", 4, 2);
+    maps[1] = dfs_load_map("/gfx/maps/2-%02d.sprite", 2, 1);
+    maps[2] = dfs_load_map("/gfx/maps/4-%02d.sprite", 2, 1);
+    maps[3] = dfs_load_map("/gfx/maps/8-%02d.sprite", 2, 1);
+    maps[4] = dfs_load_map("/gfx/maps/16-%02d.sprite", 2, 1);
+    maps[5] = dfs_load_map("/gfx/maps/32-%02d.sprite", 2, 1);
+    maps[6] = dfs_load_map("/gfx/maps/64-%02d.sprite", 2, 1);
+    maps[7] = dfs_load_map("/gfx/maps/128-%02d.sprite", 2, 1);
+    maps[8] = dfs_load_map("/gfx/maps/256-%02d.sprite", 2, 1);
+    maps[9] = dfs_load_map("/gfx/maps/512-%02d.sprite", 2, 1);
+    maps[10] = dfs_load_map("/gfx/maps/1024-%02d.sprite", 4, 2);
+    maps[11] = dfs_load_map("/gfx/maps/2048-%02d.sprite", 4, 2);
+    maps[12] = dfs_load_map("/gfx/maps/4096-%02d.sprite", 4, 2);
+    maps[13] = dfs_load_map("/gfx/maps/8192-%02d.sprite", 4, 2);
+    maps[14] = dfs_load_map("/gfx/maps/16384-%02d.sprite", 4, 2);
+    maps[15] = dfs_load_map("/gfx/maps/32768-%02d.sprite", 4, 2);
 
     // init colors
     colors[0] = COLOR_CELL_EMPTY_BG;

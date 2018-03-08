@@ -34,10 +34,10 @@ $(PROG_NAME).elf : $(OBJS)
 
 PNGS := $(wildcard resources/gfx/*/*.png)
 SPRITES := $(subst .png,.sprite,$(subst resources/,filesystem/,$(PNGS)))
-filesystem/gfx/16/%.sprite: resources/gfx/16/%.png
+filesystem/gfx/sprites/%.sprite: resources/gfx/sprites/%.png
 	$(MKSPRITE) 16 1 1 $< $@
 
-filesystem/gfx/32/%.sprite: resources/gfx/32/%.png
+filesystem/gfx/maps/%.sprite: resources/gfx/maps/%.png
 	$(MKSPRITE) 16 1 1 $< $@
 
 $(PROG_NAME).dfs: $(SPRITES)

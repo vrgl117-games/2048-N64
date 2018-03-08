@@ -31,10 +31,10 @@ void screen_timer_title()
 
 void screen_init()
 {
-    logo = dfs_load_map("/gfx/16/logo-%02d.sprite", 6, 2);
-    best = dfs_load("/gfx/16/best.sprite");
-    score = dfs_load("/gfx/16/score.sprite");
-    font = dfs_load_map("/gfx/16/font%d.sprite", 10, 1);
+    logo = dfs_load_map("/gfx/maps/logo-%02d.sprite", 6, 2);
+    best = dfs_load("/gfx/sprites/best.sprite");
+    score = dfs_load("/gfx/sprites/score.sprite");
+    font = dfs_load_map("/gfx/maps/font%d.sprite", 10, 1);
 }
 
 // return true when the animation is done.
@@ -52,13 +52,13 @@ bool screen_intro(display_context_t disp)
     switch (anim)
     {
     case 1 ... 9:
-        intro = dfs_loadf("/gfx/32/intro_%d.sprite", anim);
+        intro = dfs_loadf("/gfx/sprites/intro_%d.sprite", anim);
         break;
     case 10 ... 30:
-        intro = dfs_load("/gfx/32/intro.sprite");
+        intro = dfs_load("/gfx/sprites/intro.sprite");
         break;
     case 31 ... 39:
-        intro = dfs_loadf("/gfx/32/intro_%d.sprite", 40 - anim);
+        intro = dfs_loadf("/gfx/sprites/intro_%d.sprite", 40 - anim);
         break;
     }
 
@@ -80,7 +80,7 @@ void screen_no_controller(display_context_t disp)
 
     rdp_detach_display();
 
-    sprite_t *no_controller = dfs_load("/gfx/32/no_controller.sprite");
+    sprite_t *no_controller = dfs_load("/gfx/sprites/no_controller.sprite");
     graphics_draw_sprite_trans(disp, 320 - no_controller->width / 2, 240 - no_controller->height / 2, no_controller);
     free(no_controller);
 }
@@ -122,7 +122,7 @@ void screen_title(display_context_t disp, bool press_start)
 
     if (press_start && tick % 14 > 7)
     {
-        map_t *press_start = dfs_load_map("/gfx/16/press_start-%02d.sprite", 6, 3);
+        map_t *press_start = dfs_load_map("/gfx/maps/press_start-%02d.sprite", 6, 3);
         rdp_draw_sprite_with_texture_map(press_start, 318, 26, (konami_enabled() ? 3 : 0));
         dfs_free_map(press_start);
     }
@@ -133,7 +133,7 @@ void screen_title(display_context_t disp, bool press_start)
 
     if (press_start)
     {
-        sprite_t *version = dfs_load("/gfx/32/version.sprite");
+        sprite_t *version = dfs_load("/gfx/sprites/version.sprite");
         graphics_draw_sprite_trans(disp, 640 - version->width - 6, 480 - version->height - 6, version);
         free(version);
     }

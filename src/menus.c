@@ -108,21 +108,21 @@ void menu_draw(display_context_t disp, menu_t *menu)
     {
         if (menu->title != NULL)
         {
-            sprite_t *title = dfs_loadf("/gfx/32/%s.sprite", menu->title);
+            sprite_t *title = dfs_loadf("/gfx/sprites/%s.sprite", menu->title);
             graphics_draw_sprite_trans(disp, 320 - title->width / 2, 240 - menu->height / 2 + 10, title);
             free(title);
         }
 
         if (menu->text != NULL)
         {
-            sprite_t *text = dfs_loadf("/gfx/32/%s.sprite", menu->text);
+            sprite_t *text = dfs_loadf("/gfx/sprites/%s.sprite", menu->text);
             graphics_draw_sprite_trans(disp, 320 - text->width / 2, 240 - menu->height / 2 + 75, text);
             free(text);
         }
 
         for (int i = 0; i < menu->options_size; i++)
         {
-            sprite_t *option = dfs_loadf((i == menu->selected_option ? "/gfx/32/%s_selec.sprite" : "/gfx/32/%s.sprite"), menu->options[i].text);
+            sprite_t *option = dfs_loadf((i == menu->selected_option ? "/gfx/sprites/%s_selec.sprite" : "/gfx/sprites/%s.sprite"), menu->options[i].text);
             graphics_draw_sprite_trans(disp, 320 - option->width / 2, 240 - menu->height / 2 + (menu->text != NULL ? 100 : 0) + 75 + 30 * i, option);
             free(option);
         }
