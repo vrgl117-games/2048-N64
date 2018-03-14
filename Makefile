@@ -44,7 +44,7 @@ $(PROG_NAME).dfs: $(SPRITES)
 	$(MKDFSPATH) $@ ./filesystem/
 
 cen64:
-	$(CEN64_DIR)/cen64 $(CEN64_DIR)/pifdata.bin $(PROG_NAME).z64
+	$(CEN64_DIR)/cen64 -controller num=1,pak=rumble $(CEN64_DIR)/pifdata.bin $(PROG_NAME).z64
 
 flashair:
 	curl -X POST -F 'file=@$(PROG_NAME).z64' http://vieux_flashair/upload.cgi
