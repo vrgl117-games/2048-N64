@@ -52,7 +52,7 @@ int main()
         fps_check(keys);
         konami_check(keys);
 
-        if (keys.rumble)
+        if (keys.rumble && game_stop_rumble())
             rumble_stop(0);
 
         while (!(disp = display_lock()))

@@ -16,7 +16,7 @@
 #include "konami.h"
 #include "rdp.h"
 
-static game_t game;
+static game_t game = {0};
 static map_t *maps[16];
 static uint32_t colors[16];
 
@@ -122,6 +122,17 @@ void game_random()
         new = rand() % 16;
     } while (old == new);
     game.cells[new] = 2048 * 10 + POP;
+}
+
+bool game_stop_rumble()
+{
+    // rumble already stopped
+    if (game.rumble == 0)
+        return false;
+
+    game.rumble--;
+
+    return (game.rumble == 0);
 }
 
 // return > 0 if player was able to move
@@ -272,7 +283,10 @@ status_t game_play(control_t keys)
     if (move == 0)
     {
         if (keys.rumble)
+        {
             rumble_start(0);
+            game.rumble = 4;
+        }
         return status;
     }
 

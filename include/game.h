@@ -31,6 +31,8 @@ typedef struct game
 
     difficulty_t difficulty;
     bool won;
+
+    uint8_t rumble;
 } game_t;
 
 typedef enum status {
@@ -49,5 +51,6 @@ void game_draw(display_context_t disp, int grid_x, int grid_y);
 int game_score();
 void game_random();
 void game_reset();
+bool game_stop_rumble();
 
 #endif //__GAME_H__
