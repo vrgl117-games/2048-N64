@@ -44,25 +44,25 @@ control_t controls_get_keys()
         keys.pressed = true;
     }
 
-    if (down.C_up || down.up || down.y > 0)
+    if (down.up)
     {
         keys.direction = d_up;
         keys.pressed = true;
     }
 
-    if (down.C_up || down.down || down.y < 0)
+    if (down.down)
     {
         keys.direction = d_down;
         keys.pressed = true;
     }
 
-    if (down.C_left || down.left || down.x < -JOYSTICK_THRESHOLD)
+    if (down.left)
     {
         keys.direction = d_left;
         keys.pressed = true;
     }
 
-    if (down.C_right || down.right || down.x > JOYSTICK_THRESHOLD)
+    if (down.right)
     {
         keys.direction = d_right;
         keys.pressed = true;

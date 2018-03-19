@@ -36,8 +36,6 @@ typedef struct
 
 } control_t;
 
-#define JOYSTICK_THRESHOLD 80
-
 control_t controls_get_keys();
 
 #endif //__CONTROLS_H__
