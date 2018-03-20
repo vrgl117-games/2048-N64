@@ -75,3 +75,14 @@ convert -brightness-contrast -60 resources/gfx/sprites/intro.png resources/gfx/s
 convert -brightness-contrast -70 resources/gfx/sprites/intro.png resources/gfx/sprites/intro_3.png
 convert -brightness-contrast -80 resources/gfx/sprites/intro.png resources/gfx/sprites/intro_2.png
 convert -brightness-contrast -90 resources/gfx/sprites/intro.png resources/gfx/sprites/intro_1.png
+
+
+convert -brightness-contrast -10 resources/gfx/sprites/n64.png resources/gfx/sprites/n64_9.png
+convert -brightness-contrast -20 resources/gfx/sprites/n64.png resources/gfx/sprites/n64_8.png
+convert -brightness-contrast -30 resources/gfx/sprites/n64.png resources/gfx/sprites/n64_7.png
+convert -brightness-contrast -40 resources/gfx/sprites/n64.png resources/gfx/sprites/n64_6.png
+convert -brightness-contrast -50 resources/gfx/sprites/n64.png resources/gfx/sprites/n64_5.png
+convert -brightness-contrast -60 resources/gfx/sprites/n64.png resources/gfx/sprites/n64_4.png
+convert -brightness-contrast -70 resources/gfx/sprites/n64.png resources/gfx/sprites/n64_3.png
+convert -brightness-contrast -80 resources/gfx/sprites/n64.png resources/gfx/sprites/n64_2.png
+convert -brightness-contrast -90 resources/gfx/sprites/n64.png resources/gfx/sprites/n64_1.png

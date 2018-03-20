@@ -52,13 +52,22 @@ bool screen_intro(display_context_t disp)
     switch (anim)
     {
     case 1 ... 9:
-        intro = dfs_loadf("/gfx/sprites/intro_%d.sprite", anim);
+        intro = dfs_loadf("/gfx/sprites/n64_%d.sprite", anim);
         break;
     case 10 ... 30:
-        intro = dfs_load("/gfx/sprites/intro.sprite");
+        intro = dfs_load("/gfx/sprites/n64.sprite");
         break;
     case 31 ... 39:
-        intro = dfs_loadf("/gfx/sprites/intro_%d.sprite", 40 - anim);
+        intro = dfs_loadf("/gfx/sprites/n64_%d.sprite", 40 - anim);
+        break;
+    case 41 ... 49:
+        intro = dfs_loadf("/gfx/sprites/intro_%d.sprite", anim - 40);
+        break;
+    case 50 ... 70:
+        intro = dfs_load("/gfx/sprites/intro.sprite");
+        break;
+    case 71 ... 79:
+        intro = dfs_loadf("/gfx/sprites/intro_%d.sprite", 80 - anim);
         break;
     }
 
@@ -69,7 +78,7 @@ bool screen_intro(display_context_t disp)
     }
 
     anim++;
-    return (anim >= 42);
+    return (anim >= 82);
 }
 
 void screen_no_controller(display_context_t disp)
