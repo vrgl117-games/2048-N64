@@ -103,12 +103,12 @@ void screen_game(display_context_t disp)
     rdp_draw_sprite_with_texture_map(logo, 140, 18, (konami_enabled() ? 3 : 0));
 
     rdp_draw_filled_rectangle_with_border_size(300, 30, 90, 40, COLOR_CELL_EMPTY_BG, COLOR_GRID_BG);
-    rdp_draw_sprite_with_texture(best, 306, 30, (konami_enabled() ? 3 : 0));
-    rdp_draw_int_map(306, 46, font, game_best(), (konami_enabled() ? 3 : 0));
+    rdp_draw_sprite_with_texture(best, 306, 32, (konami_enabled() ? 3 : 0));
+    rdp_draw_int_map(306, 50, font, game_best(), (konami_enabled() ? 3 : 0));
 
     rdp_draw_filled_rectangle_with_border_size(410, 30, 90, 40, COLOR_CELL_EMPTY_BG, COLOR_GRID_BG);
-    rdp_draw_sprite_with_texture(score, 416, 30, (konami_enabled() ? 3 : 0));
-    rdp_draw_int_map(416, 46, font, game_score(), (konami_enabled() ? 3 : 0));
+    rdp_draw_sprite_with_texture(score, 416, 32, (konami_enabled() ? 3 : 0));
+    rdp_draw_int_map(416, 50, font, game_score(), (konami_enabled() ? 3 : 0));
 
     game_draw(disp, 140, 90);
 
