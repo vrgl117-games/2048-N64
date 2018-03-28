@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "bgm.h"
 #include "colors.h"
 #include "controls.h"
 #include "dfs.h"
@@ -35,6 +36,7 @@ int main()
     rdp_init();
     controller_init();
     timer_init();
+    bgm_init();
     screen_init();
     game_init();
     game_random();
@@ -65,7 +67,10 @@ int main()
             {
             case intro:
                 if (screen_intro(disp))
+                {
+                    bgm_start();
                     screen = title;
+                }
                 break;
             case title:
                 if (menu.visible)
@@ -110,6 +115,7 @@ int main()
             fps_draw(disp);
         }
         display_show(disp);
+        bgm_update();
     }
 
     // cleanup, never called
