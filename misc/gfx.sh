@@ -14,7 +14,7 @@ convert -background "#faf8efff" -fill "#776E65ff" -font "$fontb" -pointsize 10 l
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Game Over" resources/gfx/sprites/title_game_over.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"You Win!" resources/gfx/sprites/title_you_win.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Pause" resources/gfx/sprites/title_pause.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Difficulty" resources/gfx/sprites/title_difficulty.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"New Game" resources/gfx/sprites/title_new_game.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"About" resources/gfx/sprites/title_about.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Continue" resources/gfx/sprites/continue.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Continue" resources/gfx/sprites/continue_selec.png
@@ -24,14 +24,8 @@ convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 l
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"About" resources/gfx/sprites/about_selec.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Back" resources/gfx/sprites/back.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Back" resources/gfx/sprites/back_selec.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Easy" resources/gfx/sprites/easy.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Easy" resources/gfx/sprites/easy_selec.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Normal" resources/gfx/sprites/normal.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Normal" resources/gfx/sprites/normal_selec.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Hard" resources/gfx/sprites/hard.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Hard" resources/gfx/sprites/hard_selec.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 -gravity Center label:"Original game created\nby Gabriele Cirulli,\nN64 version by vrgl117." resources/gfx/sprites/text_about.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 -gravity Center label:"Join the numbers\nand get to the\n2048 tile!" resources/gfx/sprites/text_help.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 -gravity Center label:"Join the numbers and get to the 2048 tile!\n\n\nThis game is Rumble Pak compatible. Please insert\nyour Rumble Pak now if you wish to play with it." resources/gfx/sprites/text_help.png
 
 #screen
 convert -background "#faf8efff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 24 label:"NO CONTROLLER INSERTED ON PORT #1" resources/gfx/sprites/no_controller.png

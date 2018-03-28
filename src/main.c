@@ -21,7 +21,7 @@
 
 screen_t screen = intro;
 menu_t menu;
-extern menu_t menu_difficulty;
+extern menu_t menu_new_game;
 extern menu_t menu_game_over;
 extern menu_t menu_pause;
 extern menu_t menu_you_win;
@@ -50,7 +50,6 @@ int main()
     {
         control_t keys = controls_get_keys();
         fps_check(keys);
-        konami_check(keys);
 
         if (keys.rumble && game_stop_rumble())
             rumble_stop(0);
@@ -78,8 +77,9 @@ int main()
                     }
                 }
                 else if (keys.start)
-                    menu = menu_difficulty;
+                    menu = menu_new_game;
 
+                konami_check(keys);
                 screen_title(disp, !menu.visible);
                 break;
             case game:

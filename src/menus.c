@@ -24,6 +24,8 @@ menu_t menu_about;
 
 menu_t menu_pause = {
     .title = "title_pause",
+    .max_width = 200,
+    .max_height = 80 + 30 * 3,
     .options_size = 3,
     .options = {{.text = "continue", .action = NULL, .close = true}, {.text = "restart", .action = game_reset, .close = true}, {.text = "about", .next = &menu_about, .close = false}},
     .visible = true,
@@ -32,6 +34,8 @@ menu_t menu_pause = {
 menu_t menu_about = {
     .title = "title_about",
     .text = "text_about",
+    .max_width = 240,
+    .max_height = 80 + 30 + 100,
     .options_size = 1,
     .options = {{.text = "back", .next = &menu_pause, .close = false}},
     .visible = true,
@@ -39,6 +43,8 @@ menu_t menu_about = {
 
 menu_t menu_you_win = {
     .title = "title_you_win",
+    .max_width = 240,
+    .max_height = 80 + 30 * 2,
     .options_size = 2,
     .options = {{.text = "continue", .action = NULL, .close = true}, {.text = "restart", .action = game_reset, .close = true}},
     .visible = true,
@@ -46,17 +52,20 @@ menu_t menu_you_win = {
 
 menu_t menu_game_over = {
     .title = "title_game_over",
+    .max_width = 240,
+    .max_height = 80 + 30,
     .options_size = 1,
     .options = {{.text = "restart", .action = game_reset, .close = true}},
     .visible = true,
 };
 
-menu_t menu_difficulty = {
-    .title = "title_difficulty",
+menu_t menu_new_game = {
+    .title = "title_new_game",
     .text = "text_help",
-    .options_size = 3,
-    .options = {{.text = "easy", .action = game_set_difficulty_easy, .close = true}, {.text = "normal", .action = game_set_difficulty_normal, .close = true}, {.text = "hard", .action = game_set_difficulty_hard, .close = true}},
-    .selected_option = 1,
+    .max_width = 440,
+    .max_height = 80 + 30 + 140,
+    .options_size = 1,
+    .options = {{.text = "continue", .action = NULL, .close = true}},
     .visible = true,
 };
 
@@ -82,29 +91,29 @@ void menu_draw(display_context_t disp, menu_t *menu)
     }
     else
     {
-        if (menu->width < MAX_WIDTH)
+        if (menu->width < menu->max_width)
         {
             menu->width += w_step;
-            if (menu->width > MAX_WIDTH)
-                menu->width = MAX_WIDTH;
+            if (menu->width > menu->max_width)
+                menu->width = menu->max_width;
         }
-        if (menu->width > MAX_WIDTH)
+        if (menu->width > menu->max_width)
             menu->width -= w_step;
 
-        if (menu->height < MAX_HEIGHT)
+        if (menu->height < menu->max_height)
         {
             menu->height += h_step;
-            if (menu->height > MAX_HEIGHT)
-                menu->height = MAX_HEIGHT;
+            if (menu->height > menu->max_height)
+                menu->height = menu->max_height;
         }
-        if (menu->height > MAX_HEIGHT)
+        if (menu->height > menu->max_height)
             menu->height -= h_step;
     }
     rdp_attach(disp);
     rdp_draw_filled_rectangle_with_border_size(320 - menu->width / 2, 240 - menu->height / 2, menu->width, menu->height, COLOR_GRID_BG, COLOR_CELL_MORE_BG);
     rdp_detach_display();
 
-    if (menu->width >= MAX_WIDTH && menu->height >= MAX_HEIGHT)
+    if (menu->width >= menu->max_width && menu->height >= menu->max_height)
     {
         if (menu->title != NULL)
         {

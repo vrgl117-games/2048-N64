@@ -24,28 +24,13 @@ int game_new_cell()
 {
     int r = rand() % 10;
 
-    switch (game.difficulty)
-    {
-    case game_easy:
-        return 20 + POP;
-    case game_normal:
-        if (r == 0)
-            return 40 + POP;
-        return 20 + POP;
-    case game_hard:
-        if (r == 0)
-            return 80 + POP;
-        if (r == 1 || r == 2)
-            return 40 + POP;
-        return 20 + POP;
-    }
-    return -1;
+    if (r == 0)
+        return 40 + POP;
+    return 20 + POP;
 }
 
 void game_init()
 {
-    game.difficulty = game_normal;
-
     // init sprites
     maps[1] = dfs_load_map("/gfx/maps/2-%02d.sprite", 2, 1);
     maps[2] = dfs_load_map("/gfx/maps/4-%02d.sprite", 2, 1);
@@ -418,19 +403,4 @@ void game_draw(display_context_t disp, int grid_x, int grid_y)
                 rdp_draw_sprite_with_texture_map(map, xx + 40 - map->width / 2, yy + 40 - map->height / 2, flags);
         }
     }
-}
-
-void game_set_difficulty_easy()
-{
-    game.difficulty = game_easy;
-}
-
-void game_set_difficulty_normal()
-{
-    game.difficulty = game_normal;
-}
-
-void game_set_difficulty_hard()
-{
-    game.difficulty = game_hard;
 }

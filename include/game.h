@@ -16,12 +16,6 @@
 #define POP 4
 #define MERGE 9
 
-typedef enum difficulty {
-    game_easy,
-    game_normal,
-    game_hard
-} difficulty_t;
-
 typedef struct game
 {
     int cells[16];
@@ -29,7 +23,6 @@ typedef struct game
     uint16_t score;
     uint16_t best;
 
-    difficulty_t difficulty;
     bool won;
 
     uint8_t rumble;
@@ -43,9 +36,6 @@ typedef enum status {
 
 int game_best();
 void game_init();
-void game_set_difficulty_easy();
-void game_set_difficulty_normal();
-void game_set_difficulty_hard();
 status_t game_play(control_t keys);
 void game_draw(display_context_t disp, int grid_x, int grid_y);
 int game_score();
