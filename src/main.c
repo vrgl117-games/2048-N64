@@ -119,6 +119,8 @@ int main()
     }
 
     // cleanup, never called
+    bgm_stop();
+    audio_close();
     timer_close();
     rdp_close();
     display_close();
