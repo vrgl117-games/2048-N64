@@ -4,7 +4,7 @@ fontb='misc/font/clearsans-1.00/TTF/ClearSans-Bold.ttf'
 fontr='misc/font/clearsans-1.00/TTF/ClearSans-Regular.ttf'
 
 #UI
-convert -background "#faf8efff" -fill "#776E65ff" -font "$fontb" -pointsize 48 label:2048 -crop 64x32 resources/gfx/maps/logo-%02d.png
+convert resources/gfx/sprites/logo.png -crop 64x32 resources/gfx/maps/logo-%02d.png
 convert -background "#faf8efff" -fill "#776E65ff" -font "$fontb" -pointsize 36 label:"Press Start" -crop 64x32 resources/gfx/maps/press_start-%02d.png
 convert -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:SCORE -shave 0x1 resources/gfx/sprites/score.png
 convert -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:BEST -shave 0x1 resources/gfx/sprites/best.png

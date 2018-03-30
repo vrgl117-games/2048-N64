@@ -31,7 +31,7 @@ void screen_timer_title()
 
 void screen_init()
 {
-    logo = dfs_load_map("/gfx/maps/logo-%02d.sprite", 6, 2);
+    logo = dfs_load_map("/gfx/maps/logo-%02d.sprite", 5, 3);
     best = dfs_load("/gfx/sprites/best.sprite");
     score = dfs_load("/gfx/sprites/score.sprite");
     font = dfs_load_map("/gfx/maps/font%d.sprite", 10, 1);
@@ -73,7 +73,7 @@ bool screen_intro(display_context_t disp)
 
     if (intro != NULL)
     {
-        graphics_draw_sprite(disp, 320 - intro->width / 2, 240 - intro->height / 2, intro);
+        graphics_draw_sprite(disp, 320 - intro->width / 2, 150, intro);
         free(intro);
     }
 
