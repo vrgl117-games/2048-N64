@@ -132,7 +132,7 @@ void menu_draw(display_context_t disp, menu_t *menu)
         for (int i = 0; i < menu->options_size; i++)
         {
             sprite_t *option = dfs_loadf((i == menu->selected_option ? "/gfx/sprites/%s_selec.sprite" : "/gfx/sprites/%s.sprite"), menu->options[i].text);
-            graphics_draw_sprite_trans(disp, 320 - option->width / 2, 240 - menu->height / 2 + (menu->text != NULL ? 100 : 0) + 75 + 30 * i, option);
+            graphics_draw_sprite_trans(disp, 320 - option->width / 2, 240 + menu->height / 2 - 35 - 30 * (menu->options_size - 1 - i), option);
             free(option);
         }
     }
