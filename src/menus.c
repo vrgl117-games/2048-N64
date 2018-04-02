@@ -21,22 +21,22 @@
 extern menu_t menu;
 
 /* menus */
-menu_t menu_about;
+menu_t menu_credits;
 
 menu_t menu_pause = {
     .title = "title_pause",
     .max_width = 200,
     .max_height = 80 + 30 * 3,
     .options_size = 3,
-    .options = {{.text = "continue", .action = bgm_toggle, .close = true}, {.text = "restart", .action = game_reset, .close = true}, {.text = "about", .next = &menu_about, .close = false}},
+    .options = {{.text = "continue", .action = bgm_toggle, .close = true}, {.text = "restart", .action = game_reset, .close = true}, {.text = "credits", .next = &menu_credits, .close = false}},
     .visible = true,
 };
 
-menu_t menu_about = {
-    .title = "title_about",
-    .text = "text_about",
-    .max_width = 240,
-    .max_height = 80 + 30 + 100,
+menu_t menu_credits = {
+    .title = "title_credits",
+    .text = "text_credits",
+    .max_width = 330,
+    .max_height = 80 + 30 + 300,
     .options_size = 1,
     .options = {{.text = "back", .next = &menu_pause, .close = false}},
     .visible = true,
