@@ -53,6 +53,11 @@ void bgm_stop()
     module = NULL;
 }
 
+void bgm_toggle()
+{
+    Player_TogglePause();
+}
+
 void bgm_update()
 {
     MikMod_Update();

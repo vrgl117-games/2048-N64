@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "bgm.h"
 #include "colors.h"
 #include "dfs.h"
 #include "game.h"
@@ -27,7 +28,7 @@ menu_t menu_pause = {
     .max_width = 200,
     .max_height = 80 + 30 * 3,
     .options_size = 3,
-    .options = {{.text = "continue", .action = NULL, .close = true}, {.text = "restart", .action = game_reset, .close = true}, {.text = "about", .next = &menu_about, .close = false}},
+    .options = {{.text = "continue", .action = bgm_toggle, .close = true}, {.text = "restart", .action = game_reset, .close = true}, {.text = "about", .next = &menu_about, .close = false}},
     .visible = true,
 };
 

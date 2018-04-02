@@ -91,7 +91,10 @@ int main()
                 if (menu.visible)
                     menu_press(&menu, keys);
                 else if (keys.start)
+                {
+                    bgm_toggle();
                     menu = menu_pause;
+                }
                 else
                 {
                     status_t status = game_play(keys);
