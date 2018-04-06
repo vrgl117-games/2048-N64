@@ -32,7 +32,7 @@ OBJS := $(SRCS:.c=.o)
 $(PROG_NAME).elf : $(OBJS)
 	$(LD) -o $@ $^ $(LINK_FLAGS)
 
-PNGS := $(wildcard resources/gfx/*/*.png)
+PNGS := $(wildcard resources/gfx/*/*.png) $(wildcard resources/gfx/*/*/*.png)
 SPRITES := $(subst .png,.sprite,$(subst resources/,filesystem/,$(PNGS)))
 filesystem/gfx/sprites/%.sprite: resources/gfx/sprites/%.png
 	$(MKSPRITE) 16 1 1 $< $@
@@ -40,16 +40,13 @@ filesystem/gfx/sprites/%.sprite: resources/gfx/sprites/%.png
 filesystem/gfx/maps/%.sprite: resources/gfx/maps/%.png
 	$(MKSPRITE) 16 1 1 $< $@
 
-ITS := $(wildcard resources/sfx/bgms/*.it)
-BGMS := $(subst .it,.bgm,$(subst resources/,filesystem/,$(ITS)))
-filesystem/sfx/bgms/%.bgm: resources/sfx/bgms/%.it
-	cp $< $@
 
-$(PROG_NAME).dfs: $(SPRITES) $(BGMS)
+$(PROG_NAME).dfs: $(SPRITES)
+	cp resources/sfx/bgms/bgm01.it filesystem/sfx/bgms/bgm01.it
 	$(MKDFSPATH) $@ ./filesystem/
 
 cen64:
-	$(CEN64_DIR)/cen64 -controller num=1,pak=rumble $(CEN64_DIR)/pifdata.bin $(PROG_NAME).z64
+	$(CEN64_DIR)/cen64 -multithread -controller num=1,pak=rumble $(CEN64_DIR)/pifdata.bin $(PROG_NAME).z64
 
 flashair:
 	curl -X POST -F 'file=@$(PROG_NAME).z64' http://vieux_flashair/upload.cgi

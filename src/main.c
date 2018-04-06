@@ -37,7 +37,7 @@ int main()
     controller_init();
     timer_init();
     bgm_init();
-    screen_init();
+    screen_init("en");
     game_init();
     game_random();
 
@@ -109,7 +109,7 @@ int main()
             }
 
             // display menu
-            menu_draw(disp, &menu);
+            menu_draw(disp, &menu, "en");
 
             // increment fps counter
             fps_frame();

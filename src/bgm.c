@@ -30,7 +30,7 @@ void bgm_init()
     MikMod_Init("");
 
     /* reserve 2 voices for sound effects */
-    //MikMod_SetNumVoices(-1, 2);
+    MikMod_SetNumVoices(-1, 2);
 
     /* get ready to play */
     MikMod_EnableOutput();
@@ -41,9 +41,12 @@ void bgm_start()
     if (Player_Active())
         bgm_stop();
 
-    module = Player_Load("rom://filesystem/sfx/bgms/bgm01.bgm", 16, 0);
-    Player_Start(module);
-    // Player_SetVolume(80);
+    module = Player_Load("rom://sfx/bgms/bgm01.bgm", 16, 0);
+    if (module)
+    {
+        Player_Start(module);
+        Player_SetVolume(80);
+    }
 }
 
 void bgm_stop()

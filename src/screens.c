@@ -29,12 +29,12 @@ void screen_timer_title()
     tick++;
 }
 
-void screen_init()
+void screen_init(char *lang)
 {
-    logo = dfs_load_map("/gfx/maps/logo-%02d.sprite", 5, 3);
-    best = dfs_load("/gfx/sprites/best.sprite");
-    score = dfs_load("/gfx/sprites/score.sprite");
-    font = dfs_load_map("/gfx/maps/font%d.sprite", 10, 1);
+    logo = dfs_load_map("/gfx/maps/logo-%02d.sprite", 3);
+    best = dfs_loadf("/gfx/sprites/%s/best.sprite", lang);
+    score = dfs_loadf("/gfx/sprites/%s/score.sprite", lang);
+    font = dfs_load_map("/gfx/maps/font%d.sprite", 1);
 }
 
 // return true when the animation is done.
@@ -89,7 +89,7 @@ void screen_no_controller(display_context_t disp)
 
     rdp_detach_display();
 
-    sprite_t *no_controller = dfs_load("/gfx/sprites/no_controller.sprite");
+    sprite_t *no_controller = dfs_load("/gfx/sprites/en/no_controller.sprite");
     graphics_draw_sprite_trans(disp, 320 - no_controller->width / 2, 240 - no_controller->height / 2, no_controller);
     free(no_controller);
 }
@@ -102,13 +102,13 @@ void screen_game(display_context_t disp)
 
     rdp_draw_sprite_with_texture_map(logo, 140, 18, (konami_enabled() ? 3 : 0));
 
-    rdp_draw_filled_rectangle_with_border_size(300, 30, 90, 40, COLOR_CELL_EMPTY_BG, COLOR_GRID_BG);
-    rdp_draw_sprite_with_texture(best, 306, 32, (konami_enabled() ? 3 : 0));
-    rdp_draw_int_map(306, 50, font, game_best(), (konami_enabled() ? 3 : 0));
+    rdp_draw_filled_rectangle_with_border_size(320, 30, 80, 40, COLOR_CELL_EMPTY_BG, COLOR_GRID_BG);
+    rdp_draw_sprite_with_texture(best, 326, 32, (konami_enabled() ? 3 : 0));
+    rdp_draw_int_map(326, 50, font, game_best(), (konami_enabled() ? 3 : 0));
 
-    rdp_draw_filled_rectangle_with_border_size(410, 30, 90, 40, COLOR_CELL_EMPTY_BG, COLOR_GRID_BG);
-    rdp_draw_sprite_with_texture(score, 416, 32, (konami_enabled() ? 3 : 0));
-    rdp_draw_int_map(416, 50, font, game_score(), (konami_enabled() ? 3 : 0));
+    rdp_draw_filled_rectangle_with_border_size(420, 30, 80, 40, COLOR_CELL_EMPTY_BG, COLOR_GRID_BG);
+    rdp_draw_sprite_with_texture(score, 426, 32, (konami_enabled() ? 3 : 0));
+    rdp_draw_int_map(426, 50, font, game_score(), (konami_enabled() ? 3 : 0));
 
     game_draw(disp, 140, 90);
 
@@ -131,7 +131,7 @@ void screen_title(display_context_t disp, bool press_start)
 
     if (press_start && tick % 14 > 7)
     {
-        map_t *press_start = dfs_load_map("/gfx/maps/press_start-%02d.sprite", 6, 3);
+        map_t *press_start = dfs_load_map("/gfx/maps/en/press_start-%02d.sprite", 3);
         rdp_draw_sprite_with_texture_map(press_start, 318, 26, (konami_enabled() ? 3 : 0));
         dfs_free_map(press_start);
     }
@@ -142,7 +142,7 @@ void screen_title(display_context_t disp, bool press_start)
 
     if (press_start)
     {
-        sprite_t *version = dfs_load("/gfx/sprites/version.sprite");
+        sprite_t *version = dfs_load("/gfx/sprites/en/version.sprite");
         graphics_draw_sprite_trans(disp, 640 - version->width - 6, 480 - version->height - 6, version);
         free(version);
     }

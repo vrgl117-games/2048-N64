@@ -70,7 +70,7 @@ menu_t menu_new_game = {
     .visible = true,
 };
 
-void menu_draw(display_context_t disp, menu_t *menu)
+void menu_draw(display_context_t disp, menu_t *menu, char *lang)
 {
     if (!menu->visible)
         return;
@@ -118,21 +118,21 @@ void menu_draw(display_context_t disp, menu_t *menu)
     {
         if (menu->title != NULL)
         {
-            sprite_t *title = dfs_loadf("/gfx/sprites/%s.sprite", menu->title);
+            sprite_t *title = dfs_loadf("/gfx/sprites/%s/%s.sprite", lang, menu->title);
             graphics_draw_sprite_trans(disp, 320 - title->width / 2, 240 - menu->height / 2 + 10, title);
             free(title);
         }
 
         if (menu->text != NULL)
         {
-            sprite_t *text = dfs_loadf("/gfx/sprites/%s.sprite", menu->text);
+            sprite_t *text = dfs_loadf("/gfx/sprites/%s/%s.sprite", lang, menu->text);
             graphics_draw_sprite_trans(disp, 320 - text->width / 2, 240 - menu->height / 2 + 75, text);
             free(text);
         }
 
         for (int i = 0; i < menu->options_size; i++)
         {
-            sprite_t *option = dfs_loadf((i == menu->selected_option ? "/gfx/sprites/%s_selec.sprite" : "/gfx/sprites/%s.sprite"), menu->options[i].text);
+            sprite_t *option = dfs_loadf((i == menu->selected_option ? "/gfx/sprites/%s/%s_selec.sprite" : "/gfx/sprites/%s/%s.sprite"), lang, menu->options[i].text);
             graphics_draw_sprite_trans(disp, 320 - option->width / 2, 240 + menu->height / 2 - 35 - 30 * (menu->options_size - 1 - i), option);
             free(option);
         }

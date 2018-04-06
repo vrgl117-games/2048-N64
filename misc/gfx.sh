@@ -5,30 +5,33 @@ fontr='misc/font/clearsans-1.00/TTF/ClearSans-Regular.ttf'
 
 #UI
 convert resources/gfx/sprites/logo.png -crop 64x32 resources/gfx/maps/logo-%02d.png
-convert -background "#faf8efff" -fill "#776E65ff" -font "$fontb" -pointsize 36 label:"Press Start" -crop 64x32 resources/gfx/maps/press_start-%02d.png
-convert -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:SCORE -shave 0x1 resources/gfx/sprites/score.png
-convert -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:BEST -shave 0x1 resources/gfx/sprites/best.png
-convert -background "#faf8efff" -fill "#776E65ff" -font "$fontb" -pointsize 10 label:"version: 0.9" resources/gfx/sprites/version.png
+convert -background "#faf8efff" -fill "#776E65ff" -font "$fontb" -pointsize 36 label:"Press Start" -crop 64x32 resources/gfx/maps/en/press_start-%02d.png
+convert -background "#faf8efff" -fill "#776E65ff" -font "$fontb" -pointsize 36 label:"Appuyez sur Start" -crop 64x32 resources/gfx/maps/fr/press_start-%02d.png
+convert -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:SCORE -shave 0x1 resources/gfx/sprites/en/score.png
+convert -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:SCORE -shave 0x1 resources/gfx/sprites/fr/score.png
+convert -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:BEST -shave 0x1 resources/gfx/sprites/en/best.png
+convert -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:TOP -shave 0x1 resources/gfx/sprites/fr/best.png
+convert -background "#faf8efff" -fill "#776E65ff" -font "$fontb" -pointsize 10 label:"version: 0.9" resources/gfx/sprites/en/version.png
 
 #menu
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Game Over" resources/gfx/sprites/title_game_over.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"You Win!" resources/gfx/sprites/title_you_win.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Pause" resources/gfx/sprites/title_pause.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"New Game" resources/gfx/sprites/title_new_game.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"About" resources/gfx/sprites/title_about.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Continue" resources/gfx/sprites/continue.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Continue" resources/gfx/sprites/continue_selec.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Restart" resources/gfx/sprites/restart.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Restart" resources/gfx/sprites/restart_selec.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"About" resources/gfx/sprites/about.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"About" resources/gfx/sprites/about_selec.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Back" resources/gfx/sprites/back.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Back" resources/gfx/sprites/back_selec.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 -gravity Center label:"Original game created\nby Gabriele Cirulli,\nN64 version by vrgl117." resources/gfx/sprites/text_about.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 -gravity Center label:"Join the numbers and get to the 2048 tile!\n\n\nThis game is Rumble Pak compatible. Please insert\nyour Rumble Pak now if you wish to play with it." resources/gfx/sprites/text_help.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Game Over" resources/gfx/sprites/en/title_game_over.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"You Win!" resources/gfx/sprites/en/title_you_win.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Pause" resources/gfx/sprites/en/title_pause.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"New Game" resources/gfx/sprites/en/title_new_game.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Credits" resources/gfx/sprites/en/title_credits.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Continue" resources/gfx/sprites/en/continue.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Continue" resources/gfx/sprites/en/continue_selec.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Restart" resources/gfx/sprites/en/restart.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Restart" resources/gfx/sprites/en/restart_selec.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Credits" resources/gfx/sprites/en/credits.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Credits" resources/gfx/sprites/en/credits_selec.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Back" resources/gfx/sprites/en/back.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Back" resources/gfx/sprites/en/back_selec.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 -gravity Center label:"Original 2048 game by Gabriele Cirulli\nwww.gabrielecirulli.com\n\nMusic by Eric Matyas\nwww.soundimage.org\n\nN64 version by vrgl117\nwww.vrgl117.games" resources/gfx/sprites/en/text_credits.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 -gravity Center label:"Join the numbers and get to the 2048 tile!\n\n\nThis game is Rumble Pak compatible. Please insert\nyour Rumble Pak now if you wish to play with it." resources/gfx/sprites/en/text_help.png
 
 #screen
-convert -background "#faf8efff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 24 label:"NO CONTROLLER INSERTED ON PORT #1" resources/gfx/sprites/no_controller.png
+convert -background "#faf8efff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 24 label:"NO CONTROLLER INSERTED ON PORT #1" resources/gfx/sprites/en/no_controller.png
 
 #grid
 convert -background "#EEE4DAff" -fill "#776E65ff" -font "$fontb" -pointsize 36 label:2 -crop 64x32 resources/gfx/maps/2-%02d.png

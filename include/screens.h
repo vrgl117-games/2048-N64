@@ -19,7 +19,7 @@ typedef enum screens {
     game
 } screen_t;
 
-void screen_init();
+void screen_init(char *lang);
 bool screen_intro(display_context_t disp);
 void screen_game(display_context_t disp);
 void screen_no_controller(display_context_t disp);
