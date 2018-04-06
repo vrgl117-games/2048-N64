@@ -31,10 +31,10 @@ void screen_timer_title()
 
 void screen_init(char *lang)
 {
-    logo = dfs_load_map("/gfx/maps/logo-%02d.sprite", 3);
+    logo = dfs_load_mapf("/gfx/maps/logo-%02d.sprite", 3);
     best = dfs_loadf("/gfx/sprites/%s/best.sprite", lang);
     score = dfs_loadf("/gfx/sprites/%s/score.sprite", lang);
-    font = dfs_load_map("/gfx/maps/font%d.sprite", 1);
+    font = dfs_load_mapf("/gfx/maps/font%d.sprite", 1);
 }
 
 // return true when the animation is done.
@@ -115,7 +115,7 @@ void screen_game(display_context_t disp)
     rdp_detach_display();
 }
 
-void screen_title(display_context_t disp, bool press_start)
+void screen_title(display_context_t disp, bool press_start, char *lang)
 {
     rdp_attach(disp);
 
@@ -131,7 +131,7 @@ void screen_title(display_context_t disp, bool press_start)
 
     if (press_start && tick % 14 > 7)
     {
-        map_t *press_start = dfs_load_map("/gfx/maps/en/press_start-%02d.sprite", 3);
+        map_t *press_start = dfs_load_mapf("/gfx/maps/%s/press_start-%02d.sprite", (lang[0] == 'e' ? 3 : 5), lang);
         rdp_draw_sprite_with_texture_map(press_start, 318, 26, (konami_enabled() ? 3 : 0));
         dfs_free_map(press_start);
     }

@@ -37,7 +37,7 @@ int main()
     controller_init();
     timer_init();
     bgm_init();
-    screen_init("en");
+    screen_init("fr");
     game_init();
     game_random();
 
@@ -85,7 +85,7 @@ int main()
                     menu = menu_new_game;
 
                 konami_check(keys);
-                screen_title(disp, !menu.visible);
+                screen_title(disp, !menu.visible, "fr");
                 break;
             case game:
                 if (menu.visible)
@@ -109,7 +109,7 @@ int main()
             }
 
             // display menu
-            menu_draw(disp, &menu, "en");
+            menu_draw(disp, &menu, "fr");
 
             // increment fps counter
             fps_frame();

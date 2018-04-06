@@ -32,21 +32,21 @@ int game_new_cell()
 void game_init()
 {
     // init sprites
-    maps[1] = dfs_load_map("/gfx/maps/2-%02d.sprite", 1);
-    maps[2] = dfs_load_map("/gfx/maps/4-%02d.sprite", 1);
-    maps[3] = dfs_load_map("/gfx/maps/8-%02d.sprite", 1);
-    maps[4] = dfs_load_map("/gfx/maps/16-%02d.sprite", 1);
-    maps[5] = dfs_load_map("/gfx/maps/32-%02d.sprite", 1);
-    maps[6] = dfs_load_map("/gfx/maps/64-%02d.sprite", 1);
-    maps[7] = dfs_load_map("/gfx/maps/128-%02d.sprite", 1);
-    maps[8] = dfs_load_map("/gfx/maps/256-%02d.sprite", 1);
-    maps[9] = dfs_load_map("/gfx/maps/512-%02d.sprite", 1);
-    maps[10] = dfs_load_map("/gfx/maps/1024-%02d.sprite", 2);
-    maps[11] = dfs_load_map("/gfx/maps/2048-%02d.sprite", 2);
-    maps[12] = dfs_load_map("/gfx/maps/4096-%02d.sprite", 2);
-    maps[13] = dfs_load_map("/gfx/maps/8192-%02d.sprite", 2);
-    maps[14] = dfs_load_map("/gfx/maps/16384-%02d.sprite", 2);
-    maps[15] = dfs_load_map("/gfx/maps/32768-%02d.sprite", 2);
+    maps[1] = dfs_load_mapf("/gfx/maps/2-%02d.sprite", 1);
+    maps[2] = dfs_load_mapf("/gfx/maps/4-%02d.sprite", 1);
+    maps[3] = dfs_load_mapf("/gfx/maps/8-%02d.sprite", 1);
+    maps[4] = dfs_load_mapf("/gfx/maps/16-%02d.sprite", 1);
+    maps[5] = dfs_load_mapf("/gfx/maps/32-%02d.sprite", 1);
+    maps[6] = dfs_load_mapf("/gfx/maps/64-%02d.sprite", 1);
+    maps[7] = dfs_load_mapf("/gfx/maps/128-%02d.sprite", 1);
+    maps[8] = dfs_load_mapf("/gfx/maps/256-%02d.sprite", 1);
+    maps[9] = dfs_load_mapf("/gfx/maps/512-%02d.sprite", 1);
+    maps[10] = dfs_load_mapf("/gfx/maps/1024-%02d.sprite", 2);
+    maps[11] = dfs_load_mapf("/gfx/maps/2048-%02d.sprite", 2);
+    maps[12] = dfs_load_mapf("/gfx/maps/4096-%02d.sprite", 2);
+    maps[13] = dfs_load_mapf("/gfx/maps/8192-%02d.sprite", 2);
+    maps[14] = dfs_load_mapf("/gfx/maps/16384-%02d.sprite", 2);
+    maps[15] = dfs_load_mapf("/gfx/maps/32768-%02d.sprite", 2);
 
     // init colors
     colors[0] = COLOR_CELL_EMPTY_BG;

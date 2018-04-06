@@ -13,7 +13,7 @@
 
 typedef struct map
 {
-    sprite_t *sprites[10];
+    sprite_t *sprites[12];
     int slices;
 
     int height;
@@ -25,6 +25,6 @@ typedef struct map
 void dfs_free_map(map_t *map);
 void *dfs_load(const char *const path);
 void *dfs_loadf(const char *const format, ...);
-map_t *dfs_load_map(const char *const path, int mod);
+map_t *dfs_load_mapf(const char *const path, ...);
 
 #endif //__FILESYSTEM_H__

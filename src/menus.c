@@ -35,8 +35,8 @@ menu_t menu_pause = {
 menu_t menu_credits = {
     .title = "title_credits",
     .text = "text_credits",
-    .max_width = 330,
-    .max_height = 80 + 30 + 300,
+    .max_width = 380,
+    .max_height = 80 + 30 + 320,
     .options_size = 1,
     .options = {{.text = "back", .next = &menu_pause, .close = false}},
     .visible = true,

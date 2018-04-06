@@ -23,7 +23,7 @@ void screen_init(char *lang);
 bool screen_intro(display_context_t disp);
 void screen_game(display_context_t disp);
 void screen_no_controller(display_context_t disp);
-void screen_title(display_context_t disp, bool press_start);
+void screen_title(display_context_t disp, bool press_start, char *lang);
 void screen_timer_title();
 
 #endif //__SCREENS_H__

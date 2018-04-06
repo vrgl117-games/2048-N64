@@ -15,23 +15,39 @@ convert -background "#faf8efff" -fill "#776E65ff" -font "$fontb" -pointsize 10 l
 
 #menu
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Game Over" resources/gfx/sprites/en/title_game_over.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Partie Terminée" resources/gfx/sprites/fr/title_game_over.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"You Win!" resources/gfx/sprites/en/title_you_win.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Bravo!" resources/gfx/sprites/fr/title_you_win.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Pause" resources/gfx/sprites/en/title_pause.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Pause" resources/gfx/sprites/fr/title_pause.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"New Game" resources/gfx/sprites/en/title_new_game.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Nouvelle Partie" resources/gfx/sprites/fr/title_new_game.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Credits" resources/gfx/sprites/en/title_credits.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Crédits" resources/gfx/sprites/fr/title_credits.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Continue" resources/gfx/sprites/en/continue.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Continuer" resources/gfx/sprites/fr/continue.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Continue" resources/gfx/sprites/en/continue_selec.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Continuer" resources/gfx/sprites/fr/continue_selec.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Restart" resources/gfx/sprites/en/restart.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Recommencer" resources/gfx/sprites/fr/restart.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Restart" resources/gfx/sprites/en/restart_selec.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Recommencer" resources/gfx/sprites/fr/restart_selec.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Credits" resources/gfx/sprites/en/credits.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Crédits" resources/gfx/sprites/fr/credits.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Credits" resources/gfx/sprites/en/credits_selec.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Crédits" resources/gfx/sprites/fr/credits_selec.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Back" resources/gfx/sprites/en/back.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Retour" resources/gfx/sprites/fr/back.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Back" resources/gfx/sprites/en/back_selec.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Retour" resources/gfx/sprites/fr/back_selec.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 -gravity Center label:"Original 2048 game by Gabriele Cirulli\nwww.gabrielecirulli.com\n\nMusic by Eric Matyas\nwww.soundimage.org\n\nN64 version by vrgl117\nwww.vrgl117.games" resources/gfx/sprites/en/text_credits.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 -gravity Center label:"Jeu 2048 original creé par Gabriele Cirulli\nwww.gabrielecirulli.com\n\nMusic par Eric Matyas\nwww.soundimage.org\n\nVersion N64 par vrgl117\nwww.vrgl117.games" resources/gfx/sprites/fr/text_credits.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 -gravity Center label:"Join the numbers and get to the 2048 tile!\n\n\nThis game is Rumble Pak compatible. Please insert\nyour Rumble Pak now if you wish to play with it." resources/gfx/sprites/en/text_help.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 -gravity Center label:"Grouppez les nombres pour créer la case 2048!\n\n\Ce jeu est compatible avec le Rumble Pak. Insérez\nvotre Rumble Pak maintenant si vous souhaitez\nl'utiliser." resources/gfx/sprites/fr/text_help.png
 
 #screen
 convert -background "#faf8efff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 24 label:"NO CONTROLLER INSERTED ON PORT #1" resources/gfx/sprites/en/no_controller.png
+convert -background "#faf8efff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 24 label:"PAS DE MANETTE CONNECTEE AU PORT #1" resources/gfx/sprites/fr/no_controller.png
 
 #grid
 convert -background "#EEE4DAff" -fill "#776E65ff" -font "$fontb" -pointsize 36 label:2 -crop 64x32 resources/gfx/maps/2-%02d.png
