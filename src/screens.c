@@ -115,7 +115,7 @@ void screen_no_controller(display_context_t disp)
     rdp_detach_display();
 
     sprite_t *no_controller = dfs_loadf("/gfx/sprites/%s/no_controller.sprite", lang_selected_str());
-    graphics_draw_sprite_trans(disp, 320 - no_controller->width / 2, 240 - no_controller->height / 2, no_controller);
+    graphics_draw_sprite(disp, 320 - no_controller->width / 2, 240 - no_controller->height / 2, no_controller);
     free(no_controller);
 }
 
@@ -168,7 +168,7 @@ void screen_title(display_context_t disp, bool press_start)
     if (press_start)
     {
         sprite_t *version = dfs_load("/gfx/sprites/en/version.sprite");
-        graphics_draw_sprite_trans(disp, 640 - version->width - 6, 480 - version->height - 6, version);
+        graphics_draw_sprite(disp, 640 - version->width - 6, 480 - version->height - 6, version);
         free(version);
     }
 }
