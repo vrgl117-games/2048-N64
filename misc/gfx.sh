@@ -7,43 +7,78 @@ fontr='misc/font/clearsans-1.00/TTF/ClearSans-Regular.ttf'
 convert resources/gfx/sprites/logo.png -crop 64x32 resources/gfx/maps/logo-%02d.png
 convert -background "#faf8efff" -fill "#776E65ff" -font "$fontb" -pointsize 36 label:"Press Start" -crop 64x32 resources/gfx/maps/en/press_start-%02d.png
 convert -background "#faf8efff" -fill "#776E65ff" -font "$fontb" -pointsize 36 label:"Appuyez sur Start" -crop 64x32 resources/gfx/maps/fr/press_start-%02d.png
+convert -background "#faf8efff" -fill "#776E65ff" -font "$fontb" -pointsize 36 label:"Pulsa Start" -crop 64x32 resources/gfx/maps/es/press_start-%02d.png
+
 convert -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:SCORE -shave 0x1 resources/gfx/sprites/en/score.png
 convert -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:SCORE -shave 0x1 resources/gfx/sprites/fr/score.png
+convert -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:SCORE -shave 0x1 resources/gfx/sprites/es/score.png
+
 convert -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:BEST -shave 0x1 resources/gfx/sprites/en/best.png
 convert -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:TOP -shave 0x1 resources/gfx/sprites/fr/best.png
+convert -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:TOP -shave 0x1 resources/gfx/sprites/es/best.png
+
 convert -background "#faf8efff" -fill "#776E65ff" -font "$fontb" -pointsize 10 label:"version: 0.9" resources/gfx/sprites/en/version.png
 
 #menu
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Game Over" resources/gfx/sprites/en/title_game_over.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Partie Terminée" resources/gfx/sprites/fr/title_game_over.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Fin del juego" resources/gfx/sprites/es/title_game_over.png
+
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"You Win!" resources/gfx/sprites/en/title_you_win.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Bravo!" resources/gfx/sprites/fr/title_you_win.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Gagné !" resources/gfx/sprites/fr/title_you_win.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"¡Ganas!" resources/gfx/sprites/es/title_you_win.png
+
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Pause" resources/gfx/sprites/en/title_pause.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Pause" resources/gfx/sprites/fr/title_pause.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Pausa" resources/gfx/sprites/es/title_pause.png
+
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"New Game" resources/gfx/sprites/en/title_new_game.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Nouvelle Partie" resources/gfx/sprites/fr/title_new_game.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Juego nuevo" resources/gfx/sprites/es/title_new_game.png
+
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Credits" resources/gfx/sprites/en/title_credits.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Crédits" resources/gfx/sprites/fr/title_credits.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Créditos" resources/gfx/sprites/es/title_credits.png
+
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Continue" resources/gfx/sprites/en/continue.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Continuer" resources/gfx/sprites/fr/continue.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Continuar" resources/gfx/sprites/es/continue.png
+
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Continue" resources/gfx/sprites/en/continue_selec.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Continuer" resources/gfx/sprites/fr/continue_selec.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Continuar" resources/gfx/sprites/es/continue_selec.png
+
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Restart" resources/gfx/sprites/en/restart.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Recommencer" resources/gfx/sprites/fr/restart.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Jugar otra vez" resources/gfx/sprites/es/restart.png
+
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Restart" resources/gfx/sprites/en/restart_selec.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Recommencer" resources/gfx/sprites/fr/restart_selec.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Repetir" resources/gfx/sprites/es/restart_selec.png
+
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Credits" resources/gfx/sprites/en/credits.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Crédits" resources/gfx/sprites/fr/credits.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Créditos" resources/gfx/sprites/es/credits.png
+
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Credits" resources/gfx/sprites/en/credits_selec.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Crédits" resources/gfx/sprites/fr/credits_selec.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Créditos" resources/gfx/sprites/es/credits_selec.png
+
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Back" resources/gfx/sprites/en/back.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Retour" resources/gfx/sprites/fr/back.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Volver" resources/gfx/sprites/es/back.png
+
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Back" resources/gfx/sprites/en/back_selec.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Retour" resources/gfx/sprites/fr/back_selec.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Volver" resources/gfx/sprites/fr/back_selec.png
+
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 -gravity Center label:"Original 2048 game by Gabriele Cirulli\nwww.gabrielecirulli.com\n\nMusic by Eric Matyas\nwww.soundimage.org\n\nN64 version by vrgl117\nwww.vrgl117.games" resources/gfx/sprites/en/text_credits.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 -gravity Center label:"Jeu 2048 original creé par Gabriele Cirulli\nwww.gabrielecirulli.com\n\nMusic par Eric Matyas\nwww.soundimage.org\n\nVersion N64 par vrgl117\nwww.vrgl117.games" resources/gfx/sprites/fr/text_credits.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 -gravity Center label:"Juego original 2048 por Gabriele Cirulli\nwww.gabrielecirulli.com\n\nMusica por Eric Matyas\nwww.soundimage.org\n\nVersion N64 por vrgl117\nwww.vrgl117.games" resources/gfx/sprites/es/text_credits.png
+
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 -gravity Center label:"Join the numbers and get to the 2048 tile!\n\n\nThis game is Rumble Pak compatible. Please insert\nyour Rumble Pak now if you wish to play with it." resources/gfx/sprites/en/text_help.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 -gravity Center label:"Grouppez les nombres pour créer la case 2048!\n\n\Ce jeu est compatible avec le Rumble Pak. Insérez\nvotre Rumble Pak maintenant si vous souhaitez\nl'utiliser." resources/gfx/sprites/fr/text_help.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 -gravity Center label:"Junte los numeros y obtenga la casilla 2048!\n\n\nEste juego es compatible con Rumble Pak. Por favor inserte\nsu Rumble Pak si desea jugar con este." resources/gfx/sprites/es/text_help.png
 
 #screen
 convert -background "#faf8efff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 24 label:"NO CONTROLLER INSERTED ON PORT #1" resources/gfx/sprites/en/no_controller.png

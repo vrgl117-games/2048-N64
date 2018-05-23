@@ -7,5 +7,5 @@ RUN cd /tmp && git clone https://github.com/parasyte/libmikmod-n64.git && cd /tm
 COPY . /2048-N64
 WORKDIR /2048-N64
 
-RUN mkdir -p filesystem/gfx/sprites/en filesystem/gfx/sprites/fr filesystem/gfx/maps/en filesystem/gfx/maps/fr filesystem/sfx/bgms
+RUN mkdir -p filesystem/gfx/sprites/en filesystem/gfx/sprites/fr  filesystem/gfx/sprites/es filesystem/gfx/maps/en filesystem/gfx/maps/fr filesystem/gfx/maps/es filesystem/sfx/bgms
 RUN make

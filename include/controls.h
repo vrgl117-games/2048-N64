@@ -11,7 +11,8 @@
 
 #include <libdragon.h>
 
-typedef enum direction {
+typedef enum direction
+{
     d_none,
     d_up,
     d_down,

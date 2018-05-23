@@ -17,6 +17,7 @@
 #include "game.h"
 #include "graphics.h"
 #include "konami.h"
+#include "lang.h"
 #include "menus.h"
 #include "screens.h"
 
@@ -37,9 +38,6 @@ int main()
     controller_init();
     timer_init();
     bgm_init();
-    screen_init("fr");
-    game_init();
-    game_random();
 
     new_timer(TIMER_TICKS(1000000), TF_CONTINUOUS, fps_timer);
 
@@ -69,8 +67,19 @@ int main()
                 if (screen_intro(disp))
                 {
                     bgm_start();
+                    screen = lang;
+                }
+                break;
+            case lang:
+                if (lang_press(keys))
+                {
+                    screen_init();
+                    game_init();
+                    game_random();
                     screen = title;
                 }
+
+                screen_lang(disp);
                 break;
             case title:
                 if (menu.visible)
@@ -85,7 +94,7 @@ int main()
                     menu = menu_new_game;
 
                 konami_check(keys);
-                screen_title(disp, !menu.visible, "fr");
+                screen_title(disp, !menu.visible);
                 break;
             case game:
                 if (menu.visible)
@@ -109,7 +118,7 @@ int main()
             }
 
             // display menu
-            menu_draw(disp, &menu, "fr");
+            menu_draw(disp, &menu);
 
             // increment fps counter
             fps_frame();

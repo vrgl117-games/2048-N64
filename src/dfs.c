@@ -49,15 +49,9 @@ void *dfs_loadf(const char *const format, ...)
     return dfs_load(buffer);
 }
 
-map_t *dfs_load_mapf(const char *const path, ...)
+map_t *dfs_load_map(const char *const path, int mod, char *lang)
 {
     char buffer[256];
-
-    va_list args;
-    va_start(args, path);
-    int mod = va_arg(args, int);
-    char *lang = va_arg(args, char *);
-    va_end(args);
 
     map_t *data = calloc(1, sizeof(map_t));
     data->mod = mod;

@@ -28,7 +28,8 @@ typedef struct game
     uint8_t rumble;
 } game_t;
 
-typedef enum status {
+typedef enum status
+{
     game_none,
     game_over,
     game_win

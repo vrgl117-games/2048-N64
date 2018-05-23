@@ -15,6 +15,7 @@
 #include "game.h"
 #include "graphics.h"
 #include "konami.h"
+#include "lang.h"
 #include "rdp.h"
 #include "screens.h"
 
@@ -29,12 +30,12 @@ void screen_timer_title()
     tick++;
 }
 
-void screen_init(char *lang)
+void screen_init()
 {
-    logo = dfs_load_mapf("/gfx/maps/logo-%02d.sprite", 3);
-    best = dfs_loadf("/gfx/sprites/%s/best.sprite", lang);
-    score = dfs_loadf("/gfx/sprites/%s/score.sprite", lang);
-    font = dfs_load_mapf("/gfx/maps/font%d.sprite", 1);
+    logo = dfs_load_map("/gfx/maps/logo-%02d.sprite", 3, NULL);
+    best = dfs_loadf("/gfx/sprites/%s/best.sprite", lang_selected_str());
+    score = dfs_loadf("/gfx/sprites/%s/score.sprite", lang_selected_str());
+    font = dfs_load_map("/gfx/maps/font%d.sprite", 1, NULL);
 }
 
 // return true when the animation is done.
@@ -81,6 +82,30 @@ bool screen_intro(display_context_t disp)
     return (anim >= 82);
 }
 
+void screen_lang(display_context_t disp)
+{
+    int selected_lang = lang_selected();
+
+    rdp_attach(disp);
+
+    rdp_draw_filled_fullscreen(COLOR_BLACK);
+    rdp_draw_filled_rectangle_with_border_size(220 - 4, 45 + 45 * selected_lang + 100 * selected_lang - 4, 208, 108, COLOR_BLACK, COLOR_WHITE);
+
+    rdp_detach_display();
+
+    sprite_t *en = dfs_load("/gfx/sprites/en_flag.sprite");
+    graphics_draw_sprite(disp, 220, 45, en);
+    free(en);
+
+    sprite_t *es = dfs_load("/gfx/sprites/es_flag.sprite");
+    graphics_draw_sprite(disp, 220, 190, es);
+    free(es);
+
+    sprite_t *fr = dfs_load("/gfx/sprites/fr_flag.sprite");
+    graphics_draw_sprite(disp, 220, 335, fr);
+    free(fr);
+}
+
 void screen_no_controller(display_context_t disp)
 {
     rdp_attach(disp);
@@ -89,7 +114,7 @@ void screen_no_controller(display_context_t disp)
 
     rdp_detach_display();
 
-    sprite_t *no_controller = dfs_load("/gfx/sprites/en/no_controller.sprite");
+    sprite_t *no_controller = dfs_loadf("/gfx/sprites/%s/no_controller.sprite", lang_selected_str());
     graphics_draw_sprite_trans(disp, 320 - no_controller->width / 2, 240 - no_controller->height / 2, no_controller);
     free(no_controller);
 }
@@ -115,7 +140,7 @@ void screen_game(display_context_t disp)
     rdp_detach_display();
 }
 
-void screen_title(display_context_t disp, bool press_start, char *lang)
+void screen_title(display_context_t disp, bool press_start)
 {
     rdp_attach(disp);
 
@@ -131,7 +156,7 @@ void screen_title(display_context_t disp, bool press_start, char *lang)
 
     if (press_start && tick % 14 > 7)
     {
-        map_t *press_start = dfs_load_mapf("/gfx/maps/%s/press_start-%02d.sprite", (lang[0] == 'e' ? 3 : 5), lang);
+        map_t *press_start = dfs_load_map("/gfx/maps/%s/press_start-%02d.sprite", (lang_selected_str()[0] == 'e' ? 3 : 5), lang_selected_str());
         rdp_draw_sprite_with_texture_map(press_start, 318, 26, (konami_enabled() ? 3 : 0));
         dfs_free_map(press_start);
     }

@@ -14,6 +14,7 @@
 #include "colors.h"
 #include "dfs.h"
 #include "game.h"
+#include "lang.h"
 #include "menus.h"
 #include "rdp.h"
 #include "screens.h"
@@ -36,7 +37,7 @@ menu_t menu_credits = {
     .title = "title_credits",
     .text = "text_credits",
     .max_width = 380,
-    .max_height = 80 + 30 + 320,
+    .max_height = 80 + 30 + 220,
     .options_size = 1,
     .options = {{.text = "back", .next = &menu_pause, .close = false}},
     .visible = true,
@@ -70,8 +71,10 @@ menu_t menu_new_game = {
     .visible = true,
 };
 
-void menu_draw(display_context_t disp, menu_t *menu, char *lang)
+void menu_draw(display_context_t disp, menu_t *menu)
 {
+    char *lang = lang_selected_str();
+
     if (!menu->visible)
         return;
 

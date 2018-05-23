@@ -43,7 +43,7 @@ struct menu
     int max_height;
 };
 
-void menu_draw(display_context_t disp, menu_t *menu, char *lang);
+void menu_draw(display_context_t disp, menu_t *menu);
 bool menu_press(menu_t *m, control_t keys);
 
 #endif //__MENUS_H__

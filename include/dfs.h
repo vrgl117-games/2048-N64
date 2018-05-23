@@ -25,6 +25,6 @@ typedef struct map
 void dfs_free_map(map_t *map);
 void *dfs_load(const char *const path);
 void *dfs_loadf(const char *const format, ...);
-map_t *dfs_load_mapf(const char *const path, ...);
+map_t *dfs_load_map(const char *const path, int mod, char *lang);
 
 #endif //__FILESYSTEM_H__
