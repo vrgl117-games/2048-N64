@@ -65,10 +65,8 @@ int main()
             {
             case intro:
                 if (screen_intro(disp))
-                {
-                    bgm_start();
                     screen = lang;
-                }
+
                 break;
             case lang:
                 if (lang_press(keys))
@@ -76,6 +74,7 @@ int main()
                     screen_init();
                     game_init();
                     game_random();
+                    bgm_start();
                     screen = title;
                 }
 

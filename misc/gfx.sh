@@ -15,7 +15,7 @@ convert -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 l
 
 convert -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:BEST -shave 0x1 resources/gfx/sprites/en/best.png
 convert -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:TOP -shave 0x1 resources/gfx/sprites/fr/best.png
-convert -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:TOP -shave 0x1 resources/gfx/sprites/es/best.png
+convert -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:BEST -shave 0x1 resources/gfx/sprites/es/best.png
 
 convert -background "#faf8efff" -fill "#776E65ff" -font "$fontb" -pointsize 10 label:"version: 0.9" resources/gfx/sprites/en/version.png
 
@@ -26,7 +26,7 @@ convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 l
 
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"You Win!" resources/gfx/sprites/en/title_you_win.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Gagné !" resources/gfx/sprites/fr/title_you_win.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"¡Ganas!" resources/gfx/sprites/es/title_you_win.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"¡Exito!" resources/gfx/sprites/es/title_you_win.png
 
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Pause" resources/gfx/sprites/en/title_pause.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Pause" resources/gfx/sprites/fr/title_pause.png
@@ -34,7 +34,7 @@ convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 l
 
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"New Game" resources/gfx/sprites/en/title_new_game.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Nouvelle Partie" resources/gfx/sprites/fr/title_new_game.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Juego nuevo" resources/gfx/sprites/es/title_new_game.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Nuevo juego" resources/gfx/sprites/es/title_new_game.png
 
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Credits" resources/gfx/sprites/en/title_credits.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Crédits" resources/gfx/sprites/fr/title_credits.png
