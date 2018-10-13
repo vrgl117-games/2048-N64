@@ -75,6 +75,25 @@ void game_reset()
   memset(game.cells, 0, sizeof(int) * 16);
   game.won = false;
 
+  /* debug
+  game.cells[0] = 20;
+  game.cells[1] = 40;
+  game.cells[2] = 20;
+  game.cells[3] = 0;
+  game.cells[4] = 40;
+  game.cells[5] = 80;
+  game.cells[6] = 40;
+  game.cells[7] = 80;
+  game.cells[8] = 20;
+  game.cells[9] = 40;
+  game.cells[10] = 20;
+  game.cells[11] = 40;
+  game.cells[12] = 40;
+  game.cells[13] = 80;
+  game.cells[14] = 40;
+  game.cells[15] = 80;
+  */
+
   // init start position
   int r1 = rand() % 16;
   int r2 = -1;
@@ -234,11 +253,11 @@ static inline bool is_gameover()
   for (int i = 0; i < 16; i++)
   {
     // (top 3 row) can merge with bottom one ?
-    if (i < 12 && game.cells[i] == game.cells[i + 4])
+    if (i < 12 && game.cells[i]/10 == game.cells[i + 4]/10)
       return false;
 
     // (left 3 columns) can merge with right one ?
-    if (i % 4 != 3 && game.cells[i] == game.cells[i + 1])
+    if (i % 4 != 3 && game.cells[i]/10 == game.cells[i + 1]/10)
       return false;
   }
   return true;
