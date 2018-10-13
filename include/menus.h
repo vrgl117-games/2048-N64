@@ -14,12 +14,14 @@
 #include "controls.h"
 
 typedef void (*action_t)(void);
+typedef bool (*toggle_t)(bool);
 typedef struct menu menu_t;
 
 typedef struct option
 {
     char *text;
     action_t action;
+    toggle_t toggle;
     menu_t *next;
     bool close;
 
@@ -32,7 +34,7 @@ struct menu
 
     char *title;
     char *text;
-    option_t options[3];
+    option_t options[4];
     int options_size;
 
     int selected_option;

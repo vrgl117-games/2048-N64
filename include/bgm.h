@@ -14,7 +14,7 @@
 void bgm_init();
 void bgm_start();
 void bgm_stop();
-void bgm_toggle();
+bool bgm_toggle(bool);
 void bgm_update();
 
 #endif //__BGM_H__

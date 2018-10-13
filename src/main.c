@@ -37,7 +37,6 @@ int main()
     rdp_init();
     controller_init();
     timer_init();
-    bgm_init();
 
     new_timer(TIMER_TICKS(1000000), TF_CONTINUOUS, fps_timer);
 
@@ -99,10 +98,7 @@ int main()
                 if (menu.visible)
                     menu_press(&menu, keys);
                 else if (keys.start)
-                {
-                    bgm_toggle();
                     menu = menu_pause;
-                }
                 else
                 {
                     status_t status = game_play(keys);

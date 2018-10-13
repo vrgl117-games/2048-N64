@@ -9,11 +9,12 @@
 #include <mikmod.h>
 #include "bgm.h"
 
-static MODULE *module = NULL;
+static MODULE *bgm;
 
 void bgm_init()
 {
-    audio_init(32000, 2);
+    audio_init(44100, 2);
+    
     /* register all the drivers */
     MikMod_RegisterAllDrivers();
     MikMod_RegisterAllLoaders();
@@ -34,31 +35,31 @@ void bgm_init()
 
     /* get ready to play */
     MikMod_EnableOutput();
+
+    bgm = Player_Load("rom://sfx/bgms/bgm.xm", 14, 0);
 }
 
 void bgm_start()
 {
-    if (Player_Active())
-        bgm_stop();
-
-    module = Player_Load("rom://sfx/bgms/bgm01.bgm", 16, 0);
-    if (module)
-    {
-        Player_Start(module);
-        Player_SetVolume(80);
-    }
+    Player_Start(bgm);
 }
 
 void bgm_stop()
 {
     Player_Stop();
-    Player_Free(module);
-    module = NULL;
+    Player_Free(bgm);
+    bgm = NULL;
 }
 
-void bgm_toggle()
+bool bgm_toggle(bool change)
 {
-    Player_TogglePause();
+    static bool mode = true;
+
+    if (change) {
+        Player_TogglePause();
+        mode = !mode;
+    }
+    return mode;
 }
 
 void bgm_update()

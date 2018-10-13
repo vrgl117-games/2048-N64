@@ -40,9 +40,8 @@ filesystem/gfx/sprites/%.sprite: resources/gfx/sprites/%.png
 filesystem/gfx/maps/%.sprite: resources/gfx/maps/%.png
 	$(MKSPRITE) 16 1 1 $< $@
 
-
 $(PROG_NAME).dfs: $(SPRITES)
-	cp resources/sfx/bgms/bgm01.it filesystem/sfx/bgms/bgm01.it
+	cp resources/sfx/Arcade_S900.xm filesystem/sfx/bgms/bgm.xm
 	$(MKDFSPATH) $@ ./filesystem/
 
 cen64:

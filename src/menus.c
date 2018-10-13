@@ -28,8 +28,8 @@ menu_t menu_pause = {
     .title = "title_pause",
     .max_width = 200,
     .max_height = 80 + 30 * 3,
-    .options_size = 3,
-    .options = {{.text = "continue", .action = bgm_toggle, .close = true}, {.text = "restart", .action = game_reset, .close = true}, {.text = "credits", .next = &menu_credits, .close = false}},
+    .options_size = 4,
+    .options = {{.text = "continue", .close = true}, {.text = "restart", .action = game_reset, .close = true}, {.text = "music", .toggle = bgm_toggle, .close = false}, {.text = "credits", .next = &menu_credits, .close = false}},
     .visible = true,
 };
 
@@ -135,7 +135,15 @@ void menu_draw(display_context_t disp, menu_t *menu)
 
         for (int i = 0; i < menu->options_size; i++)
         {
-            sprite_t *option = dfs_loadf((i == menu->selected_option ? "/gfx/sprites/%s/%s_selec.sprite" : "/gfx/sprites/%s/%s.sprite"), lang, menu->options[i].text);
+            sprite_t *option;
+            if (menu->options[i].toggle != NULL) {
+                if (menu->options[i].toggle(false))
+                    option = dfs_loadf((i == menu->selected_option ? "/gfx/sprites/%s/%s_on_selec.sprite" : "/gfx/sprites/%s/%s_on.sprite"), lang, menu->options[i].text);
+                else                
+                    option = dfs_loadf((i == menu->selected_option ? "/gfx/sprites/%s/%s_off_selec.sprite" : "/gfx/sprites/%s/%s_off.sprite"), lang, menu->options[i].text);
+            }
+            else
+                option = dfs_loadf((i == menu->selected_option ? "/gfx/sprites/%s/%s_selec.sprite" : "/gfx/sprites/%s/%s.sprite"), lang, menu->options[i].text);
             graphics_draw_sprite(disp, 320 - option->width / 2, 240 + menu->height / 2 - 35 - 30 * (menu->options_size - 1 - i), option);
             free(option);
         }
@@ -175,9 +183,10 @@ bool menu_press(menu_t *m, control_t keys)
     {
         m->closing = m->options[m->selected_option].close;
 
-        action_t action = m->options[m->selected_option].action;
-        if (action != NULL)
-            action();
+        if (m->options[m->selected_option].action != NULL)
+            m->options[m->selected_option].action();
+        else if (m->options[m->selected_option].toggle != NULL)
+            m->options[m->selected_option].toggle(true);
         else if (m->options[m->selected_option].next != NULL)
         {
             int w = menu.width;

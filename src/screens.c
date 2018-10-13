@@ -8,6 +8,7 @@
 
 #include <stdlib.h>
 
+#include "bgm.h"
 #include "colors.h"
 #include "controls.h"
 #include "dfs.h"
@@ -79,6 +80,8 @@ bool screen_intro(display_context_t disp)
     }
 
     anim++;
+    if (anim == 20)
+        bgm_init();
     return (anim >= 82);
 }
 
