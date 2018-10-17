@@ -8,7 +8,6 @@
 
 #include <stdlib.h>
 
-#include "bgm.h"
 #include "colors.h"
 #include "controls.h"
 #include "dfs.h"
@@ -31,6 +30,7 @@ void screen_timer_title()
     tick++;
 }
 
+// load a few sprites in memory
 void screen_init()
 {
     logo = dfs_load_map("/gfx/maps/logo-%02d.sprite", 3, NULL);
@@ -39,6 +39,7 @@ void screen_init()
     font = dfs_load_map("/gfx/maps/font%d.sprite", 1, NULL);
 }
 
+// display the n64 logo and then the vrgl117 games logo.
 // return true when the animation is done.
 bool screen_intro(display_context_t disp)
 {
@@ -80,11 +81,10 @@ bool screen_intro(display_context_t disp)
     }
 
     anim++;
-    if (anim == 20)
-        bgm_init();
     return (anim >= 82);
 }
 
+// display the flags to select the lang.
 void screen_lang(display_context_t disp)
 {
     int selected_lang = lang_selected();
@@ -92,6 +92,8 @@ void screen_lang(display_context_t disp)
     rdp_attach(disp);
 
     rdp_draw_filled_fullscreen(COLOR_BLACK);
+
+    // display the white border around the selected flag.
     rdp_draw_filled_rectangle_with_border_size(220 - 4, 45 + 45 * selected_lang + 100 * selected_lang - 4, 208, 108, COLOR_BLACK, COLOR_WHITE);
 
     rdp_detach_display();
@@ -109,6 +111,7 @@ void screen_lang(display_context_t disp)
     free(fr);
 }
 
+// display a simple text when no controller is connected.
 void screen_no_controller(display_context_t disp)
 {
     rdp_attach(disp);
@@ -122,6 +125,7 @@ void screen_no_controller(display_context_t disp)
     free(no_controller);
 }
 
+// display the board and scores.
 void screen_game(display_context_t disp)
 {
     rdp_attach(disp);
@@ -130,20 +134,24 @@ void screen_game(display_context_t disp)
 
     rdp_draw_sprite_with_texture_map(logo, 140, 18, (konami_enabled() ? 3 : 0));
 
+    // draw best.
     rdp_draw_filled_rectangle_with_border_size(320, 30, 80, 40, COLOR_CELL_EMPTY_BG, COLOR_GRID_BG);
     rdp_draw_sprite_with_texture(best, 326, 32, (konami_enabled() ? 3 : 0));
     rdp_draw_int_map(326, 50, font, game_best(), (konami_enabled() ? 3 : 0));
 
+    // draw score.
     rdp_draw_filled_rectangle_with_border_size(420, 30, 80, 40, COLOR_CELL_EMPTY_BG, COLOR_GRID_BG);
     rdp_draw_sprite_with_texture(score, 426, 32, (konami_enabled() ? 3 : 0));
     rdp_draw_int_map(426, 50, font, game_score(), (konami_enabled() ? 3 : 0));
 
+    // draw the board.
     game_draw(disp, 140, 90);
 
     rdp_detach_display();
 }
 
-void screen_title(display_context_t disp, bool press_start)
+// display the title screen, with press start blinking.
+void screen_title(display_context_t disp, bool waiting)
 {
     rdp_attach(disp);
 
@@ -151,24 +159,29 @@ void screen_title(display_context_t disp, bool press_start)
 
     rdp_draw_sprite_with_texture_map(logo, 140, 18, (konami_enabled() ? 3 : 0));
 
+    // pick a new random cell.
     if (tick % 17 == 0)
     {
         game_random();
         tick++;
     }
 
-    if (press_start && tick % 14 > 7)
+    // draw only press start half of the time (blink).
+    if (waiting && tick % 14 > 7)
     {
+        // todo: improve this, right now en and es have 3 chuncks, fr has 5, we should not rely on 'e'.
         map_t *press_start = dfs_load_map("/gfx/maps/%s/press_start-%02d.sprite", (lang_selected_str()[0] == 'e' ? 3 : 5), lang_selected_str());
         rdp_draw_sprite_with_texture_map(press_start, 318, 26, (konami_enabled() ? 3 : 0));
         dfs_free_map(press_start);
     }
 
+    // draw the board.
     game_draw(disp, 140, 90);
 
     rdp_detach_display();
 
-    if (press_start)
+    // draw the version if start was not pressed.
+    if (waiting)
     {
         sprite_t *version = dfs_load("/gfx/sprites/en/version.sprite");
         graphics_draw_sprite(disp, 640 - version->width - 6, 480 - version->height - 6, version);

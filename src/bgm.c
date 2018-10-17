@@ -6,63 +6,82 @@
  * of the Apache license. See the LICENSE file for details.
  */
 
-#include <mikmod.h>
-#include "bgm.h"
+#include <stdlib.h>
+#include <strings.h>
 
-static MODULE *bgm;
+#include "bgm.h"
+#include "debug.h"
+#include "dfs.h"
+
+static signed short *buffer;
+static int fp;
+// current bgm playing 0: not playing; 1,2,3:bgms
+static int current_bgm;
 
 void bgm_init()
 {
-    audio_init(44100, 2);
-    
-    /* register all the drivers */
-    MikMod_RegisterAllDrivers();
-    MikMod_RegisterAllLoaders();
-
-    /* initialize the library */
-    md_mode = 0;
-    md_mode |= DMODE_16BITS;
-    md_mode |= DMODE_SOFT_MUSIC;
-    md_mode |= DMODE_SOFT_SNDFX;
-    md_mode |= DMODE_INTERP;
-
-    md_mixfreq = audio_get_frequency();
-
-    MikMod_Init("");
-
-    /* reserve 2 voices for sound effects */
-    MikMod_SetNumVoices(-1, 2);
-
-    /* get ready to play */
-    MikMod_EnableOutput();
-
-    bgm = Player_Load("rom://sfx/bgms/bgm.xm", 14, 0);
+    audio_init(FREQUENCY_44KHZ, 4);
+    buffer = malloc(sizeof(signed short) * audio_get_buffer_length() * 2);
+    current_bgm = 0;
 }
 
 void bgm_start()
 {
-    Player_Start(bgm);
+    current_bgm = 1; // + rand() % (NUM_BGMS - 1);
+    fp = dfs_openf("/sfx/bgms/bgm%d.raw", current_bgm);
 }
 
 void bgm_stop()
 {
-    Player_Stop();
-    Player_Free(bgm);
-    bgm = NULL;
+    current_bgm = 0;
+    dfs_close(fp);
+    fp = 0;
+    free(buffer);
+    audio_close();
 }
 
-bool bgm_toggle(bool change)
+int bgm_toggle(int change)
 {
-    static bool mode = true;
+    if (change != 0)
+    {
+        // if a bgm is already playing, close it
+        if (current_bgm != 0)
+            dfs_close(fp);
 
-    if (change) {
-        Player_TogglePause();
-        mode = !mode;
+        // change bgm
+        current_bgm += change;
+
+        // handle overflow
+        if (current_bgm < 0)
+            current_bgm = NUM_BGMS;
+        else if (current_bgm > NUM_BGMS)
+            current_bgm = 0;
+
+        if (current_bgm != 0)
+            fp = dfs_openf("/sfx/bgms/bgm%d.raw", current_bgm);
     }
-    return mode;
+    return current_bgm;
 }
 
 void bgm_update()
 {
-    MikMod_Update();
+    if (current_bgm != 0 && audio_can_write())
+    {
+        int did_read = dfs_read(buffer, sizeof(signed short), audio_get_buffer_length(), fp);
+        did_read = did_read / sizeof(signed short);
+        //debug_setf("DID_READ: %d BUFF_LEN %d", did_read, audio_get_buffer_length());
+        if (dfs_eof(fp))
+            bgm_toggle(current_bgm == NUM_BGMS ? 2 : 1);
+        // dfs_seek(fp, 0, 0 /*SEEK_SET*/);
+        // |a|b|c|d|.|.|.|.|.|.| -> |a|a|b|b|c|c|d|d|.|.|
+        for (int i = did_read - 1; i >= 0; i--)
+        {
+            buffer[(i * 2) + 1] = buffer[i];
+            buffer[i * 2] = buffer[i];
+        }
+        // |a|a|b|b|c|c|d|d|.|.| -> |a|a|b|b|c|c|d|d|0|0|
+        //for (int i = did_read; i < buffer_length * 2; i++)
+        //    buffer[i] = 0;
+        audio_write(buffer);
+    }
 }

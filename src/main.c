@@ -12,6 +12,7 @@
 #include "bgm.h"
 #include "colors.h"
 #include "controls.h"
+#include "debug.h"
 #include "dfs.h"
 #include "fps.h"
 #include "game.h"
@@ -37,6 +38,8 @@ int main()
     rdp_init();
     controller_init();
     timer_init();
+    bgm_init();
+    debug_clear();
 
     new_timer(TIMER_TICKS(1000000), TF_CONTINUOUS, fps_timer);
 
@@ -47,27 +50,32 @@ int main()
 
     while (true)
     {
+        // get the keys pressed.
         control_t keys = controls_get_keys();
+
+        // display/hide the FPS count.
         fps_check(keys);
 
+        // stop rumble if needed.
         if (keys.rumble && game_stop_rumble())
             rumble_stop(0);
 
+        // wait for the screen to be availalble.
         while (!(disp = display_lock()))
             ;
 
+        // display no controller screen is there are node plugged in.
         if (!keys.plugged)
             screen_no_controller(disp);
         else
         {
-            switch (screen)
+            switch (screen) // state machine for the screens. intro -> lang -> title -> game.
             {
-            case intro:
+            case intro: // n64 logo and vrgl117 logo.
                 if (screen_intro(disp))
                     screen = lang;
-
                 break;
-            case lang:
+            case lang: // flags.
                 if (lang_press(keys))
                 {
                     screen_init();
@@ -76,10 +84,9 @@ int main()
                     bgm_start();
                     screen = title;
                 }
-
                 screen_lang(disp);
                 break;
-            case title:
+            case title: // press start.
                 if (menu.visible)
                 {
                     if (menu_press(&menu, keys))
@@ -91,10 +98,11 @@ int main()
                 else if (keys.start)
                     menu = menu_new_game;
 
+                // check for konami code.
                 konami_check(keys);
                 screen_title(disp, !menu.visible);
                 break;
-            case game:
+            case game: // actual game.
                 if (menu.visible)
                     menu_press(&menu, keys);
                 else if (keys.start)
@@ -120,6 +128,9 @@ int main()
 
             // display fps
             fps_draw(disp);
+
+            // display debug
+            debug_draw(disp);
         }
         display_show(disp);
         bgm_update();

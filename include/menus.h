@@ -14,7 +14,7 @@
 #include "controls.h"
 
 typedef void (*action_t)(void);
-typedef bool (*toggle_t)(bool);
+typedef int (*toggle_t)(int);
 typedef struct menu menu_t;
 
 typedef struct option

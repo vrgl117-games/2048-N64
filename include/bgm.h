@@ -11,10 +11,13 @@
 
 #include <libdragon.h>
 
+#define FREQUENCY_44KHZ 44100
+#define NUM_BGMS 3
+
 void bgm_init();
 void bgm_start();
 void bgm_stop();
-bool bgm_toggle(bool);
+int bgm_toggle(int);
 void bgm_update();
 
 #endif //__BGM_H__

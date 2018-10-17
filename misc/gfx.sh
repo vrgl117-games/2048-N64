@@ -17,7 +17,7 @@ convert -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 l
 convert -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:TOP -shave 0x1 resources/gfx/sprites/fr/best.png
 convert -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:BEST -shave 0x1 resources/gfx/sprites/es/best.png
 
-convert -background "#faf8efff" -fill "#776E65ff" -font "$fontb" -pointsize 10 label:"version: 0.9" resources/gfx/sprites/en/version.png
+convert -background "#faf8efff" -fill "#776E65ff" -font "$fontb" -pointsize 10 label:"version: 1.0" resources/gfx/sprites/en/version.png
 
 #menu
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Game Over" resources/gfx/sprites/en/title_game_over.png
@@ -48,21 +48,37 @@ convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 l
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Continuer" resources/gfx/sprites/fr/continue_selec.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Continuar" resources/gfx/sprites/es/continue_selec.png
 
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Music: ON" resources/gfx/sprites/en/music_on.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Musique: ON" resources/gfx/sprites/fr/music_on.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Musica: ON" resources/gfx/sprites/es/music_on.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"  Music: Track #1  " resources/gfx/sprites/en/music_1.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"  Musique: Track #1  " resources/gfx/sprites/fr/music_1.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"  Musica: Track #1  " resources/gfx/sprites/es/music_1.png
 
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Music: ON" resources/gfx/sprites/en/music_on_selec.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Musique: ON" resources/gfx/sprites/fr/music_on_selec.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Musica: ON" resources/gfx/sprites/es/music_on_selec.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"< Music: Track #1 >" resources/gfx/sprites/en/music_1_selec.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"< Musique: Track #1 >" resources/gfx/sprites/fr/music_1_selec.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"< Musica: Track #1 >" resources/gfx/sprites/es/music_1_selec.png
 
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Music: OFF" resources/gfx/sprites/en/music_off.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Musique: OFF" resources/gfx/sprites/fr/music_off.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Musica: OFF" resources/gfx/sprites/es/music_off.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"  Music: Track #2  " resources/gfx/sprites/en/music_2.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"  Musique: Track #2  " resources/gfx/sprites/fr/music_2.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"  Musica: Track #2  " resources/gfx/sprites/es/music_2.png
 
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Music: OFF" resources/gfx/sprites/en/music_off_selec.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Musique: OFF" resources/gfx/sprites/fr/music_off_selec.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Musica: OFF" resources/gfx/sprites/es/music_off_selec.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"< Music: Track #2 >" resources/gfx/sprites/en/music_2_selec.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"< Musique: Track #2 >" resources/gfx/sprites/fr/music_2_selec.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"< Musica: Track #2 >" resources/gfx/sprites/es/music_2_selec.png
+
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"  Music: Track #3  " resources/gfx/sprites/en/music_3.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"  Musique: Track #3  " resources/gfx/sprites/fr/music_3.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"  Musica: Track #3  " resources/gfx/sprites/es/music_3.png
+
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"< Music: Track #3 >" resources/gfx/sprites/en/music_3_selec.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"< Musique: Track #3 >" resources/gfx/sprites/fr/music_3_selec.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"< Musica: Track #3 >" resources/gfx/sprites/es/music_3_selec.png
+
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"  Music: OFF  " resources/gfx/sprites/en/music_0.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"  Musique: OFF  " resources/gfx/sprites/fr/music_0.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"  Musica: OFF  " resources/gfx/sprites/es/music_0.png
+
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"< Music: OFF >" resources/gfx/sprites/en/music_0_selec.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"< Musique: OFF >" resources/gfx/sprites/fr/music_0_selec.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"< Musica: OFF >" resources/gfx/sprites/es/music_0_selec.png
 
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Restart" resources/gfx/sprites/en/restart.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 label:"Recommencer" resources/gfx/sprites/fr/restart.png
@@ -88,9 +104,9 @@ convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 l
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Retour" resources/gfx/sprites/fr/back_selec.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:"Volver" resources/gfx/sprites/es/back_selec.png
 
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 -gravity Center label:"Original 2048 game by Gabriele Cirulli\nwww.gabrielecirulli.com\n\nMusic composed by Roald Strauss\nwww.dewfall.dk\n\nN64 version developed by vrgl117\nwww.vrgl117.games" resources/gfx/sprites/en/text_credits.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 -gravity Center label:"Jeu 2048 original creé par Gabriele Cirulli\nwww.gabrielecirulli.com\n\nMusique composée par Roald Strauss\nwww.dewfall.dk\n\nVersion N64 codée par vrgl117\nwww.vrgl117.games" resources/gfx/sprites/fr/text_credits.png
-convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 -gravity Center label:"Juego original 2048 por Gabriele Cirulli\nwww.gabrielecirulli.com\n\nMusica por Roald Strauss\nwww.dewfall.dk\n\nVersion N64 por vrgl117\nwww.vrgl117.games" resources/gfx/sprites/es/text_credits.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 -gravity Center label:"Original 2048 game by Gabriele Cirulli\nwww.gabrielecirulli.com\n\nMusic by Eric Matyas\nwww.soundimage.org\n\nN64 version developed by vrgl117\nwww.vrgl117.games" resources/gfx/sprites/en/text_credits.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 -gravity Center label:"Jeu 2048 original creé par Gabriele Cirulli\nwww.gabrielecirulli.com\n\nMusique par Eric Matyas\nwww.soundimage.org\n\nVersion N64 codée par vrgl117\nwww.vrgl117.games" resources/gfx/sprites/fr/text_credits.png
+convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 -gravity Center label:"Juego original 2048 por Gabriele Cirulli\nwww.gabrielecirulli.com\n\nMusica por Eric Matyas\nwww.soundimage.org\n\nVersion N64 por vrgl117\nwww.vrgl117.games" resources/gfx/sprites/es/text_credits.png
 
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 -gravity Center label:"Join the numbers and get to the 2048 tile!\n\n\nThis game is Rumble Pak compatible. Please insert\nyour Rumble Pak now if you wish to play with it." resources/gfx/sprites/en/text_help.png
 convert -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 -gravity Center label:"Grouppez les nombres pour créer la case 2048!\n\n\Ce jeu est compatible avec le Rumble Pak. Insérez\nvotre Rumble Pak maintenant si vous souhaitez\nl'utiliser." resources/gfx/sprites/fr/text_help.png

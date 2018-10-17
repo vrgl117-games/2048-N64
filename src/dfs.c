@@ -29,15 +29,16 @@ void *dfs_load(const char *const path)
 
     if (fp)
     {
-        int size = dfs_size(fp);
-        void *data = malloc(size);
-        dfs_read(data, 1, size, fp);
+        int s = dfs_size(fp);
+        void *data = malloc(s);
+        dfs_read(data, 1, s, fp);
         dfs_close(fp);
         return data;
     }
 
     return NULL;
 }
+
 void *dfs_loadf(const char *const format, ...)
 {
     char buffer[256];
@@ -77,4 +78,15 @@ map_t *dfs_load_map(const char *const path, int mod, char *lang)
     }
     data->slices = i;
     return data;
+}
+
+int dfs_openf(const char *const format, ...)
+{
+    char buffer[256];
+    va_list args;
+    va_start(args, format);
+    vsprintf(buffer, format, args);
+    va_end(args);
+
+    return dfs_open(buffer);
 }
