@@ -27,7 +27,7 @@ void bgm_init()
 
 void bgm_start()
 {
-    current_bgm = 1; // + rand() % (NUM_BGMS - 1);
+    current_bgm = 1 + rand() % (NUM_BGMS - 1);
     fp = dfs_openf("/sfx/bgms/bgm%d.raw", current_bgm);
 }
 

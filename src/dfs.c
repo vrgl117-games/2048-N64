@@ -27,7 +27,7 @@ void *dfs_load(const char *const path)
 {
     int fp = dfs_open(path);
 
-    if (fp)
+    if (fp > 0)
     {
         int s = dfs_size(fp);
         void *data = malloc(s);

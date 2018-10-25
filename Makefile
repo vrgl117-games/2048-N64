@@ -46,7 +46,7 @@ $(PROG_NAME).dfs: $(SPRITES) $(BGMS)
 # rom
 $(PROG_NAME).z64: $(PROG_NAME).bin $(PROG_NAME).dfs
 	@rm -f $@
-	$(N64TOOL) -l 1M -t "$(PROG_NAME)" -h $(ROOTDIR)/mips64-elf/lib/header -o $(PROG_NAME).z64 $(PROG_NAME).bin -s 1M $(PROG_NAME).dfs
+	$(N64TOOL) -l 64M -t "$(PROG_NAME)" -h $(ROOTDIR)/mips64-elf/lib/header -o $(PROG_NAME).z64 $(PROG_NAME).bin -s 1M $(PROG_NAME).dfs
 	$(CHKSUM64PATH) $@
 
 docker:		## Create rom file in a docker container.
