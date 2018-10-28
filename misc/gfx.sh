@@ -124,9 +124,9 @@ convert -strip -background "#F2B179ff" -fill "#F9F6F2ff" -font "$fontb" -pointsi
 convert -strip -background "#F59563ff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 36 label:16 -crop 64x32 resources/gfx/maps/16-%02d.png
 convert -strip -background "#F67C5Fff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 36 label:32 -crop 64x32 resources/gfx/maps/32-%02d.png
 convert -strip -background "#F45E43ff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 36 label:64 -crop 64x32 resources/gfx/maps/64-%02d.png
-convert -strip -background "#ECCE78ff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 32 label:128 -crop 64x32 resources/gfx/maps/128-%02d.png
-convert -strip -background "#ECCB69ff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 32 label:256 -crop 64x32 resources/gfx/maps/256-%02d.png
-convert -strip -background "#ECC75Aff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 32 label:512 -crop 64x32 resources/gfx/maps/512-%02d.png
+convert -strip -background "#ECCE78ff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 33 label:128 -crop 64x32 resources/gfx/maps/128-%02d.png
+convert -strip -background "#ECCB69ff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 33 label:256 -crop 64x32 resources/gfx/maps/256-%02d.png
+convert -strip -background "#ECC75Aff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 33 label:512 -crop 64x32 resources/gfx/maps/512-%02d.png
 convert -strip -background "#ECC44Cff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 28 label:1024 -crop 64x32 resources/gfx/maps/1024-%02d.png
 convert -strip -background "#EDC22Eff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 28 label:2048 -crop 64x32 resources/gfx/maps/2048-%02d.png
 convert -strip -background "#3C3A33ff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 28 label:4096 -crop 64x32 resources/gfx/maps/4096-%02d.png
