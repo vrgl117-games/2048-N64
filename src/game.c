@@ -32,21 +32,21 @@ int game_new_cell()
 void game_init()
 {
     // init sprites
-    maps[1] = dfs_load_map("/gfx/maps/2-%02d.sprite", 1, NULL);
-    maps[2] = dfs_load_map("/gfx/maps/4-%02d.sprite", 1, NULL);
-    maps[3] = dfs_load_map("/gfx/maps/8-%02d.sprite", 1, NULL);
-    maps[4] = dfs_load_map("/gfx/maps/16-%02d.sprite", 1, NULL);
-    maps[5] = dfs_load_map("/gfx/maps/32-%02d.sprite", 1, NULL);
-    maps[6] = dfs_load_map("/gfx/maps/64-%02d.sprite", 1, NULL);
-    maps[7] = dfs_load_map("/gfx/maps/128-%02d.sprite", 1, NULL);
-    maps[8] = dfs_load_map("/gfx/maps/256-%02d.sprite", 1, NULL);
-    maps[9] = dfs_load_map("/gfx/maps/512-%02d.sprite", 1, NULL);
-    maps[10] = dfs_load_map("/gfx/maps/1024-%02d.sprite", 2, NULL);
-    maps[11] = dfs_load_map("/gfx/maps/2048-%02d.sprite", 2, NULL);
-    maps[12] = dfs_load_map("/gfx/maps/4096-%02d.sprite", 2, NULL);
-    maps[13] = dfs_load_map("/gfx/maps/8192-%02d.sprite", 2, NULL);
-    maps[14] = dfs_load_map("/gfx/maps/16384-%02d.sprite", 2, NULL);
-    maps[15] = dfs_load_map("/gfx/maps/32768-%02d.sprite", 2, NULL);
+    maps[1] = dfs_load_map("/gfx/maps/2-%d_%d.sprite", NULL);
+    maps[2] = dfs_load_map("/gfx/maps/4-%d_%d.sprite", NULL);
+    maps[3] = dfs_load_map("/gfx/maps/8-%d_%d.sprite", NULL);
+    maps[4] = dfs_load_map("/gfx/maps/16-%d_%d.sprite", NULL);
+    maps[5] = dfs_load_map("/gfx/maps/32-%d_%d.sprite", NULL);
+    maps[6] = dfs_load_map("/gfx/maps/64-%d_%d.sprite", NULL);
+    maps[7] = dfs_load_map("/gfx/maps/128-%d_%d.sprite", NULL);
+    maps[8] = dfs_load_map("/gfx/maps/256-%d_%d.sprite", NULL);
+    maps[9] = dfs_load_map("/gfx/maps/512-%d_%d.sprite", NULL);
+    maps[10] = dfs_load_map("/gfx/maps/1024-%d_%d.sprite", NULL);
+    maps[11] = dfs_load_map("/gfx/maps/2048-%d_%d.sprite", NULL);
+    maps[12] = dfs_load_map("/gfx/maps/4096-%d_%d.sprite", NULL);
+    maps[13] = dfs_load_map("/gfx/maps/8192-%d_%d.sprite", NULL);
+    maps[14] = dfs_load_map("/gfx/maps/16384-%d_%d.sprite", NULL);
+    maps[15] = dfs_load_map("/gfx/maps/32768-%d_%d.sprite", NULL);
 
     // init colors
     colors[0] = COLOR_CELL_EMPTY_BG;

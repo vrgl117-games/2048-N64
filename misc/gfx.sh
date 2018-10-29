@@ -4,10 +4,10 @@ fontb='misc/font/clearsans-1.00/TTF/ClearSans-Bold.ttf'
 fontr='misc/font/clearsans-1.00/TTF/ClearSans-Regular.ttf'
 
 #UI
-convert -strip resources/gfx/sprites/logo.png -crop 64x32 resources/gfx/maps/logo-%02d.png
-convert -strip -background "#faf8efff" -fill "#776E65ff" -font "$fontb" -pointsize 36 label:"Press Start" -crop 64x32 resources/gfx/maps/en/press_start-%02d.png
-convert -strip -background "#faf8efff" -fill "#776E65ff" -font "$fontb" -pointsize 36 label:"Appuyez sur Start" -crop 64x32 resources/gfx/maps/fr/press_start-%02d.png
-convert -strip -background "#faf8efff" -fill "#776E65ff" -font "$fontb" -pointsize 36 label:"Pulsa Start" -crop 64x32 resources/gfx/maps/es/press_start-%02d.png
+convert -strip resources/gfx/sprites/logo.png -crop 64x32 -set filename:tile "%[fx:page.x/64]_%[fx:page.y/32]" +repage "resources/gfx/maps/logo-%[filename:tile].png"
+convert -strip -background "#faf8efff" -fill "#776E65ff" -font "$fontb" -pointsize 36 label:"Press Start" -crop 64x32 -set filename:tile "%[fx:page.x/64]_%[fx:page.y/32]" +repage "resources/gfx/maps/en/press_start-%[filename:tile].png"
+convert -strip -background "#faf8efff" -fill "#776E65ff" -font "$fontb" -pointsize 36 label:"Appuyez sur Start" -crop 64x32 -set filename:tile "%[fx:page.x/64]_%[fx:page.y/32]" +repage "resources/gfx/maps/fr/press_start-%[filename:tile].png"
+convert -strip -background "#faf8efff" -fill "#776E65ff" -font "$fontb" -pointsize 36 label:"Pulsa Start" -crop 64x32 -set filename:tile "%[fx:page.x/64]_%[fx:page.y/32]" +repage "resources/gfx/maps/es/press_start-%[filename:tile].png"
 
 convert -strip -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:SCORE -shave 0x1 resources/gfx/sprites/en/score.png
 convert -strip -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:SCORE -shave 0x1 resources/gfx/sprites/fr/score.png
@@ -118,33 +118,33 @@ convert -strip -background "#faf8efff" -fill "#F9F6F2ff" -font "$fontb" -pointsi
 convert -strip -background "#faf8efff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 24 label:"JOYSTICK NO INSERTADO EN EL PUERTO #1" resources/gfx/sprites/es/no_controller.png
 
 #grid
-convert -strip -background "#EEE4DAff" -fill "#776E65ff" -font "$fontb" -pointsize 36 label:2 -crop 64x32 resources/gfx/maps/2-%02d.png
-convert -strip -background "#EDE0C8ff" -fill "#776E65ff" -font "$fontb" -pointsize 36 label:4 -crop 64x32 resources/gfx/maps/4-%02d.png
-convert -strip -background "#F2B179ff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 36 label:8 -crop 64x32 resources/gfx/maps/8-%02d.png
-convert -strip -background "#F59563ff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 36 label:16 -crop 64x32 resources/gfx/maps/16-%02d.png
-convert -strip -background "#F67C5Fff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 36 label:32 -crop 64x32 resources/gfx/maps/32-%02d.png
-convert -strip -background "#F45E43ff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 36 label:64 -crop 64x32 resources/gfx/maps/64-%02d.png
-convert -strip -background "#ECCE78ff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 33 label:128 -crop 64x32 resources/gfx/maps/128-%02d.png
-convert -strip -background "#ECCB69ff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 33 label:256 -crop 64x32 resources/gfx/maps/256-%02d.png
-convert -strip -background "#ECC75Aff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 33 label:512 -crop 64x32 resources/gfx/maps/512-%02d.png
-convert -strip -background "#ECC44Cff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 28 label:1024 -crop 64x32 resources/gfx/maps/1024-%02d.png
-convert -strip -background "#EDC22Eff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 28 label:2048 -crop 64x32 resources/gfx/maps/2048-%02d.png
-convert -strip -background "#3C3A33ff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 28 label:4096 -crop 64x32 resources/gfx/maps/4096-%02d.png
-convert -strip -background "#3C3A33ff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 28 label:8192 -crop 64x32 resources/gfx/maps/8192-%02d.png
-convert -strip -background "#3C3A33ff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 24 label:16384 -crop 64x32 resources/gfx/maps/16384-%02d.png
-convert -strip -background "#3C3A33ff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 24 label:32768 -crop 64x32 resources/gfx/maps/32768-%02d.png
+convert -strip -background "#EEE4DAff" -fill "#776E65ff" -font "$fontb" -pointsize 36 label:2 -crop 64x32 -set filename:tile "%[fx:page.x/64]_%[fx:page.y/32]" +repage "resources/gfx/maps/2-%[filename:tile].png"
+convert -strip -background "#EDE0C8ff" -fill "#776E65ff" -font "$fontb" -pointsize 36 label:4 -crop 64x32 -set filename:tile "%[fx:page.x/64]_%[fx:page.y/32]" +repage "resources/gfx/maps/4-%[filename:tile].png"
+convert -strip -background "#F2B179ff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 36 label:8 -crop 64x32 -set filename:tile "%[fx:page.x/64]_%[fx:page.y/32]" +repage "resources/gfx/maps/8-%[filename:tile].png"
+convert -strip -background "#F59563ff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 36 label:16 -crop 64x32 -set filename:tile "%[fx:page.x/64]_%[fx:page.y/32]" +repage "resources/gfx/maps/16-%[filename:tile].png"
+convert -strip -background "#F67C5Fff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 36 label:32 -crop 64x32 -set filename:tile "%[fx:page.x/64]_%[fx:page.y/32]" +repage "resources/gfx/maps/32-%[filename:tile].png"
+convert -strip -background "#F45E43ff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 36 label:64 -crop 64x32 -set filename:tile "%[fx:page.x/64]_%[fx:page.y/32]" +repage "resources/gfx/maps/64-%[filename:tile].png"
+convert -strip -background "#ECCE78ff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 33 label:128 -crop 64x32 -set filename:tile "%[fx:page.x/64]_%[fx:page.y/32]" +repage "resources/gfx/maps/128-%[filename:tile].png"
+convert -strip -background "#ECCB69ff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 33 label:256 -crop 64x32 -set filename:tile "%[fx:page.x/64]_%[fx:page.y/32]" +repage "resources/gfx/maps/256-%[filename:tile].png"
+convert -strip -background "#ECC75Aff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 33 label:512 -crop 64x32 -set filename:tile "%[fx:page.x/64]_%[fx:page.y/32]" +repage "resources/gfx/maps/512-%[filename:tile].png"
+convert -strip -background "#ECC44Cff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 28 label:1024 -crop 64x32 -set filename:tile "%[fx:page.x/64]_%[fx:page.y/32]" +repage "resources/gfx/maps/1024-%[filename:tile].png"
+convert -strip -background "#EDC22Eff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 28 label:2048 -crop 64x32 -set filename:tile "%[fx:page.x/64]_%[fx:page.y/32]" +repage "resources/gfx/maps/2048-%[filename:tile].png"
+convert -strip -background "#3C3A33ff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 28 label:4096 -crop 64x32 -set filename:tile "%[fx:page.x/64]_%[fx:page.y/32]" +repage "resources/gfx/maps/4096-%[filename:tile].png"
+convert -strip -background "#3C3A33ff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 28 label:8192 -crop 64x32 -set filename:tile "%[fx:page.x/64]_%[fx:page.y/32]" +repage "resources/gfx/maps/8192-%[filename:tile].png"
+convert -strip -background "#3C3A33ff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 24 label:16384 -crop 64x32 -set filename:tile "%[fx:page.x/64]_%[fx:page.y/32]" +repage "resources/gfx/maps/16384-%[filename:tile].png"
+convert -strip -background "#3C3A33ff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 24 label:32768 -crop 64x32 -set filename:tile "%[fx:page.x/64]_%[fx:page.y/32]" +repage "resources/gfx/maps/32768-%[filename:tile].png" 
 
 #font
-convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:0 -shave 0x4 resources/gfx/maps/font0.png
-convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:1 -shave 0x4 resources/gfx/maps/font1.png
-convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:2 -shave 0x4 resources/gfx/maps/font2.png
-convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:3 -shave 0x4 resources/gfx/maps/font3.png
-convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:4 -shave 0x4 resources/gfx/maps/font4.png
-convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:5 -shave 0x4 resources/gfx/maps/font5.png
-convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:6 -shave 0x4 resources/gfx/maps/font6.png
-convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:7 -shave 0x4 resources/gfx/maps/font7.png
-convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:8 -shave 0x4 resources/gfx/maps/font8.png
-convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:9 -shave 0x4 resources/gfx/maps/font9.png
+convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:0 -shave 0x4 resources/gfx/maps/font0_0.png
+convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:1 -shave 0x4 resources/gfx/maps/font1_0.png
+convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:2 -shave 0x4 resources/gfx/maps/font2_0.png
+convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:3 -shave 0x4 resources/gfx/maps/font3_0.png
+convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:4 -shave 0x4 resources/gfx/maps/font4_0.png
+convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:5 -shave 0x4 resources/gfx/maps/font5_0.png
+convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:6 -shave 0x4 resources/gfx/maps/font6_0.png
+convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:7 -shave 0x4 resources/gfx/maps/font7_0.png
+convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:8 -shave 0x4 resources/gfx/maps/font8_0.png
+convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:9 -shave 0x4 resources/gfx/maps/font9_0.png
 
 #logo
 convert -strip -brightness-contrast -10 resources/gfx/sprites/intro.png resources/gfx/sprites/intro_9.png

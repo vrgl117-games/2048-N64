@@ -50,31 +50,45 @@ void *dfs_loadf(const char *const format, ...)
     return dfs_load(buffer);
 }
 
-map_t *dfs_load_map(const char *const path, int mod, char *lang)
+map_t *dfs_load_map(const char *const path, char *lang)
 {
     char buffer[256];
 
     map_t *data = calloc(1, sizeof(map_t));
-    data->mod = mod;
 
+    int x = 0;
+    int y = 0;
     int i = 0;
     while (true)
     {
         if (lang == NULL)
-            sprintf(buffer, path, i);
+            sprintf(buffer, path, x, y);
         else
-            sprintf(buffer, path, lang, i);
+            sprintf(buffer, path, lang, x, y);
 
-        data->sprites[i] = dfs_load(buffer);
-        if (data->sprites[i] == NULL)
-            break;
+        sprite_t *sp = dfs_load(buffer);
+        if (sp == NULL)
+        {
+            if (x == 0)
+                break;
+            else
+            {
+                y++;
+                if (data->mod == 0)
+                    data->mod = x;
+                x = 0;
+                continue;
+            }
+        }
+        data->sprites[i] = sp;
 
-        if (i % mod == 0)
+        if (x == 0)
             data->height += data->sprites[i]->height;
-        if (i < mod)
+        if (y == 0)
             data->width += data->sprites[i]->width;
 
         i++;
+        x++;
     }
     data->slices = i;
     return data;

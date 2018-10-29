@@ -33,10 +33,10 @@ void screen_timer_title()
 // load a few sprites in memory
 void screen_init()
 {
-    logo = dfs_load_map("/gfx/maps/logo-%02d.sprite", 3, NULL);
+    logo = dfs_load_map("/gfx/maps/logo-%d_%d.sprite", NULL);
     best = dfs_loadf("/gfx/sprites/%s/best.sprite", lang_selected_str());
     score = dfs_loadf("/gfx/sprites/%s/score.sprite", lang_selected_str());
-    font = dfs_load_map("/gfx/maps/font%d.sprite", 1, NULL);
+    font = dfs_load_map("/gfx/maps/font%d_%d.sprite", NULL);
 }
 
 // display the n64 logo and then the vrgl117 games logo.
@@ -170,7 +170,7 @@ void screen_title(display_context_t disp, bool waiting)
     if (waiting && tick % 14 > 7)
     {
         // todo: improve this, right now en and es have 3 chuncks, fr has 5, we should not rely on 'e'.
-        map_t *press_start = dfs_load_map("/gfx/maps/%s/press_start-%02d.sprite", (lang_selected_str()[0] == 'e' ? 3 : 5), lang_selected_str());
+        map_t *press_start = dfs_load_map("/gfx/maps/%s/press_start-%d_%d.sprite", lang_selected_str());
         rdp_draw_sprite_with_texture_map(press_start, 318, 26, (konami_enabled() ? 3 : 0));
         dfs_free_map(press_start);
     }
