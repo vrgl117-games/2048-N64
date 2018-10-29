@@ -178,13 +178,13 @@ void screen_title(display_context_t disp, bool waiting)
     // draw the board.
     game_draw(disp, 140, 90);
 
-    rdp_detach_display();
-
     // draw the version if start was not pressed.
     if (waiting)
     {
-        sprite_t *version = dfs_load("/gfx/sprites/en/version.sprite");
-        graphics_draw_sprite(disp, 640 - version->width - 6, 480 - version->height - 6, version);
+        sprite_t *version = dfs_load("/gfx/sprites/version.sprite");
+        rdp_draw_sprite_with_texture(version, 640 - version->width - 6, 480 - version->height - 6, 0);
         free(version);
     }
+
+    rdp_detach_display();
 }

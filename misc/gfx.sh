@@ -17,7 +17,7 @@ convert -strip -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsi
 convert -strip -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:TOP -shave 0x1 resources/gfx/sprites/fr/best.png
 convert -strip -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:BEST -shave 0x1 resources/gfx/sprites/es/best.png
 
-convert -strip -background "#faf8efff" -fill "#776E65ff" -font "$fontb" -pointsize 10 label:"version: 1.0" resources/gfx/sprites/en/version.png
+convert -strip -background "#faf8efff" -fill "#776E65ff" -font "$fontb" -pointsize 10 label:"version: 1.0" resources/gfx/sprites/version.png
 
 #menu
 convert -strip -background "#bbada0ff" -fill "#776E65ff" -font "$fontb" -pointsize 24 label:"Game Over" resources/gfx/sprites/en/title_game_over.png
