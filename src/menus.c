@@ -27,9 +27,9 @@ menu_t menu_credits;
 menu_t menu_pause = {
     .title = "title_pause",
     .max_width = 260,
-    .max_height = 80 + 30 * 3,
+    .max_height = 80 + 30 * 4,
     .options_size = 4,
-    .options = {{.text = "continue", .close = true}, {.text = "restart", .action = game_reset, .close = true}, {.text = "music", .toggle = bgm_toggle, .close = false}, {.text = "credits", .next = &menu_credits, .close = false}},
+    .options = {{.text = "continue", .action = bgm_play_pause, .close = true}, {.text = "restart", .action = game_reset, .close = true}, {.text = "music", .toggle = bgm_toggle, .close = false}, {.text = "credits", .next = &menu_credits, .close = false}},
     .visible = true,
 };
 

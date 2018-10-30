@@ -81,7 +81,6 @@ int main()
                     screen_init();
                     game_init();
                     game_random();
-                    bgm_start();
                     screen = title;
                 }
                 screen_lang(disp);
@@ -92,6 +91,7 @@ int main()
                     if (menu_press(&menu, keys))
                     {
                         game_reset();
+                        bgm_start();
                         screen = game;
                     }
                 }
@@ -106,7 +106,10 @@ int main()
                 if (menu.visible)
                     menu_press(&menu, keys);
                 else if (keys.start)
+                {
+                    bgm_play_pause();
                     menu = menu_pause;
+                }
                 else
                 {
                     status_t status = game_play(keys);

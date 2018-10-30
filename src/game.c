@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "bgm.h"
 #include "colors.h"
 #include "dfs.h"
 #include "game.h"
@@ -72,6 +73,7 @@ void game_init()
 
 void game_reset()
 {
+    bgm_play_pause();
     memset(game.cells, 0, sizeof(int) * 16);
     game.won = false;
 

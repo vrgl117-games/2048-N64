@@ -17,6 +17,7 @@ static signed short *buffer;
 static int fp;
 // current bgm playing 0: not playing; 1,2,3:bgms
 static int current_bgm;
+static bool paused = false;
 
 void bgm_init()
 {
@@ -29,6 +30,7 @@ void bgm_start()
 {
     current_bgm = 1 + rand() % (NUM_BGMS - 1);
     fp = dfs_openf("/sfx/bgms/bgm%d.raw", current_bgm);
+    paused = false;
 }
 
 void bgm_stop()
@@ -63,16 +65,19 @@ int bgm_toggle(int change)
     return current_bgm;
 }
 
+void bgm_play_pause()
+{
+    paused = !paused;
+}
+
 void bgm_update()
 {
-    if (current_bgm != 0 && audio_can_write())
+    if (!paused && current_bgm != 0 && audio_can_write())
     {
         int did_read = dfs_read(buffer, sizeof(signed short), audio_get_buffer_length(), fp);
         did_read = did_read / sizeof(signed short);
-        //debug_setf("DID_READ: %d BUFF_LEN %d", did_read, audio_get_buffer_length());
         if (dfs_eof(fp))
             bgm_toggle(current_bgm == NUM_BGMS ? 2 : 1);
-        // dfs_seek(fp, 0, 0 /*SEEK_SET*/);
         // |a|b|c|d|.|.|.|.|.|.| -> |a|a|b|b|c|c|d|d|.|.|
         for (int i = did_read - 1; i >= 0; i--)
         {
