@@ -77,24 +77,22 @@ void game_reset()
     memset(game.cells, 0, sizeof(int) * 16);
     game.won = false;
 
-    /* debug
-  game.cells[0] = 20;
-  game.cells[1] = 40;
-  game.cells[2] = 20;
-  game.cells[3] = 0;
-  game.cells[4] = 40;
-  game.cells[5] = 80;
-  game.cells[6] = 40;
-  game.cells[7] = 80;
-  game.cells[8] = 20;
-  game.cells[9] = 40;
-  game.cells[10] = 20;
-  game.cells[11] = 40;
-  game.cells[12] = 40;
-  game.cells[13] = 80;
-  game.cells[14] = 40;
-  game.cells[15] = 80;
-  */
+    game.cells[0] = 640;
+    game.cells[1] = 640;
+    game.cells[2] = 20;
+    game.cells[3] = 0;
+    game.cells[4] = 40;
+    game.cells[5] = 80;
+    game.cells[6] = 40;
+    game.cells[7] = 80;
+    game.cells[8] = 20;
+    game.cells[9] = 40;
+    game.cells[10] = 20;
+    game.cells[11] = 40;
+    game.cells[12] = 40;
+    game.cells[13] = 80;
+    game.cells[14] = 40;
+    game.cells[15] = 80;
 
     // init start position
     int r1 = rand() % 16;
