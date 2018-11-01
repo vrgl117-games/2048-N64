@@ -114,9 +114,15 @@ int main()
                 {
                     status_t status = game_play(keys);
                     if (status == game_win)
+                    {
+                        bgm_play_pause();
                         menu = menu_you_win;
-                    if (status == game_over)
+                    }
+                    else if (status == game_over)
+                    {
+                        bgm_play_pause();
                         menu = menu_game_over;
+                    }
                 }
 
                 screen_game(disp);

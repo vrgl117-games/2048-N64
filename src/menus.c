@@ -48,7 +48,7 @@ menu_t menu_you_win = {
     .max_width = 240,
     .max_height = 80 + 30 * 2,
     .options_size = 2,
-    .options = {{.text = "continue", .action = NULL, .close = true}, {.text = "restart", .action = game_reset, .close = true}},
+    .options = {{.text = "continue", .action = bgm_play_pause, .close = true}, {.text = "restart", .action = game_reset, .close = true}},
     .visible = true,
 };
 

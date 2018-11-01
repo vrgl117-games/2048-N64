@@ -77,6 +77,7 @@ void game_reset()
     memset(game.cells, 0, sizeof(int) * 16);
     game.won = false;
 
+    /* debug
     game.cells[0] = 640;
     game.cells[1] = 640;
     game.cells[2] = 20;
@@ -93,6 +94,7 @@ void game_reset()
     game.cells[13] = 80;
     game.cells[14] = 40;
     game.cells[15] = 80;
+    */
 
     // init start position
     int r1 = rand() % 16;
