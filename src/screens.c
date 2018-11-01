@@ -118,11 +118,11 @@ void screen_no_controller(display_context_t disp)
 
     rdp_draw_filled_fullscreen(COLOR_BLACK);
 
-    rdp_detach_display();
+    map_t *no_controller = dfs_load_map("/gfx/maps/%s/no_controller-%d_%d.sprite", lang_selected_str());
+    rdp_draw_sprite_with_texture_map(no_controller, 320 - no_controller->width / 2, 240 - no_controller->height / 2, (konami_enabled() ? 3 : 0));
+    dfs_free_map(no_controller);
 
-    sprite_t *no_controller = dfs_loadf("/gfx/sprites/%s/no_controller.sprite", lang_selected_str());
-    graphics_draw_sprite(disp, 320 - no_controller->width / 2, 240 - no_controller->height / 2, no_controller);
-    free(no_controller);
+    rdp_detach_display();
 }
 
 // display the board and scores.
@@ -169,7 +169,6 @@ void screen_title(display_context_t disp, bool waiting)
     // draw only press start half of the time (blink).
     if (waiting && tick % 14 > 7)
     {
-        // todo: improve this, right now en and es have 3 chuncks, fr has 5, we should not rely on 'e'.
         map_t *press_start = dfs_load_map("/gfx/maps/%s/press_start-%d_%d.sprite", lang_selected_str());
         rdp_draw_sprite_with_texture_map(press_start, 318, 26, (konami_enabled() ? 3 : 0));
         dfs_free_map(press_start);

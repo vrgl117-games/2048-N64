@@ -113,9 +113,9 @@ convert -strip -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsi
 convert -strip -background "#bbada0ff" -fill "#776E65ff" -font "$fontr" -pointsize 18 -gravity Center label:"Junte los numeros y obtenga la casilla 2048!\n\n\nEste juego es compatible con Rumble Pak. Por favor\ninserte su Rumble Pak si desea jugar con este." resources/gfx/sprites/es/text_help.png
 
 #screen
-convert -strip -background "#000000FF" -fill "#EDE0C8ff" -font "$fontb" -pointsize 24 label:"NO CONTROLLER INSERTED ON PORT #1" -gravity center -extent 446x32 resources/gfx/sprites/en/no_controller.png
-convert -strip -background "#000000FF" -fill "#EDE0C8ff" -font "$fontb" -pointsize 24 label:"PAS DE MANETTE CONNECTEE AU PORT #1" -gravity center -extent 476x32 resources/gfx/sprites/fr/no_controller.png
-convert -strip -background "#000000FF" -fill "#EDE0C8ff" -font "$fontb" -pointsize 24 label:"JOYSTICK NO INSERTADO EN EL PUERTO #1" -gravity center -extent 482x32 resources/gfx/sprites/es/no_controller.png
+convert -strip -background "#000000FF" -fill "#EDE0C8ff" -font "$fontb" -pointsize 24 label:"NO CONTROLLER INSERTED ON PORT #1" -gravity center -extent 446x32 -crop 64 resources/gfx/maps/en/no_controller-%d_0.png
+convert -strip -background "#000000FF" -fill "#EDE0C8ff" -font "$fontb" -pointsize 24 label:"PAS DE MANETTE CONNECTEE AU PORT #1" -gravity center -extent 476x32 -crop 64 resources/gfx/maps/fr/no_controller-%d_0.png
+convert -strip -background "#000000FF" -fill "#EDE0C8ff" -font "$fontb" -pointsize 24 label:"JOYSTICK NO INSERTADO EN EL PUERTO #1" -gravity center -extent 482x32 -crop 64 resources/gfx/maps/es/no_controller-%d_0.png
 
 #grid
 convert -strip -background "#EEE4DAff" -fill "#776E65ff" -font "$fontb" -pointsize 36 label:2 -gravity center -extent 24x64 resources/gfx/maps/2-%d_0.png
