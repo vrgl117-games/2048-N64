@@ -135,16 +135,16 @@ convert -strip -background "#3C3A33ff" -fill "#F9F6F2ff" -font "$fontb" -pointsi
 convert -strip -background "#3C3A33ff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 24 label:32768 -gravity center -extent 74x64 -crop 32 resources/gfx/maps/32768-%d_0.png
 
 #font
-convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:0 -shave 0x4 resources/gfx/maps/font0_0.png
-convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:1 -shave 0x4 resources/gfx/maps/font1_0.png
-convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:2 -shave 0x4 resources/gfx/maps/font2_0.png
-convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:3 -shave 0x4 resources/gfx/maps/font3_0.png
-convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:4 -shave 0x4 resources/gfx/maps/font4_0.png
-convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:5 -shave 0x4 resources/gfx/maps/font5_0.png
-convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:6 -shave 0x4 resources/gfx/maps/font6_0.png
-convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:7 -shave 0x4 resources/gfx/maps/font7_0.png
-convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:8 -shave 0x4 resources/gfx/maps/font8_0.png
-convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:9 -shave 0x4 resources/gfx/maps/font9_0.png
+convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:0 -shave x4 -background "#ffffff00" -gravity north -extent 12x24 resources/gfx/maps/font0_0.png
+convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:1 -shave x4 -background "#ffffff00" -gravity north -extent 12x24 resources/gfx/maps/font1_0.png
+convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:2 -shave x4 -background "#ffffff00" -gravity north -extent 12x24 resources/gfx/maps/font2_0.png
+convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:3 -shave x4 -background "#ffffff00" -gravity north -extent 12x24 resources/gfx/maps/font3_0.png
+convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:4 -shave x4 -background "#ffffff00" -gravity north -extent 12x24 resources/gfx/maps/font4_0.png
+convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:5 -shave x4 -background "#ffffff00" -gravity north -extent 12x24 resources/gfx/maps/font5_0.png
+convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:6 -shave x4 -background "#ffffff00" -gravity north -extent 12x24 resources/gfx/maps/font6_0.png
+convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:7 -shave x4 -background "#ffffff00" -gravity north -extent 12x24 resources/gfx/maps/font7_0.png
+convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:8 -shave x4 -background "#ffffff00" -gravity north -extent 12x24 resources/gfx/maps/font8_0.png
+convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:9 -shave x4 -background "#ffffff00" -gravity north -extent 12x24 resources/gfx/maps/font9_0.png
 
 # studio logo
 convert -strip -brightness-contrast -10 resources/gfx/sprites/intro.png resources/gfx/sprites/intro_9.png
