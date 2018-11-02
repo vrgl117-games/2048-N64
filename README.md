@@ -5,7 +5,10 @@ by [Gabriele Cirulli](https://gabrielecirulli.com/) for N64.
 
 Support 1 player and Rumble Pak.
 
-![game](./misc/screenshot.png?raw=true)
+![press_start](./misc/press_start.png?raw=true)
+![new_game](./misc/new_game.png?raw=true)
+![game](./misc/game.png?raw=true)
+![credits](./misc/credits.png?raw=true)
 
 ## Note
 
