@@ -9,13 +9,13 @@ convert -strip -background "#faf8efff" -fill "#776E65ff" -font "$fontb" -pointsi
 convert -strip -background "#faf8efff" -fill "#776E65ff" -font "$fontb" -pointsize 36 label:"Appuyez sur Start" -gravity center -extent 300x64 -crop 32 resources/gfx/maps/fr/press_start-%d_0.png
 convert -strip -background "#faf8efff" -fill "#776E65ff" -font "$fontb" -pointsize 36 label:"Pulsa Start" -gravity center -extent 186x64 -crop 32 resources/gfx/maps/es/press_start-%d_0.png
 
-convert -strip -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:SCORE -gravity north -extent 44x32 resources/gfx/sprites/en/score.png
-convert -strip -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:SCORE -gravity north -extent 44x32 resources/gfx/sprites/fr/score.png
-convert -strip -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:SCORE -gravity north -extent 44x32 resources/gfx/sprites/es/score.png
+convert -strip -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:SCORE -background "#ffffff00" -gravity center -extent 44x32 resources/gfx/sprites/en/score.png
+convert -strip -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:SCORE -background "#ffffff00" -gravity center -extent 44x32 resources/gfx/sprites/fr/score.png
+convert -strip -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:SCORE -background "#ffffff00" -gravity center -extent 44x32 resources/gfx/sprites/es/score.png
 
-convert -strip -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:BEST -gravity north -extent 34x32 resources/gfx/sprites/en/best.png
-convert -strip -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:TOP -gravity north -extent 26x32 resources/gfx/sprites/fr/best.png
-convert -strip -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:BEST -gravity north -extent 34x32 resources/gfx/sprites/es/best.png
+convert -strip -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:BEST -background "#ffffff00" -gravity center -extent 34x32 resources/gfx/sprites/en/best.png
+convert -strip -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:TOP -background "#ffffff00" -gravity center -extent 26x32 resources/gfx/sprites/fr/best.png
+convert -strip -background "#CDC1B4ff" -fill "#EEE4DAff" -font "$fontb" -pointsize 14 label:BEST -background "#ffffff00" -gravity center -extent 34x32 resources/gfx/sprites/es/best.png
 
 convert -strip -background "#faf8efff" -fill "#776E65ff" -font "$fontb" -pointsize 10 label:"version: 1.0" -gravity center -extent 56x16 resources/gfx/sprites/version.png
 
@@ -135,16 +135,16 @@ convert -strip -background "#3C3A33ff" -fill "#F9F6F2ff" -font "$fontb" -pointsi
 convert -strip -background "#3C3A33ff" -fill "#F9F6F2ff" -font "$fontb" -pointsize 24 label:32768 -gravity center -extent 74x64 -crop 32 resources/gfx/maps/32768-%d_0.png
 
 #font
-convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:0 -shave x4 -background "#ffffff00" -gravity north -extent 12x24 resources/gfx/maps/font0_0.png
-convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:1 -shave x4 -background "#ffffff00" -gravity north -extent 12x24 resources/gfx/maps/font1_0.png
-convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:2 -shave x4 -background "#ffffff00" -gravity north -extent 12x24 resources/gfx/maps/font2_0.png
-convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:3 -shave x4 -background "#ffffff00" -gravity north -extent 12x24 resources/gfx/maps/font3_0.png
-convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:4 -shave x4 -background "#ffffff00" -gravity north -extent 12x24 resources/gfx/maps/font4_0.png
-convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:5 -shave x4 -background "#ffffff00" -gravity north -extent 12x24 resources/gfx/maps/font5_0.png
-convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:6 -shave x4 -background "#ffffff00" -gravity north -extent 12x24 resources/gfx/maps/font6_0.png
-convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:7 -shave x4 -background "#ffffff00" -gravity north -extent 12x24 resources/gfx/maps/font7_0.png
-convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:8 -shave x4 -background "#ffffff00" -gravity north -extent 12x24 resources/gfx/maps/font8_0.png
-convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:9 -shave x4 -background "#ffffff00" -gravity north -extent 12x24 resources/gfx/maps/font9_0.png
+convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:0 -shave x4 -background "#ffffff00" -gravity center -extent 12x24 resources/gfx/maps/font0_0.png
+convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:1 -shave x4 -background "#ffffff00" -gravity center -extent 12x24 resources/gfx/maps/font1_0.png
+convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:2 -shave x4 -background "#ffffff00" -gravity center -extent 12x24 resources/gfx/maps/font2_0.png
+convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:3 -shave x4 -background "#ffffff00" -gravity center -extent 12x24 resources/gfx/maps/font3_0.png
+convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:4 -shave x4 -background "#ffffff00" -gravity center -extent 12x24 resources/gfx/maps/font4_0.png
+convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:5 -shave x4 -background "#ffffff00" -gravity center -extent 12x24 resources/gfx/maps/font5_0.png
+convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:6 -shave x4 -background "#ffffff00" -gravity center -extent 12x24 resources/gfx/maps/font6_0.png
+convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:7 -shave x4 -background "#ffffff00" -gravity center -extent 12x24 resources/gfx/maps/font7_0.png
+convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:8 -shave x4 -background "#ffffff00" -gravity center -extent 12x24 resources/gfx/maps/font8_0.png
+convert -strip -background "#CDC1B4ff" -fill "#776E65ff" -font "$fontb" -pointsize 18 label:9 -shave x4 -background "#ffffff00" -gravity center -extent 12x24 resources/gfx/maps/font9_0.png
 
 # studio logo
 convert -strip -brightness-contrast -10 resources/gfx/sprites/intro.png resources/gfx/sprites/intro_9.png

@@ -136,13 +136,13 @@ void screen_game(display_context_t disp)
 
     // draw best.
     rdp_draw_filled_rectangle_with_border_size(320, 30, 80, 40, COLOR_CELL_EMPTY_BG, COLOR_GRID_BG);
-    rdp_draw_sprite_with_texture(best, 326, 32, (konami_enabled() ? 3 : 0));
-    rdp_draw_int_map(326, 50, font, game_best(), (konami_enabled() ? 3 : 0));
+    rdp_draw_sprite_with_texture(best, 326, 26, (konami_enabled() ? 3 : 0));
+    rdp_draw_int_map(326, 47, font, game_best(), (konami_enabled() ? 3 : 0));
 
     // draw score.
     rdp_draw_filled_rectangle_with_border_size(420, 30, 80, 40, COLOR_CELL_EMPTY_BG, COLOR_GRID_BG);
-    rdp_draw_sprite_with_texture(score, 426, 32, (konami_enabled() ? 3 : 0));
-    rdp_draw_int_map(426, 50, font, game_score(), (konami_enabled() ? 3 : 0));
+    rdp_draw_sprite_with_texture(score, 426, 26, (konami_enabled() ? 3 : 0));
+    rdp_draw_int_map(426, 47, font, game_score(), (konami_enabled() ? 3 : 0));
 
     // draw the board.
     game_draw(disp, 140, 90);
