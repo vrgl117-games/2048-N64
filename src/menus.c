@@ -148,21 +148,14 @@ void menu_draw(display_context_t disp, menu_t *menu)
 
 bool menu_press(menu_t *m, control_t keys)
 {
-    if (keys.start || keys.B)
+    if (keys.start)
     {
-        action_t action = m->options[0].action;
-        if (action != NULL)
-            action();
-        else if (m->options[m->selected_option].next != NULL)
-        {
-            int w = menu.width;
-            int h = menu.height;
-            menu = *m->options[m->selected_option].next;
-            menu.width = w;
-            menu.height = h;
-            menu.selected_option = menu.options_size - 1;
-        }
-        m->closing = m->options[0].close;
+        m->closing = true;
+
+        if (m->options[0].next != NULL && m->options[0].next->options[0].action != NULL)
+            m->options[0].next->options[0].action();
+        if (m->options[0].action != NULL)
+            m->options[0].action();
         return true;
     }
 
@@ -181,19 +174,20 @@ bool menu_press(menu_t *m, control_t keys)
     if (keys.direction == d_right && m->options[m->selected_option].toggle != NULL)
         m->options[m->selected_option].toggle(1);
 
-    if (keys.A)
+    if (keys.A || keys.B)
     {
-        m->closing = m->options[m->selected_option].close;
+        int opt = (keys.A ? m->selected_option : 0);
+        m->closing = m->options[opt].close;
 
-        if (m->options[m->selected_option].action != NULL)
-            m->options[m->selected_option].action();
-        else if (m->options[m->selected_option].toggle != NULL)
-            m->options[m->selected_option].toggle(1);
-        else if (m->options[m->selected_option].next != NULL)
+        if (m->options[opt].action != NULL)
+            m->options[opt].action();
+        else if (m->options[opt].toggle != NULL)
+            m->options[opt].toggle(1);
+        else if (m->options[opt].next != NULL)
         {
             int w = menu.width;
             int h = menu.height;
-            menu = *m->options[m->selected_option].next;
+            menu = *m->options[opt].next;
             menu.width = w;
             menu.height = h;
             menu.selected_option = menu.options_size - 1;

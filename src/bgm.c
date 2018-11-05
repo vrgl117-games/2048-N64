@@ -10,7 +10,6 @@
 #include <strings.h>
 
 #include "bgm.h"
-#include "debug.h"
 #include "dfs.h"
 
 static signed short *buffer;
