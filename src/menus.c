@@ -121,14 +121,14 @@ void menu_draw(display_context_t disp, menu_t *menu)
     {
         if (menu->title != NULL)
         {
-            sprite_t *title = dfs_loadf("/gfx/sprites/%s/%s.sprite", lang, menu->title);
+            sprite_t *title = dfs_load_spritef("/gfx/sprites/%s/%s.sprite", lang, menu->title);
             graphics_draw_sprite(disp, 320 - title->width / 2, 240 - menu->height / 2 + 10, title);
             free(title);
         }
 
         if (menu->text != NULL)
         {
-            sprite_t *text = dfs_loadf("/gfx/sprites/%s/%s.sprite", lang, menu->text);
+            sprite_t *text = dfs_load_spritef("/gfx/sprites/%s/%s.sprite", lang, menu->text);
             graphics_draw_sprite(disp, 320 - text->width / 2, 240 - menu->height / 2 + 75, text);
             free(text);
         }
@@ -137,9 +137,9 @@ void menu_draw(display_context_t disp, menu_t *menu)
         {
             sprite_t *option;
             if (menu->options[i].toggle != NULL)
-                option = dfs_loadf((i == menu->selected_option ? "/gfx/sprites/%s/%s_%d_selec.sprite" : "/gfx/sprites/%s/%s_%d.sprite"), lang, menu->options[i].text, menu->options[i].toggle(0));
+                option = dfs_load_spritef((i == menu->selected_option ? "/gfx/sprites/%s/%s_%d_selec.sprite" : "/gfx/sprites/%s/%s_%d.sprite"), lang, menu->options[i].text, menu->options[i].toggle(0));
             else
-                option = dfs_loadf((i == menu->selected_option ? "/gfx/sprites/%s/%s_selec.sprite" : "/gfx/sprites/%s/%s.sprite"), lang, menu->options[i].text);
+                option = dfs_load_spritef((i == menu->selected_option ? "/gfx/sprites/%s/%s_selec.sprite" : "/gfx/sprites/%s/%s.sprite"), lang, menu->options[i].text);
             graphics_draw_sprite(disp, 320 - option->width / 2, 240 + menu->height / 2 - 35 - 30 * (menu->options_size - 1 - i), option);
             free(option);
         }

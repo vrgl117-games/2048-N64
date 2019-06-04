@@ -23,23 +23,30 @@ void dfs_free_map(map_t *map)
     free(map);
 }
 
-void *dfs_load(const char *const path)
+sprite_t *dfs_load_sprite(const char *const path)
 {
     int fp = dfs_open(path);
 
     if (fp > 0)
     {
         int s = dfs_size(fp);
-        void *data = malloc(s);
-        dfs_read(data, 1, s, fp);
+        sprite_t *sp = malloc(s);
+        dfs_read(sp, 1, s, fp);
         dfs_close(fp);
-        return data;
+
+        // Invalidate data associated with sprite in cache
+        if (sp->bitdepth > 0)
+            data_cache_hit_writeback_invalidate(sp->data, sp->width * sp->height * sp->bitdepth);
+        else
+            data_cache_hit_writeback_invalidate(sp->data, (sp->width * sp->height) >> 1);
+
+        return sp;
     }
 
     return NULL;
 }
 
-void *dfs_loadf(const char *const format, ...)
+sprite_t *dfs_load_spritef(const char *const format, ...)
 {
     char buffer[256];
     va_list args;
@@ -47,7 +54,7 @@ void *dfs_loadf(const char *const format, ...)
     vsprintf(buffer, format, args);
     va_end(args);
 
-    return dfs_load(buffer);
+    return dfs_load_sprite(buffer);
 }
 
 map_t *dfs_load_map(const char *const path, char *lang)
@@ -66,7 +73,7 @@ map_t *dfs_load_map(const char *const path, char *lang)
         else
             sprintf(buffer, path, lang, x, y);
 
-        sprite_t *sp = dfs_load(buffer);
+        sprite_t *sp = dfs_load_sprite(buffer);
         if (sp == NULL)
         {
             if (x == 0)

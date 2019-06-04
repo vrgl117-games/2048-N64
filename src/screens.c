@@ -34,8 +34,8 @@ void screen_timer_title()
 void screen_init()
 {
     logo = dfs_load_map("/gfx/maps/logo-%d_%d.sprite", NULL);
-    best = dfs_loadf("/gfx/sprites/%s/best.sprite", lang_selected_str());
-    score = dfs_loadf("/gfx/sprites/%s/score.sprite", lang_selected_str());
+    best = dfs_load_spritef("/gfx/sprites/%s/best.sprite", lang_selected_str());
+    score = dfs_load_spritef("/gfx/sprites/%s/score.sprite", lang_selected_str());
     font = dfs_load_map("/gfx/maps/font%d_%d.sprite", NULL);
 }
 
@@ -55,22 +55,22 @@ bool screen_intro(display_context_t disp)
     switch (anim)
     {
     case 1 ... 9:
-        intro = dfs_loadf("/gfx/sprites/n64_%d.sprite", anim);
+        intro = dfs_load_spritef("/gfx/sprites/n64_%d.sprite", anim);
         break;
     case 10 ... 30:
-        intro = dfs_load("/gfx/sprites/n64.sprite");
+        intro = dfs_load_sprite("/gfx/sprites/n64.sprite");
         break;
     case 31 ... 39:
-        intro = dfs_loadf("/gfx/sprites/n64_%d.sprite", 40 - anim);
+        intro = dfs_load_spritef("/gfx/sprites/n64_%d.sprite", 40 - anim);
         break;
     case 41 ... 49:
-        intro = dfs_loadf("/gfx/sprites/intro_%d.sprite", anim - 40);
+        intro = dfs_load_spritef("/gfx/sprites/intro_%d.sprite", anim - 40);
         break;
     case 50 ... 70:
-        intro = dfs_load("/gfx/sprites/intro.sprite");
+        intro = dfs_load_sprite("/gfx/sprites/intro.sprite");
         break;
     case 71 ... 79:
-        intro = dfs_loadf("/gfx/sprites/intro_%d.sprite", 80 - anim);
+        intro = dfs_load_spritef("/gfx/sprites/intro_%d.sprite", 80 - anim);
         break;
     }
 
@@ -98,15 +98,15 @@ void screen_lang(display_context_t disp)
 
     rdp_detach_display();
 
-    sprite_t *en = dfs_load("/gfx/sprites/en_flag.sprite");
+    sprite_t *en = dfs_load_sprite("/gfx/sprites/en_flag.sprite");
     graphics_draw_sprite(disp, 220, 45, en);
     free(en);
 
-    sprite_t *es = dfs_load("/gfx/sprites/es_flag.sprite");
+    sprite_t *es = dfs_load_sprite("/gfx/sprites/es_flag.sprite");
     graphics_draw_sprite(disp, 220, 190, es);
     free(es);
 
-    sprite_t *fr = dfs_load("/gfx/sprites/fr_flag.sprite");
+    sprite_t *fr = dfs_load_sprite("/gfx/sprites/fr_flag.sprite");
     graphics_draw_sprite(disp, 220, 335, fr);
     free(fr);
 }
@@ -180,7 +180,7 @@ void screen_title(display_context_t disp, bool waiting)
     // draw the version if start was not pressed.
     if (waiting)
     {
-        sprite_t *version = dfs_load("/gfx/sprites/version.sprite");
+        sprite_t *version = dfs_load_sprite("/gfx/sprites/version.sprite");
         rdp_draw_sprite_with_texture(version, 640 - version->width - 6, 480 - version->height - 6, 0);
         free(version);
     }

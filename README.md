@@ -23,13 +23,18 @@ instead of the proprietary SDK used by official licensed Nintendo software.
 
 ## Building
 
-In order to build you will need the following open-source software installed:
+### Using Docker
 
-* [conker64's fork of libdragon development toolchain](https://github.com/conker64/libdragon)
+All development can be done using Docker. It's the easiest way to build the ROM on Windows and MacOS.
 
-Run `make` to produce the `2048-64.z64` ROM file from this source tree.
+ * Install [Docker](https://docker.com)
+ * Run `make` to produce the `2048-64.z64` ROM file.
 
-You can run `make docker` to use [Docker](https://docker.com).
+ ### On linux
+
+* Install [conker64's fork of libdragon development toolchain](https://github.com/conker64/libdragon)
+* Run `make 2048-64.z64` to produce the `2048-64.z64` ROM file.
+
 
 ## Thanks
 

@@ -23,8 +23,8 @@ typedef struct map
 } map_t;
 
 void dfs_free_map(map_t *map);
-void *dfs_load(const char *const path);
-void *dfs_loadf(const char *const format, ...);
+sprite_t *dfs_load_sprite(const char *const path);
+sprite_t *dfs_load_spritef(const char *const format, ...);
 map_t *dfs_load_map(const char *const path, char *lang);
 int dfs_openf(const char *const format, ...);
 

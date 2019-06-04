@@ -13,7 +13,11 @@ AS = $(GCCN64PREFIX)as
 LD = $(GCCN64PREFIX)ld
 OBJCOPY = $(GCCN64PREFIX)objcopy
 
-all: $(PROG_NAME).z64
+all: build
+
+build: setup	##    Create rom.
+	@mkdir -p filesystem/gfx/sprites/en filesystem/gfx/sprites/fr  filesystem/gfx/sprites/es filesystem/gfx/maps/en filesystem/gfx/maps/fr filesystem/gfx/maps/es filesystem/sfx/bgms
+	@docker run -v ${CURDIR}:/2048-N64 build make $(PROG_NAME).z64
 
 # gfx #
 PNGS := $(wildcard resources/gfx/*/*.png) $(wildcard resources/gfx/*/*/*.png)
@@ -49,18 +53,17 @@ $(PROG_NAME).z64: $(PROG_NAME).bin $(PROG_NAME).dfs
 	$(N64TOOL) -l 64M -t "$(PROG_NAME)" -h $(ROOTDIR)/mips64-elf/lib/header -o $(PROG_NAME).z64 $(PROG_NAME).bin -s 1M $(PROG_NAME).dfs
 	$(CHKSUM64PATH) $@
 
-docker:		## Create rom file in a docker container.
-	docker build -t build .
-	docker run --rm build cat $(PROG_NAME).z64 > $(PROG_NAME).z64
+setup:		##    Create dev environment (docker image).
+	@docker build -t build -q - < Dockerfile > /dev/null
 
-cen64:		## Start rom in CEN64 emulator
-	$(CEN64_DIR)/cen64 -multithread -controller num=1,pak=rumble $(CEN64_DIR)/pifdata.bin $(PROG_NAME).z64
+cen64:		##    Start rom in CEN64 emulator.
+	$(CEN64_DIR)/cen64 -controller num=1,pak=rumble $(CEN64_DIR)/pifdata.bin $(PROG_NAME).z64
 
 flashair: 	## Flash rom to EverDrive using a flashair SD card.
 	curl -X POST -F 'file=@$(PROG_NAME).z64' http://vieux_flashair/upload.cgi
 
-clean:		## Cleanup.
-	rm -f *.z64 *.elf src/*.o *.bin *.dfs
+clean:		##    Cleanup temp files.
+	rm -f *.z64 *.elf src/*.o *.bin *.dfs filesystem/sfx/*/*.raw filesystem/gfx/*/*/*.sprite filesystem/gfx/*/*.sprite
 
-help:		## Show this help.
-	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
+help:		##     Show this help.
+	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/:.*##/:/' 
