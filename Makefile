@@ -19,6 +19,8 @@ build: setup	##    Create rom.
 	@mkdir -p filesystem/gfx/sprites/en filesystem/gfx/sprites/fr  filesystem/gfx/sprites/es filesystem/gfx/maps/en filesystem/gfx/maps/fr filesystem/gfx/maps/es filesystem/sfx/bgms
 	@docker run -v ${CURDIR}:/2048-N64 build make $(PROG_NAME).z64
 
+rebuild: clean build	##  Erase temp files and create the rom.
+
 # gfx #
 PNGS := $(wildcard resources/gfx/*/*.png) $(wildcard resources/gfx/*/*/*.png)
 SPRITES := $(subst .png,.sprite,$(subst resources/,filesystem/,$(PNGS)))
