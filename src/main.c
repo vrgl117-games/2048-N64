@@ -82,6 +82,7 @@ int main()
                     game_init();
                     game_random();
                     screen = title;
+                    break;
                 }
                 screen_lang(disp);
                 break;
@@ -93,6 +94,7 @@ int main()
                         game_reset();
                         bgm_start();
                         screen = game;
+                        break;
                     }
                 }
                 else if (keys.start)
