@@ -1,5 +1,5 @@
-FROM vieux/libdragon:conker64
+FROM anacierdem/libdragon
 
-RUN apt-get update && apt-get install -yq git libsox-fmt-all sox
+RUN apt-get update && apt-get install -yq libsox-fmt-all sox
 
 WORKDIR /2048-N64

@@ -11,24 +11,28 @@
 
 #include <libdragon.h>
 
-#define COLOR_BG 0xfaf8efff
-#define COLOR_FONT 0x776e65ff
-#define COLOR_GRID_BG 0xbbada0ff
-#define COLOR_CELL_EMPTY_BG 0xCDC1B4ff
-#define COLOR_CELL_2_BG 0xEEE4DAff
-#define COLOR_CELL_4_BG 0xEDE0C8ff
-#define COLOR_CELL_8_BG 0xF2B179ff
-#define COLOR_CELL_16_BG 0xF59563ff
-#define COLOR_CELL_32_BG 0xF67C5Fff
-#define COLOR_CELL_64_BG 0xF45E43ff
-#define COLOR_CELL_128_BG 0xECCE78ff
-#define COLOR_CELL_256_BG 0xECCB69ff
-#define COLOR_CELL_512_BG 0xECC75Aff
-#define COLOR_CELL_1024_BG 0xECC44Cff
-#define COLOR_CELL_2048_BG 0xEDC22Eff
-#define COLOR_CELL_MORE_BG 0x3C3A33ff
+typedef enum
+{
+    COLOR_CELL_EMPTY_BG,
+    COLOR_CELL_2_BG,
+    COLOR_CELL_4_BG,
+    COLOR_CELL_8_BG,
+    COLOR_CELL_16_BG,
+    COLOR_CELL_32_BG,
+    COLOR_CELL_64_BG,
+    COLOR_CELL_128_BG,
+    COLOR_CELL_256_BG,
+    COLOR_CELL_512_BG,
+    COLOR_CELL_1024_BG,
+    COLOR_CELL_2048_BG,
+    COLOR_CELL_MORE_BG,
+    COLOR_BG,
+    COLOR_FONT,
+    COLOR_GRID_BG,
+    COLOR_BLACK,
+    COLOR_WHITE,
+} colors_name_t;
 
-#define COLOR_BLACK 0x000000ff
-#define COLOR_WHITE 0xffffffff
+void colors_init();
 
 #endif //__COLORS_H__

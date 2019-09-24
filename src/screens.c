@@ -19,6 +19,8 @@
 #include "rdp.h"
 #include "screens.h"
 
+extern uint32_t colors[];
+
 static volatile int tick = 0;
 static map_t *font;
 static map_t *logo;
@@ -47,7 +49,7 @@ bool screen_intro(display_context_t disp)
 
     rdp_attach(disp);
 
-    rdp_draw_filled_fullscreen(COLOR_BLACK);
+    rdp_draw_filled_fullscreen(colors[COLOR_BLACK]);
 
     rdp_detach_display();
     sprite_t *intro = NULL;
@@ -91,10 +93,10 @@ void screen_lang(display_context_t disp)
 
     rdp_attach(disp);
 
-    rdp_draw_filled_fullscreen(COLOR_BLACK);
+    rdp_draw_filled_fullscreen(colors[COLOR_BLACK]);
 
     // display the white border around the selected flag.
-    rdp_draw_filled_rectangle_with_border_size(220 - 4, 45 + 45 * selected_lang + 100 * selected_lang - 4, 208, 108, COLOR_BLACK, COLOR_WHITE);
+    rdp_draw_filled_rectangle_with_border_size(220 - 4, 45 + 45 * selected_lang + 100 * selected_lang - 4, 208, 108, colors[COLOR_BLACK], colors[COLOR_WHITE]);
 
     rdp_detach_display();
 
@@ -116,7 +118,7 @@ void screen_no_controller(display_context_t disp)
 {
     rdp_attach(disp);
 
-    rdp_draw_filled_fullscreen(COLOR_BLACK);
+    rdp_draw_filled_fullscreen(colors[COLOR_BLACK]);
 
     map_t *no_controller = dfs_load_map("/gfx/maps/%s/no_controller-%d_%d.sprite", lang_selected_str());
     rdp_draw_sprite_with_texture_map(no_controller, 320 - no_controller->width / 2, 240 - no_controller->height / 2, (konami_enabled() ? 3 : 0));
@@ -130,17 +132,17 @@ void screen_game(display_context_t disp)
 {
     rdp_attach(disp);
 
-    rdp_draw_filled_fullscreen(COLOR_BG);
+    rdp_draw_filled_fullscreen(colors[COLOR_BG]);
 
     rdp_draw_sprite_with_texture_map(logo, 140, 18, (konami_enabled() ? 3 : 0));
 
     // draw best.
-    rdp_draw_filled_rectangle_with_border_size(320, 30, 80, 40, COLOR_CELL_EMPTY_BG, COLOR_GRID_BG);
+    rdp_draw_filled_rectangle_with_border_size(320, 30, 80, 40, colors[COLOR_CELL_EMPTY_BG], colors[COLOR_GRID_BG]);
     rdp_draw_sprite_with_texture(best, 326, 26, (konami_enabled() ? 3 : 0));
     rdp_draw_int_map(326, 47, font, game_best(), (konami_enabled() ? 3 : 0));
 
     // draw score.
-    rdp_draw_filled_rectangle_with_border_size(420, 30, 80, 40, COLOR_CELL_EMPTY_BG, COLOR_GRID_BG);
+    rdp_draw_filled_rectangle_with_border_size(420, 30, 80, 40, colors[COLOR_CELL_EMPTY_BG], colors[COLOR_GRID_BG]);
     rdp_draw_sprite_with_texture(score, 426, 26, (konami_enabled() ? 3 : 0));
     rdp_draw_int_map(426, 47, font, game_score(), (konami_enabled() ? 3 : 0));
 
@@ -155,7 +157,7 @@ void screen_title(display_context_t disp, bool waiting)
 {
     rdp_attach(disp);
 
-    rdp_draw_filled_fullscreen(COLOR_BG);
+    rdp_draw_filled_fullscreen(colors[COLOR_BG]);
 
     rdp_draw_sprite_with_texture_map(logo, 140, 18, (konami_enabled() ? 3 : 0));
 

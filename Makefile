@@ -4,7 +4,7 @@ CHKSUM64PATH = $(ROOTDIR)/bin/chksum64
 MKDFSPATH = $(ROOTDIR)/bin/mkdfs
 MKSPRITE = $(ROOTDIR)/bin/mksprite
 N64TOOL = $(ROOTDIR)/bin/n64tool
-LINK_FLAGS = -L$(ROOTDIR)/lib -L$(ROOTDIR)/mips64-elf/lib -ldragon -lc -lm -ldragonsys -Tn64ld.x
+LINK_FLAGS = -L$(ROOTDIR)/lib -L$(ROOTDIR)/mips64-elf/lib -ldragon -lc -lm -ldragonsys -Tn64.ld
 PROG_NAME = 2048-64
 CFLAGS = -std=gnu99 -march=vr4300 -mtune=vr4300 -O2 -Wall -Werror -I$(ROOTDIR)/mips64-elf/include -Iinclude -I/usr/local/include/
 ASFLAGS = -mtune=vr4300 -march=vr4300
@@ -17,7 +17,7 @@ all: build
 
 build: setup	##    Create rom.
 	@mkdir -p filesystem/gfx/sprites/en filesystem/gfx/sprites/fr  filesystem/gfx/sprites/es filesystem/gfx/maps/en filesystem/gfx/maps/fr filesystem/gfx/maps/es filesystem/sfx/bgms
-	@docker run -v ${CURDIR}:/2048-N64 build make $(PROG_NAME).z64
+	docker run -v ${CURDIR}:/2048-N64 build make $(PROG_NAME).z64
 
 rebuild: clean build	##  Erase temp files and create the rom.
 
@@ -56,7 +56,7 @@ $(PROG_NAME).z64: $(PROG_NAME).bin $(PROG_NAME).dfs
 	$(CHKSUM64PATH) $@
 
 setup:		##    Create dev environment (docker image).
-	@docker build -t build -q - < Dockerfile > /dev/null
+	docker build -t build - < Dockerfile
 
 cen64:		##    Start rom in CEN64 emulator.
 	$(CEN64_DIR)/cen64 -controller num=1,pak=rumble $(CEN64_DIR)/pifdata.bin $(PROG_NAME).z64
