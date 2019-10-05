@@ -21,6 +21,7 @@ extern uint32_t colors[];
 
 static game_t game = {0};
 static map_t *maps[16];
+static map_t *maps_rotate[16];
 
 int game_new_cell()
 {
@@ -49,6 +50,22 @@ void game_init()
     maps[13] = dfs_load_map("/gfx/maps/8192-%d_%d.sprite", NULL);
     maps[14] = dfs_load_map("/gfx/maps/16384-%d_%d.sprite", NULL);
     maps[15] = dfs_load_map("/gfx/maps/32768-%d_%d.sprite", NULL);
+
+    maps_rotate[1] = dfs_load_map("/gfx/maps/2-rotate-%d_%d.sprite", NULL);
+    maps_rotate[2] = dfs_load_map("/gfx/maps/4-rotate-%d_%d.sprite", NULL);
+    maps_rotate[3] = dfs_load_map("/gfx/maps/8-rotate-%d_%d.sprite", NULL);
+    maps_rotate[4] = dfs_load_map("/gfx/maps/16-rotate-%d_%d.sprite", NULL);
+    maps_rotate[5] = dfs_load_map("/gfx/maps/32-rotate-%d_%d.sprite", NULL);
+    maps_rotate[6] = dfs_load_map("/gfx/maps/64-rotate-%d_%d.sprite", NULL);
+    maps_rotate[7] = dfs_load_map("/gfx/maps/128-rotate-%d_%d.sprite", NULL);
+    maps_rotate[8] = dfs_load_map("/gfx/maps/256-rotate-%d_%d.sprite", NULL);
+    maps_rotate[9] = dfs_load_map("/gfx/maps/512-rotate-%d_%d.sprite", NULL);
+    maps_rotate[10] = dfs_load_map("/gfx/maps/1024-rotate-%d_%d.sprite", NULL);
+    maps_rotate[11] = dfs_load_map("/gfx/maps/2048-rotate-%d_%d.sprite", NULL);
+    maps_rotate[12] = dfs_load_map("/gfx/maps/4096-rotate-%d_%d.sprite", NULL);
+    maps_rotate[13] = dfs_load_map("/gfx/maps/8192-rotate-%d_%d.sprite", NULL);
+    maps_rotate[14] = dfs_load_map("/gfx/maps/16384-rotate-%d_%d.sprite", NULL);
+    maps_rotate[15] = dfs_load_map("/gfx/maps/32768-rotate-%d_%d.sprite", NULL);
 
     game_reset();
     game.best = game.score;
@@ -362,7 +379,6 @@ static inline uint8_t game_log2(int n)
 
 void game_draw(display_context_t disp, int grid_x, int grid_y)
 {
-    int flags = (konami_enabled() ? 3 : 0);
     rdp_draw_filled_rectangle_size(grid_x, grid_y, 360, 360, colors[COLOR_GRID_BG]);
     for (int x = 0; x < 4; x++)
     {
@@ -401,10 +417,10 @@ void game_draw(display_context_t disp, int grid_x, int grid_y)
                 break;
             }
 
-            map_t *map = maps[score];
+            map_t *map = (konami_enabled() ? maps_rotate[score] : maps[score]);
             if (map != NULL)
                 rdp_draw_sprite_with_texture_map(map, xx + 40 - map->width / 2,
-                                                 yy + 40 - map->height / 2, flags);
+                                                 yy + 40 - map->height / 2);
         }
     }
 }
