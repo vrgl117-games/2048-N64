@@ -2240,8 +2240,7 @@ void drmp3dec_f32_to_s16(const float *in, drmp3_int16 *out, int num_samples)
 
 /* Standard library stuff. */
 #ifndef DRMP3_ASSERT
-#include <assert.h>
-#define DRMP3_ASSERT(expression)           assert(expression)
+#define DRMP3_ASSERT(expression)           ((void)0)
 #endif
 #ifndef DRMP3_COPY_MEMORY
 #define DRMP3_COPY_MEMORY(dst, src, sz) memcpy((dst), (src), (sz))
