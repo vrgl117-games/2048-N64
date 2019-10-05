@@ -59,7 +59,7 @@ setup:		##    Create dev environment (docker image).
 	@docker build -t build -q - < Dockerfile > /dev/null
 
 cen64:		##    Start rom in CEN64 emulator.
-	$(CEN64_DIR)/cen64 -controller num=1,pak=rumble $(CEN64_DIR)/pifdata.bin $(PROG_NAME).z64
+	$(CEN64_DIR)/cen64 -multithread -controller num=1,pak=rumble $(CEN64_DIR)/pifdata.bin $(PROG_NAME).z64
 
 flashair: 	## Flash rom to EverDrive using a flashair SD card.
 	curl -X POST -F 'file=@$(PROG_NAME).z64' http://vieux_flashair/upload.cgi
