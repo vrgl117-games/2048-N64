@@ -5,7 +5,8 @@
         "bgm.h": "c",
         "dfs.h": "c",
         "limits": "c",
-        "type_traits": "c"
+        "type_traits": "c",
+        "dr_mp3.h": "c"
     },
     "editor.formatOnSave": true
 }
