@@ -23,7 +23,10 @@ control_t controls_get_keys()
 
     keys.plugged = true;
 
-    if ((get_accessories_present() & CONTROLLER_1_INSERTED) && identify_accessory(0) == ACCESSORY_RUMBLEPAK)
+    struct controller_data output;
+    get_accessories_present(&output);
+
+    if (identify_accessory(0) == ACCESSORY_RUMBLEPAK)
         keys.rumble = true;
 
     if (down.Z)

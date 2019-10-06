@@ -33,7 +33,7 @@ int main()
 {
     init_interrupts();
     display_init(RESOLUTION_640x480, DEPTH_16_BPP, 2, GAMMA_NONE, ANTIALIAS_RESAMPLE);
-
+    colors_init();
     dfs_init(DFS_DEFAULT_LOCATION);
     rdp_init();
     controller_init();

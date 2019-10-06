@@ -17,9 +17,11 @@
 #include "konami.h"
 #include "rdp.h"
 
+extern uint32_t colors[];
+
 static game_t game = {0};
 static map_t *maps[16];
-static uint32_t colors[16];
+static map_t *maps_rotate[16];
 
 int game_new_cell()
 {
@@ -49,23 +51,21 @@ void game_init()
     maps[14] = dfs_load_map("/gfx/maps/16384-%d_%d.sprite", NULL);
     maps[15] = dfs_load_map("/gfx/maps/32768-%d_%d.sprite", NULL);
 
-    // init colors
-    colors[0] = COLOR_CELL_EMPTY_BG;
-    colors[1] = COLOR_CELL_2_BG;
-    colors[2] = COLOR_CELL_4_BG;
-    colors[3] = COLOR_CELL_8_BG;
-    colors[4] = COLOR_CELL_16_BG;
-    colors[5] = COLOR_CELL_32_BG;
-    colors[6] = COLOR_CELL_64_BG;
-    colors[7] = COLOR_CELL_128_BG;
-    colors[8] = COLOR_CELL_256_BG;
-    colors[9] = COLOR_CELL_512_BG;
-    colors[10] = COLOR_CELL_1024_BG;
-    colors[11] = COLOR_CELL_2048_BG;
-    colors[12] = COLOR_CELL_MORE_BG;
-    colors[13] = COLOR_CELL_MORE_BG;
-    colors[14] = COLOR_CELL_MORE_BG;
-    colors[15] = COLOR_CELL_MORE_BG;
+    maps_rotate[1] = dfs_load_map("/gfx/maps/2-rotate-%d_%d.sprite", NULL);
+    maps_rotate[2] = dfs_load_map("/gfx/maps/4-rotate-%d_%d.sprite", NULL);
+    maps_rotate[3] = dfs_load_map("/gfx/maps/8-rotate-%d_%d.sprite", NULL);
+    maps_rotate[4] = dfs_load_map("/gfx/maps/16-rotate-%d_%d.sprite", NULL);
+    maps_rotate[5] = dfs_load_map("/gfx/maps/32-rotate-%d_%d.sprite", NULL);
+    maps_rotate[6] = dfs_load_map("/gfx/maps/64-rotate-%d_%d.sprite", NULL);
+    maps_rotate[7] = dfs_load_map("/gfx/maps/128-rotate-%d_%d.sprite", NULL);
+    maps_rotate[8] = dfs_load_map("/gfx/maps/256-rotate-%d_%d.sprite", NULL);
+    maps_rotate[9] = dfs_load_map("/gfx/maps/512-rotate-%d_%d.sprite", NULL);
+    maps_rotate[10] = dfs_load_map("/gfx/maps/1024-rotate-%d_%d.sprite", NULL);
+    maps_rotate[11] = dfs_load_map("/gfx/maps/2048-rotate-%d_%d.sprite", NULL);
+    maps_rotate[12] = dfs_load_map("/gfx/maps/4096-rotate-%d_%d.sprite", NULL);
+    maps_rotate[13] = dfs_load_map("/gfx/maps/8192-rotate-%d_%d.sprite", NULL);
+    maps_rotate[14] = dfs_load_map("/gfx/maps/16384-rotate-%d_%d.sprite", NULL);
+    maps_rotate[15] = dfs_load_map("/gfx/maps/32768-rotate-%d_%d.sprite", NULL);
 
     game_reset();
     game.best = game.score;
@@ -379,8 +379,7 @@ static inline uint8_t game_log2(int n)
 
 void game_draw(display_context_t disp, int grid_x, int grid_y)
 {
-    int flags = (konami_enabled() ? 3 : 0);
-    rdp_draw_filled_rectangle_size(grid_x, grid_y, 360, 360, COLOR_GRID_BG);
+    rdp_draw_filled_rectangle_size(grid_x, grid_y, 360, 360, colors[COLOR_GRID_BG]);
     for (int x = 0; x < 4; x++)
     {
         for (int y = 0; y < 4; y++)
@@ -402,26 +401,26 @@ void game_draw(display_context_t disp, int grid_x, int grid_y)
             case 5:
                 game.cells[x + y * 4] = value * 10;
             case 0:
-                rdp_draw_filled_rectangle_size(xx, yy, 80, 80, colors[score]);
+                rdp_draw_filled_rectangle_size(xx, yy, 80, 80, colors[(score > 12 ? 12 : score)]);
                 break;
             case 1 ... 4:
                 rdp_draw_filled_rectangle_size(xx + diff * 4, yy + diff * 4,
                                                80 - diff * 8, 80 - diff * 8,
-                                               colors[score]);
+                                               colors[(score > 12 ? 12 : score)]);
                 game.cells[x + y * 4] -= 1;
                 score = 0;
                 break;
             case 6 ... 9:
                 rdp_draw_filled_rectangle_size(xx - diff, yy - diff, 80 + diff * 2,
-                                               80 + diff * 2, colors[score]);
+                                               80 + diff * 2, colors[(score > 12 ? 12 : score)]);
                 game.cells[x + y * 4] -= 1;
                 break;
             }
 
-            map_t *map = maps[score];
+            map_t *map = (konami_enabled() ? maps_rotate[score] : maps[score]);
             if (map != NULL)
                 rdp_draw_sprite_with_texture_map(map, xx + 40 - map->width / 2,
-                                                 yy + 40 - map->height / 2, flags);
+                                                 yy + 40 - map->height / 2);
         }
     }
 }
