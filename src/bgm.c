@@ -12,6 +12,8 @@
 #include "bgm.h"
 #include "dfs.h"
 
+#include "debug.h"
+
 #define DR_MP3_IMPLEMENTATION
 #include "dr_mp3.h"
 
@@ -25,7 +27,7 @@ static char *files[] = {"rom://sfx/bgms/bgm1.mp3", "rom://sfx/bgms/bgm2.mp3", "r
 
 void bgm_init()
 {
-    audio_init(FREQUENCY_44KHZ, 4);
+    audio_init(FREQUENCY_32KHZ, 8);
     buffer = malloc(sizeof(signed short) * audio_get_buffer_length() * 2);
     current_bgm = 0;
 }
@@ -86,5 +88,6 @@ void bgm_update()
             buffer[i * 2] = buffer[i];
         }
         audio_write(buffer);
+        debug_setf("size: %d read: %d", audio_get_buffer_length(), did_read);
     }
 }
