@@ -121,7 +121,7 @@ void screen_no_controller(display_context_t disp)
     rdp_draw_filled_fullscreen(colors[COLOR_BLACK]);
 
     map_t *no_controller = dfs_load_map("/gfx/maps/%s/no_controller-%d_%d.sprite", lang_selected_str());
-    rdp_draw_sprite_with_texture_map(no_controller, 320 - no_controller->width / 2, 240 - no_controller->height / 2, (konami_enabled() ? 3 : 0));
+    rdp_draw_sprite_with_texture_map(no_controller, 320 - no_controller->width / 2, 240 - no_controller->height / 2, (konami_enabled() ? MIRROR_XY : 0));
     dfs_free_map(no_controller);
 
     rdp_detach_display();
@@ -134,17 +134,17 @@ void screen_game(display_context_t disp)
 
     rdp_draw_filled_fullscreen(colors[COLOR_BG]);
 
-    rdp_draw_sprite_with_texture_map(logo, 140, 18, (konami_enabled() ? 3 : 0));
+    rdp_draw_sprite_with_texture_map(logo, 140, 18, (konami_enabled() ? MIRROR_XY : 0));
 
     // draw best.
     rdp_draw_filled_rectangle_with_border_size(320, 30, 80, 40, colors[COLOR_CELL_EMPTY_BG], colors[COLOR_GRID_BG]);
-    rdp_draw_sprite_with_texture(best, 326, 26, (konami_enabled() ? 3 : 0));
-    rdp_draw_int_map(326, 47, font, game_best(), (konami_enabled() ? 3 : 0));
+    rdp_draw_sprite_with_texture(best, 326, 26, (konami_enabled() ? MIRROR_XY : 0));
+    rdp_draw_int_map(326, 47, font, game_best(), (konami_enabled() ? MIRROR_XY : 0));
 
     // draw score.
     rdp_draw_filled_rectangle_with_border_size(420, 30, 80, 40, colors[COLOR_CELL_EMPTY_BG], colors[COLOR_GRID_BG]);
-    rdp_draw_sprite_with_texture(score, 426, 26, (konami_enabled() ? 3 : 0));
-    rdp_draw_int_map(426, 47, font, game_score(), (konami_enabled() ? 3 : 0));
+    rdp_draw_sprite_with_texture(score, 426, 26, (konami_enabled() ? MIRROR_XY : 0));
+    rdp_draw_int_map(426, 47, font, game_score(), (konami_enabled() ? MIRROR_XY : 0));
 
     // draw the board.
     game_draw(disp, 140, 90);
@@ -159,7 +159,7 @@ void screen_title(display_context_t disp, bool waiting)
 
     rdp_draw_filled_fullscreen(colors[COLOR_BG]);
 
-    rdp_draw_sprite_with_texture_map(logo, 140, 18, (konami_enabled() ? 3 : 0));
+    rdp_draw_sprite_with_texture_map(logo, 140, 18, (konami_enabled() ? MIRROR_XY : 0));
 
     // pick a new random cell.
     if (tick % 17 == 0)
@@ -172,7 +172,7 @@ void screen_title(display_context_t disp, bool waiting)
     if (waiting && tick % 14 > 7)
     {
         map_t *press_start = dfs_load_map("/gfx/maps/%s/press_start-%d_%d.sprite", lang_selected_str());
-        rdp_draw_sprite_with_texture_map(press_start, 318, 26, (konami_enabled() ? 3 : 0));
+        rdp_draw_sprite_with_texture_map(press_start, 318, 26, (konami_enabled() ? MIRROR_XY : 0));
         dfs_free_map(press_start);
     }
 

@@ -362,7 +362,7 @@ static inline uint8_t game_log2(int n)
 
 void game_draw(display_context_t disp, int grid_x, int grid_y)
 {
-    int flags = (konami_enabled() ? 3 : 0);
+    int flags = (konami_enabled() ? MIRROR_XY : 0);
     rdp_draw_filled_rectangle_size(grid_x, grid_y, 360, 360, colors[COLOR_GRID_BG]);
     for (int x = 0; x < 4; x++)
     {
