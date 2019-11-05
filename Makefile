@@ -21,8 +21,8 @@ build: ##    Create rom.
 	@if [ $$? -eq 0 ]; then echo "Building rom inside docker environment..." && make docker; fi
 
 docker: setup
-	@docker run -v ${CURDIR}:/game build make $(PROG_NAME).z64
-		
+	@docker run --user $(shell id -u):$(shell id -g) -v ${CURDIR}:/game build make $(PROG_NAME).z64
+
 rebuild: clean build	##  Erase temp files and create the rom.
 
 # gfx #
@@ -67,7 +67,7 @@ $(PROG_NAME).z64: $(PROG_NAME).bin $(PROG_NAME).dfs
 setup:		##    Create dev environment (docker image).
 	@docker build -q -t build - < Dockerfile > /dev/null
 
-resetup:        ##  Force recreate the dev environment (docker image).                                       
+resetup:	##  Force recreate the dev environment (docker image).
 	@echo "Rebuilding dev environment in docker..."
 	@docker build -q -t build --no-cache  - < Dockerfile > /dev/null
 
@@ -76,10 +76,11 @@ cen64:		##    Start rom in CEN64 emulator.
 	$(CEN64_DIR)/cen64 -multithread -controller num=1,pak=rumble $(CEN64_DIR)/pifdata.bin $(PROG_NAME).z64
 
 flashair: 	## Flash rom to EverDrive using a flashair SD card.
-	curl -X POST -F 'file=@$(PROG_NAME).z64' http://vieux_flashair/upload.cgi
+	curl -X POST -F 'file=@$(PROG_NAME).z64' http://flashair/upload.cgi
 
 clean:		##    Cleanup temp files.
-	rm -f *.z64 *.elf src/*.o *.bin *.dfs
+	@echo "Cleaning up temp files..."
+	rm -rf *.z64 *.elf src/*.o *.bin *.dfs filesystem/
 
 help:		##     Show this help.
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/:.*##/:/' 
