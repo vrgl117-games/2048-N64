@@ -41,7 +41,7 @@ MP3S := $(wildcard resources/sfx/bgms/*.mp3)
 BGMS := $(subst resources/,filesystem/,$(MP3S))
 filesystem/sfx/bgms/%.mp3: resources/sfx/bgms/%.mp3
 	@mkdir -p `echo $@ | xargs dirname`
-	lame -m m -b 96 $< $@
+	lame -m m $< $@
 
 # code #
 SRCS := $(wildcard src/*.c)

@@ -27,7 +27,7 @@ static char *files[] = {"rom://sfx/bgms/bgm1.mp3", "rom://sfx/bgms/bgm2.mp3", "r
 
 void bgm_init()
 {
-    audio_init(FREQUENCY_32KHZ, 8);
+    audio_init(FREQUENCY_44KHZ, 8);
     buffer = malloc(sizeof(signed short) * audio_get_buffer_length() * 2);
     current_bgm = 0;
 }
@@ -36,7 +36,7 @@ void bgm_start()
 {
     current_bgm = 1 + rand() % (NUM_BGMS - 1);
 
-    drmp3_init_file(&mp3, files[current_bgm - 1], NULL);
+    drmp3_init_file(&mp3, files[current_bgm - 1], NULL, NULL);
     paused = false;
 }
 
@@ -66,7 +66,7 @@ int bgm_toggle(int change)
             current_bgm = 0;
 
         if (current_bgm != 0)
-            drmp3_init_file(&mp3, files[current_bgm - 1], NULL);
+            drmp3_init_file(&mp3, files[current_bgm - 1], NULL, NULL);
     }
     return current_bgm;
 }
@@ -80,14 +80,20 @@ void bgm_update()
 {
     if (!paused && current_bgm != 0 && audio_can_write())
     {
-        int did_read = drmp3_read_pcm_frames_s16(&mp3, audio_get_buffer_length(), buffer);
+        drmp3_uint64 framesToReadRightNow = audio_get_buffer_length();
+        drmp3_uint64 framesJustRead = drmp3_read_pcm_frames_s16(&mp3, framesToReadRightNow, buffer);
+        if (framesJustRead == 0)
+        {
+            return;
+        }
         // |a|b|c|d|.|.|.|.|.|.| -> |a|a|b|b|c|c|d|d|.|.|
-        for (int i = did_read - 1; i >= 0; i--)
+        for (int i = framesJustRead - 1; i >= 0; i--)
         {
             buffer[(i * 2) + 1] = buffer[i];
             buffer[i * 2] = buffer[i];
         }
+
         audio_write(buffer);
-        debug_setf("size: %d read: %d", audio_get_buffer_length(), did_read);
+        // debug_setf("size: %d read: %d", audio_get_buffer_length(), did_read);
     }
 }
