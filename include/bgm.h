@@ -11,6 +11,7 @@
 
 #include <libdragon.h>
 
+#define FREQUENCY_32KHZ 32000
 #define FREQUENCY_44KHZ 44100
 #define NUM_BGMS 3
 
