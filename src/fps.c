@@ -15,7 +15,7 @@ static bool show = false;
 
 void fps_check(control_t keys)
 {
-    if (keys.L && keys.R)
+    if (keys.fps)
         show = !show;
 }
 void fps_draw(display_context_t disp)

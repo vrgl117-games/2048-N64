@@ -22,13 +22,11 @@ typedef enum direction
 
 typedef struct
 {
-    bool Z;
     bool A;
     bool B;
     bool start;
-    bool L;
-    bool R;
 
+    bool fps;
     bool pressed;
     bool plugged;
     bool rumble;

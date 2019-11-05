@@ -14,6 +14,7 @@ control_t controls_get_keys()
 {
     controller_scan();
     struct SI_condat down = get_keys_down().c[0];
+    struct SI_condat pressed = get_keys_pressed().c[0];
 
     control_t keys = {0};
     memset(&keys, 0, sizeof(control_t));
@@ -29,65 +30,30 @@ control_t controls_get_keys()
     if (identify_accessory(0) == ACCESSORY_RUMBLEPAK)
         keys.rumble = true;
 
-    if (down.Z)
-    {
-        keys.Z = true;
-        keys.pressed = true;
-    }
+    keys.pressed = true;
 
     if (down.A)
-    {
         keys.A = true;
-        keys.pressed = true;
-    }
-
-    if (down.B)
-    {
+    else if (down.B)
         keys.B = true;
-        keys.pressed = true;
-    }
-
-    if (down.up)
-    {
+    else if (down.up)
         keys.direction = d_up;
-        keys.pressed = true;
-    }
-
-    if (down.down)
-    {
+    else if (down.down)
         keys.direction = d_down;
-        keys.pressed = true;
-    }
-
-    if (down.left)
-    {
+    else if (down.left)
         keys.direction = d_left;
-        keys.pressed = true;
-    }
-
-    if (down.right)
-    {
+    else if (down.right)
         keys.direction = d_right;
-        keys.pressed = true;
-    }
-
-    if (down.start)
-    {
+    else if (down.start)
         keys.start = true;
-        keys.pressed = true;
-    }
-
-    if (down.L)
-    {
-        keys.L = true;
-        keys.pressed = true;
-    }
-
-    if (down.R)
-    {
-        keys.R = true;
-        keys.pressed = true;
-    }
+    else if (down.L && down.R)
+        keys.fps = true;
+    else if (down.L && pressed.R)
+        keys.fps = true;
+    else if (pressed.L && down.R)
+        keys.fps = true;
+    else
+        keys.pressed = false;
 
     return keys;
 }

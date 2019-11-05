@@ -1,5 +1,7 @@
 2048-64.*
 *.o
 *.sprite
-*.raw
 .vscode/ipch/
+.DS_Store
+*~
+filesystem/
