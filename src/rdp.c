@@ -20,12 +20,12 @@ void rdp_attach(display_context_t disp)
     rdp_set_default_clipping();
 }
 
-int rdp_draw_int_map(int x, int y, map_t *font, int n)
+int rdp_draw_int_map(int x, int y, map_t *font, int n, mirror_t mirror)
 {
     if (n >= 10)
-        x = rdp_draw_int_map(x, y, font, n / 10);
+        x = rdp_draw_int_map(x, y, font, n / 10, mirror);
 
-    rdp_draw_sprite_with_texture(font->sprites[n % 10], x, y);
+    rdp_draw_sprite_with_texture(font->sprites[n % 10], x, y, mirror);
     return x + 11;
 }
 
@@ -52,28 +52,29 @@ void rdp_draw_filled_rectangle_with_border_size(int x, int y, int width, int hei
     rdp_draw_filled_rectangle(x + 2, y + 2, x + width - 2, y + height - 2);
 }
 
-void rdp_draw_sprite_with_texture(sprite_t *sp, int x, int y)
+void rdp_draw_sprite_with_texture(sprite_t *sp, int x, int y, mirror_t mirror)
 {
     rdp_enable_texture_copy();
     rdp_sync(SYNC_PIPE);
-    rdp_load_texture(0, 0, MIRROR_DISABLED, sp);
-    rdp_draw_sprite(0, x, y);
+    rdp_load_texture(0, 0, mirror, sp);
+    rdp_draw_sprite(0, x, y, mirror);
 }
 
-void rdp_draw_sprite_with_texture_map(map_t *map, int x, int y)
+void rdp_draw_sprite_with_texture_map(map_t *map, int x, int y, mirror_t mirror)
 {
     int xx = 0;
     int yy = 0;
 
     for (int i = 0; i < map->slices; i++)
     {
-        rdp_draw_sprite_with_texture(map->sprites[i], x + xx, y + yy);
+        int ii = (mirror == MIRROR_XY ? map->slices - 1 - i : i);
+        rdp_draw_sprite_with_texture(map->sprites[ii], x + xx, y + yy, mirror);
         if (i % map->mod == map->mod - 1)
         {
-            yy += map->sprites[i]->height;
+            yy += map->sprites[ii]->height;
             xx = 0;
         }
         else
-            xx += map->sprites[i]->width;
+            xx += map->sprites[ii]->width;
     }
 }
