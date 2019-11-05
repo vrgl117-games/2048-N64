@@ -32,7 +32,7 @@ All development can be done using Docker. It's the easiest way to build the ROM 
 
  ### On linux
 
-* Install [conker64's fork of libdragon development toolchain](https://github.com/conker64/libdragon)
+* Install [libdragon development toolchain](https://github.com/DragonMinded/libdragon)
 * Run `make 2048-64.z64` to produce the `2048-64.z64` ROM file.
 
 
