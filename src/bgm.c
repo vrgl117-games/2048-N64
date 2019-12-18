@@ -20,7 +20,7 @@ static bool paused = false;
 
 void bgm_init()
 {
-    audio_init(FREQUENCY_44KHZ, 4);
+    audio_init(FREQUENCY_11KHZ, 4);
     buffer = malloc(sizeof(signed short) * audio_get_buffer_length() * 2);
     current_bgm = 0;
 }

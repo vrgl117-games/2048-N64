@@ -41,7 +41,7 @@ MP3S := $(wildcard resources/sfx/bgms/*.mp3)
 BGMS := $(subst .mp3,.raw,$(subst resources/,filesystem/,$(MP3S)))
 filesystem/sfx/bgms/%.raw: resources/sfx/bgms/%.mp3
 	@mkdir -p `echo $@ | xargs dirname`
-	sox $< -b 16 -e signed-integer -B -r 44100 $@ remix -
+	sox $< -b 16 -e signed-integer -B -r 11025 $@ remix -
 
 # code #
 SRCS := $(wildcard src/*.c)
@@ -61,7 +61,7 @@ $(PROG_NAME).dfs: $(SPRITES) $(BGMS)
 # rom
 $(PROG_NAME).z64: $(PROG_NAME).bin $(PROG_NAME).dfs
 	@rm -f $@
-	$(N64TOOL) -l 64M -t "$(PROG_NAME)" -h $(ROOTDIR)/mips64-elf/lib/header -o $(PROG_NAME).z64 $(PROG_NAME).bin -s 1M $(PROG_NAME).dfs
+	$(N64TOOL) -l 16M -t "$(PROG_NAME)" -h $(ROOTDIR)/mips64-elf/lib/header -o $(PROG_NAME).z64 $(PROG_NAME).bin -s 1M $(PROG_NAME).dfs
 	$(CHKSUM64PATH) $@
 
 setup:		##    Create dev environment (docker image).
