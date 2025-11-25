@@ -1,22 +1,18 @@
 /* main.c -- main implementation
  *
- * Copyright (C) 2018 Victor Vieux
+ * Copyright (C) 2018-2025 Victor Vieux
  *
  * This software may be modified and distributed under the terms
  * of the Apache license. See the LICENSE file for details.
  */
 
 #include <stdlib.h>
-#include <string.h>
-
 #include "bgm.h"
 #include "colors.h"
 #include "controls.h"
-#include "debug.h"
-#include "dfs.h"
 #include "fps.h"
+#include "font.h"
 #include "game.h"
-#include "graphics.h"
 #include "konami.h"
 #include "lang.h"
 #include "menus.h"
@@ -31,22 +27,21 @@ extern menu_t menu_you_win;
 
 int main()
 {
-    init_interrupts();
-    display_init(RESOLUTION_640x480, DEPTH_16_BPP, 2, GAMMA_NONE, ANTIALIAS_RESAMPLE);
+    display_init(RESOLUTION_640x480, DEPTH_16_BPP, 2, GAMMA_NONE, FILTERS_RESAMPLE_ANTIALIAS);
     colors_init();
     dfs_init(DFS_DEFAULT_LOCATION);
-    rdp_init();
-    controller_init();
+    rdpq_init();
+    font_init();
+    joypad_init();
     timer_init();
     bgm_init();
-    debug_clear();
 
     new_timer(TIMER_TICKS(1000000), TF_CONTINUOUS, fps_timer);
 
     srand(timer_ticks() & 0x7FFFFFFF);
 
     new_timer(TIMER_TICKS(50000), TF_CONTINUOUS, screen_timer_title);
-    display_context_t disp = 0;
+    surface_t *disp = NULL;
 
     while (true)
     {
@@ -58,12 +53,11 @@ int main()
 
         // stop rumble if needed.
         if (keys.rumble && game_stop_rumble())
-            rumble_stop(0);
+            joypad_set_rumble_active(JOYPAD_PORT_1, false);
 
         // wait for the screen to be availalble.
-        while (!(disp = display_lock()))
+        while (!(disp = display_try_get()))
             ;
-
         // display no controller screen is there are node plugged in.
         if (!keys.plugged)
             screen_no_controller(disp);
@@ -82,6 +76,7 @@ int main()
                     game_init();
                     game_random();
                     screen = title;
+                    bgm_start();
                     break;
                 }
                 screen_lang(disp);
@@ -92,7 +87,6 @@ int main()
                     if (menu_press(&menu, keys))
                     {
                         game_reset();
-                        bgm_start();
                         screen = game;
                         break;
                     }
@@ -109,22 +103,16 @@ int main()
                     menu_press(&menu, keys);
                 else if (keys.start)
                 {
-                    bgm_play_pause();
+                    bgm_pause();
                     menu = menu_pause;
                 }
                 else
                 {
                     status_t status = game_play(keys);
                     if (status == game_win)
-                    {
-                        bgm_play_pause();
                         menu = menu_you_win;
-                    }
                     else if (status == game_over)
-                    {
-                        bgm_play_pause();
                         menu = menu_game_over;
-                    }
                 }
 
                 screen_game(disp);
@@ -139,9 +127,6 @@ int main()
 
             // display fps
             fps_draw(disp);
-
-            // display debug
-            debug_draw(disp);
         }
         display_show(disp);
         bgm_update();
@@ -149,9 +134,9 @@ int main()
 
     // cleanup, never called
     bgm_stop();
-    audio_close();
+    // audio_close();
     timer_close();
-    rdp_close();
+    rdpq_close();
     display_close();
     return 0;
 }

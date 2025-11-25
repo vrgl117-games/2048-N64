@@ -1,13 +1,14 @@
 /* fps.c -- fps helpers implementation
  *
- * Copyright (C) 2018 Victor Vieux
+ * Copyright (C) 2018-2025 Victor Vieux
  *
  * This software may be modified and distributed under the terms
  * of the Apache license. See the LICENSE file for details.
  */
 
 #include "fps.h"
-#include "graphics.h"
+
+#include "font.h"
 
 static volatile bool fps_refresh = false;
 static volatile uint8_t fps;
@@ -21,7 +22,11 @@ void fps_check(control_t keys)
 void fps_draw(display_context_t disp)
 {
     if (show)
-        graphics_draw_textf_with_background(disp, 4, 4, "FPS: %d", fps);
+    {
+        rdpq_attach(disp, NULL);
+        rdpq_text_printf(NULL, FONT_DEBUG, 10, 10, "FPS: %d", fps);
+        rdpq_detach();
+    }
 }
 
 inline void fps_frame()

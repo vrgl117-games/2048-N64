@@ -1,6 +1,6 @@
 /* game.h -- game header
  *
- * Copyright (C) 2018 Victor Vieux
+ * Copyright (C) 2018-2025 Victor Vieux
  *
  * This software may be modified and distributed under the terms
  * of the Apache license. See the LICENSE file for details.
@@ -23,6 +23,9 @@ typedef struct game
     uint16_t score;
     uint16_t best;
 
+    char score_str[8];
+    char best_str[8];
+
     bool won;
 
     uint8_t rumble;
@@ -35,13 +38,15 @@ typedef enum status
     game_win
 } status_t;
 
-int game_best();
+const char *game_best();
+void game_draw(display_context_t disp, int grid_x, int grid_y);
 void game_init();
 status_t game_play(control_t keys);
-void game_draw(display_context_t disp, int grid_x, int grid_y);
-int game_score();
 void game_random();
 void game_reset();
+const char *game_score();
+void game_set_best(uint16_t best);
+void game_set_score(uint16_t score);
 bool game_stop_rumble();
 
 #endif //__GAME_H__

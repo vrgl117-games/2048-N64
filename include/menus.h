@@ -1,6 +1,6 @@
 /* menus.h -- menus helpers header
  *
- * Copyright (C) 2018 Victor Vieux
+ * Copyright (C) 2018-2025 Victor Vieux
  *
  * This software may be modified and distributed under the terms
  * of the Apache license. See the LICENSE file for details.

@@ -1,6 +1,6 @@
 /* screens.h -- screens helpers header
  *
- * Copyright (C) 2018 Victor Vieux
+ * Copyright (C) 2018-2025 Victor Vieux
  *
  * This software may be modified and distributed under the terms
  * of the Apache license. See the LICENSE file for details.
@@ -11,8 +11,6 @@
 
 #include <libdragon.h>
 
-#include "menus.h"
-
 typedef enum screens
 {
     intro,
@@ -21,12 +19,12 @@ typedef enum screens
     game
 } screen_t;
 
+void screen_game(display_context_t disp);
 void screen_init();
 bool screen_intro(display_context_t disp);
 void screen_lang(display_context_t disp);
-void screen_game(display_context_t disp);
 void screen_no_controller(display_context_t disp);
-void screen_title(display_context_t disp, bool press_start);
 void screen_timer_title();
+void screen_title(display_context_t disp, bool press_start);
 
 #endif //__SCREENS_H__

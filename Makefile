@@ -1,86 +1,95 @@
-ROOTDIR = $(N64_INST)
-GCCN64PREFIX = $(ROOTDIR)/bin/mips64-elf-
-CHKSUM64PATH = $(ROOTDIR)/bin/chksum64
-MKDFSPATH = $(ROOTDIR)/bin/mkdfs
-MKSPRITE = $(ROOTDIR)/bin/mksprite
-N64TOOL = $(ROOTDIR)/bin/n64tool
-LINK_FLAGS = -L$(ROOTDIR)/lib -L$(ROOTDIR)/mips64-elf/lib -ldragon -lc -lm -ldragonsys -Tn64.ld
-PROG_NAME = 2048-64
-CFLAGS = -std=gnu99 -march=vr4300 -mtune=vr4300 -O2 -Wall -Werror -I$(ROOTDIR)/mips64-elf/include -Iinclude -I/usr/local/include/
-ASFLAGS = -mtune=vr4300 -march=vr4300
-CC = $(GCCN64PREFIX)gcc
-AS = $(GCCN64PREFIX)as
-LD = $(GCCN64PREFIX)ld
-OBJCOPY = $(GCCN64PREFIX)objcopy
+ARES_BIN := /Applications/ares.app/Contents/MacOS/ares
+
+BUILD_DIR := build
+SOURCE_DIR := src
+ROM_NAME := 2048-64
+N64_ROM_TITLE := "2048-64"
+
+N64_MK_PATH := $(N64_INST)/include/n64.mk
+ifneq (,$(wildcard $(N64_MK_PATH)))
+include $(N64_MK_PATH)
+endif
+
+N64_CFLAGS += -Iinclude
+N64_ASFLAGS += -Iinclude
 
 all: build
 
 build: ##    Create rom.
-	@docker --version &> /dev/null
-	@if [ $$? -ne 0 ]; then echo "Building rom..." && make $(PROG_NAME).z64; fi
-	@if [ $$? -eq 0 ]; then echo "Building rom inside docker environment..." && make docker; fi
+	@if command -v docker >/dev/null 2>&1; then \
+		echo "Building rom inside docker environment..."; \
+		$(MAKE) docker; \
+	else \
+		echo "Building rom..."; \
+		$(MAKE) $(ROM_NAME).z64; \
+	fi
 
 docker: setup
-	@docker run --user $(shell id -u):$(shell id -g) -v ${CURDIR}:/game build make $(PROG_NAME).z64
+	@docker run --user $(shell id -u):$(shell id -g) -v ${CURDIR}:/game build make $(ROM_NAME).z64
 
 rebuild: clean build	##  Erase temp files and create the rom.
 
 # gfx #
-PNGS := $(wildcard resources/gfx/*/*.png) $(wildcard resources/gfx/*/*/*.png)
+PNGS := $(wildcard resources/gfx/sprites/*.png) $(wildcard resources/gfx/sprites/*/*.png)
 SPRITES := $(subst .png,.sprite,$(subst resources/,filesystem/,$(PNGS)))
 filesystem/gfx/sprites/%.sprite: resources/gfx/sprites/%.png
 	@mkdir -p `echo $@ | xargs dirname`
-	$(MKSPRITE) 16 1 1 $< $@
-
-filesystem/gfx/maps/%.sprite: resources/gfx/maps/%.png
-	@mkdir -p `echo $@ | xargs dirname`
-	$(MKSPRITE) 16 1 1 $< $@
+	@echo "    [SPRITE] $@"
+	$(N64_MKSPRITE) -o $(dir $@) $<
 
 # sfx #
 MP3S := $(wildcard resources/sfx/bgms/*.mp3)
-BGMS := $(subst .mp3,.raw,$(subst resources/,filesystem/,$(MP3S)))
-filesystem/sfx/bgms/%.raw: resources/sfx/bgms/%.mp3
+BGMS := $(subst .mp3,.wav64,$(subst resources/,filesystem/,$(MP3S)))
+filesystem/sfx/bgms/%.wav64: resources/sfx/bgms/%.mp3
 	@mkdir -p `echo $@ | xargs dirname`
-	sox $< -b 16 -e signed-integer -B -r 11025 $@ remix -
+	@echo "    [AUDIOCONV] $@"
+	$(N64_AUDIOCONV) -d --wav-compress 3 --wav-loop false -o $(dir $@) $<
+
+# font #
+TTFS := misc/font/clearsans-1.00/TTF/ClearSans-Bold.ttf misc/font/clearsans-1.00/TTF/ClearSans-Bold-flipped.ttf
+FONTS := $(subst .ttf,.font64,$(subst misc/font/clearsans-1.00/TTF/,filesystem/fonts/,$(TTFS)))
+filesystem/fonts/%.font64: misc/font/clearsans-1.00/TTF/%.ttf
+	@mkdir -p `echo $@ | xargs dirname`
+	@echo "    [MKFONT] $@"
+	$(N64_MKFONT) -s 18 --ellipsis 30,0 --range 30-39 -o $(dir $@) $<
 
 # code #
-SRCS := $(wildcard src/*.c)
-OBJS := $(SRCS:.c=.o)
-$(PROG_NAME).elf : $(OBJS)
-	$(LD) -o $@ $^ $(LINK_FLAGS)
+SRCS := $(wildcard $(SOURCE_DIR)/*.c)
+OBJS := $(SRCS:$(SOURCE_DIR)/%.c=$(BUILD_DIR)/%.o)
 
-$(PROG_NAME).bin : $(PROG_NAME).elf
-	$(OBJCOPY) -O binary $< $@
+$(BUILD_DIR)/$(ROM_NAME).elf: $(OBJS) $(N64_LIBDIR)/libdragon.a $(N64_LIBDIR)/libdragonsys.a $(N64_LIBDIR)/n64.ld
+	@mkdir -p $(dir $@)
+	@echo "    [LD] $@"
+	$(N64_CXX) -o $@ $(filter %.o, $^) $(filter-out $(N64_LIBDIR)/libdragon.a $(N64_LIBDIR)/libdragonsys.a, $(filter %.a, $^)) \
+		-lc -mabi=o64 $(patsubst %,-Wl$(COMMA)%,$(LDFLAGS)) -Wl,-Map=$(BUILD_DIR)/$(ROM_NAME).map
+	$(N64_SIZE) -G $@
+
+$(ROM_NAME).z64: $(BUILD_DIR)/$(ROM_NAME).elf
+$(ROM_NAME).z64: $(ROM_NAME).dfs
 
 # dfs #
-$(PROG_NAME).dfs: $(SPRITES) $(BGMS)
+$(ROM_NAME).dfs: $(SPRITES) $(BGMS) $(FONTS)
 	@mkdir -p ./filesystem/
 	@echo `git rev-parse HEAD` > ./filesystem/hash
-	$(MKDFSPATH) $@ ./filesystem/
-
-# rom
-$(PROG_NAME).z64: $(PROG_NAME).bin $(PROG_NAME).dfs
-	@rm -f $@
-	$(N64TOOL) -l 16M -t "$(PROG_NAME)" -h $(ROOTDIR)/mips64-elf/lib/header -o $(PROG_NAME).z64 $(PROG_NAME).bin -s 1M $(PROG_NAME).dfs
-	$(CHKSUM64PATH) $@
+	$(N64_MKDFS) $@ ./filesystem/ >/dev/null
 
 setup:		##    Create dev environment (docker image).
-	@docker build -q -t build - < Dockerfile > /dev/null
+	@docker build --platform linux/amd64 -t build - < Dockerfile
 
 resetup:	##  Force recreate the dev environment (docker image).
 	@echo "Rebuilding dev environment in docker..."
-	@docker build -q -t build --no-cache  - < Dockerfile > /dev/null
+	@docker build --platform linux/amd64 -t build --no-cache  - < Dockerfile
 
-cen64:		##    Start rom in CEN64 emulator.
-	@echo "Starting cen64..."
-	$(CEN64_DIR)/cen64 -multithread -controller num=1,pak=rumble $(CEN64_DIR)/pifdata.bin $(PROG_NAME).z64
+ares:		##    Start rom in Ares emulator.
+	@echo "Starting ares..."
+	$(ARES_BIN) $(ROM_NAME).z64
 
 flashair: 	## Flash rom to EverDrive using a flashair SD card.
-	curl -X POST -F 'file=@$(PROG_NAME).z64' http://flashair/upload.cgi
+	curl -X POST -F 'file=@$(ROM_NAME).z64' http://flashair/upload.cgi
 
 clean:		##    Cleanup temp files.
 	@echo "Cleaning up temp files..."
-	rm -rf *.z64 *.elf src/*.o *.bin *.dfs filesystem/
+	rm -rf $(BUILD_DIR) *.z64 *.elf src/*.o *.bin *.dfs filesystem/
 
 help:		##     Show this help.
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/:.*##/:/' 

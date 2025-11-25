@@ -1,26 +1,20 @@
 /* menus.c -- menus helpers implementation
  *
- * Copyright (C) 2018 Victor Vieux
+ * Copyright (C) 2018-2025 Victor Vieux
  *
  * This software may be modified and distributed under the terms
  * of the Apache license. See the LICENSE file for details.
  */
 
-#include <malloc.h>
-#include <stdio.h>
-#include <string.h>
-
 #include "bgm.h"
 #include "colors.h"
-#include "dfs.h"
 #include "game.h"
 #include "lang.h"
 #include "menus.h"
-#include "rdp.h"
-#include "screens.h"
+#include "rdpq.h"
+#include "sprite.h"
 
 extern menu_t menu;
-extern uint32_t colors[];
 
 /* menus */
 menu_t menu_credits;
@@ -30,7 +24,7 @@ menu_t menu_pause = {
     .max_width = 260,
     .max_height = 80 + 30 * 4,
     .options_size = 4,
-    .options = {{.text = "continue", .action = bgm_play_pause, .close = true}, {.text = "restart", .action = game_reset, .close = true}, {.text = "music", .toggle = bgm_toggle, .close = false}, {.text = "credits", .next = &menu_credits, .close = false}},
+    .options = {{.text = "continue", .action = bgm_play, .close = true}, {.text = "restart", .action = game_reset, .close = true}, {.text = "music", .toggle = bgm_toggle, .close = false}, {.text = "credits", .next = &menu_credits, .close = false}},
     .visible = true,
 };
 
@@ -49,7 +43,7 @@ menu_t menu_you_win = {
     .max_width = 240,
     .max_height = 80 + 30 * 2,
     .options_size = 2,
-    .options = {{.text = "continue", .action = bgm_play_pause, .close = true}, {.text = "restart", .action = game_reset, .close = true}},
+    .options = {{.text = "continue", .action = bgm_play, .close = true}, {.text = "restart", .action = game_reset, .close = true}},
     .visible = true,
 };
 
@@ -114,35 +108,57 @@ void menu_draw(display_context_t disp, menu_t *menu)
         if (menu->height > menu->max_height)
             menu->height -= h_step;
     }
-    rdp_attach(disp);
-    rdp_draw_filled_rectangle_with_border_size(320 - menu->width / 2, 240 - menu->height / 2, menu->width, menu->height, colors[COLOR_GRID_BG], colors[COLOR_CELL_MORE_BG]);
-    rdp_detach_display();
+
+    sprite_t *title = NULL;
+    sprite_t *text = NULL;
+    sprite_t *options[menu->options_size];
 
     if (menu->width >= menu->max_width && menu->height >= menu->max_height)
     {
+
         if (menu->title != NULL)
-        {
-            sprite_t *title = dfs_load_spritef("/gfx/sprites/%s/%s.sprite", lang, menu->title);
-            graphics_draw_sprite(disp, 320 - title->width / 2, 240 - menu->height / 2 + 10, title);
-            free(title);
-        }
+            title = sprite_loadf("rom:/gfx/sprites/%s/%s.rgba16.sprite", lang, menu->title);
 
         if (menu->text != NULL)
-        {
-            sprite_t *text = dfs_load_spritef("/gfx/sprites/%s/%s.sprite", lang, menu->text);
-            graphics_draw_sprite(disp, 320 - text->width / 2, 240 - menu->height / 2 + 75, text);
-            free(text);
-        }
+            text = sprite_loadf("rom:/gfx/sprites/%s/%s.rgba16.sprite", lang, menu->text);
 
         for (int i = 0; i < menu->options_size; i++)
         {
-            sprite_t *option;
             if (menu->options[i].toggle != NULL)
-                option = dfs_load_spritef((i == menu->selected_option ? "/gfx/sprites/%s/%s_%d_selec.sprite" : "/gfx/sprites/%s/%s_%d.sprite"), lang, menu->options[i].text, menu->options[i].toggle(0));
+                options[i] = sprite_loadf((i == menu->selected_option ? "rom:/gfx/sprites/%s/%s_%d_selec.rgba16.sprite" : "rom:/gfx/sprites/%s/%s_%d.rgba16.sprite"), lang, menu->options[i].text, menu->options[i].toggle(0));
             else
-                option = dfs_load_spritef((i == menu->selected_option ? "/gfx/sprites/%s/%s_selec.sprite" : "/gfx/sprites/%s/%s.sprite"), lang, menu->options[i].text);
-            graphics_draw_sprite(disp, 320 - option->width / 2, 240 + menu->height / 2 - 35 - 30 * (menu->options_size - 1 - i), option);
-            free(option);
+                options[i] = sprite_loadf((i == menu->selected_option ? "rom:/gfx/sprites/%s/%s_selec.rgba16.sprite" : "rom:/gfx/sprites/%s/%s.rgba16.sprite"), lang, menu->options[i].text);
+        }
+    }
+
+    rdpq_attach(disp, NULL);
+    rdpq_draw_filled_rectangle_with_border_size(320 - menu->width / 2, 240 - menu->height / 2, menu->width, menu->height, colors[COLOR_GRID_BG], colors[COLOR_CELL_MORE_BG]);
+
+    if (menu->width >= menu->max_width && menu->height >= menu->max_height)
+    {
+
+        if (menu->title != NULL)
+            rdpq_draw_sprite(title, 320 - title->width / 2, 240 - menu->height / 2 + 10, 0);
+
+        if (menu->text != NULL)
+            rdpq_draw_sprite(text, 320 - text->width / 2, 240 - menu->height / 2 + 75, 0);
+
+        for (int i = 0; i < menu->options_size; i++)
+            rdpq_draw_sprite(options[i], 320 - options[i]->width / 2, 240 + menu->height / 2 - 35 - 30 * (menu->options_size - 1 - i), 0);
+    }
+
+    rdpq_detach();
+
+    if (title != NULL)
+        sprite_free(title);
+    if (text != NULL)
+        sprite_free(text);
+    if (menu->width >= menu->max_width && menu->height >= menu->max_height)
+    {
+        for (int i = 0; i < menu->options_size; i++)
+        {
+            if (options[i] != NULL)
+                sprite_free(options[i]);
         }
     }
 }

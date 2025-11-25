@@ -1,6 +1,6 @@
 /* game.c -- game helpers implementation
  *
- * Copyright (C) 2018 Victor Vieux
+ * Copyright (C) 2018-2025 Victor Vieux
  *
  * This software may be modified and distributed under the terms
  * of the Apache license. See the LICENSE file for details.
@@ -9,18 +9,16 @@
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 #include "bgm.h"
 #include "colors.h"
-#include "dfs.h"
 #include "game.h"
 #include "konami.h"
-#include "rdp.h"
-
-extern uint32_t colors[];
+#include "rdpq.h"
 
 static game_t game = {0};
-static map_t *maps[16];
+static sprite_t *maps[16];
 
 int game_new_cell()
 {
@@ -34,29 +32,28 @@ int game_new_cell()
 void game_init()
 {
     // init sprites
-    maps[1] = dfs_load_map("/gfx/maps/2-%d_%d.sprite", NULL);
-    maps[2] = dfs_load_map("/gfx/maps/4-%d_%d.sprite", NULL);
-    maps[3] = dfs_load_map("/gfx/maps/8-%d_%d.sprite", NULL);
-    maps[4] = dfs_load_map("/gfx/maps/16-%d_%d.sprite", NULL);
-    maps[5] = dfs_load_map("/gfx/maps/32-%d_%d.sprite", NULL);
-    maps[6] = dfs_load_map("/gfx/maps/64-%d_%d.sprite", NULL);
-    maps[7] = dfs_load_map("/gfx/maps/128-%d_%d.sprite", NULL);
-    maps[8] = dfs_load_map("/gfx/maps/256-%d_%d.sprite", NULL);
-    maps[9] = dfs_load_map("/gfx/maps/512-%d_%d.sprite", NULL);
-    maps[10] = dfs_load_map("/gfx/maps/1024-%d_%d.sprite", NULL);
-    maps[11] = dfs_load_map("/gfx/maps/2048-%d_%d.sprite", NULL);
-    maps[12] = dfs_load_map("/gfx/maps/4096-%d_%d.sprite", NULL);
-    maps[13] = dfs_load_map("/gfx/maps/8192-%d_%d.sprite", NULL);
-    maps[14] = dfs_load_map("/gfx/maps/16384-%d_%d.sprite", NULL);
-    maps[15] = dfs_load_map("/gfx/maps/32768-%d_%d.sprite", NULL);
-
+    maps[1] = sprite_load("rom:/gfx/sprites/2.rgba32.sprite");
+    maps[2] = sprite_load("rom:/gfx/sprites/4.rgba32.sprite");
+    maps[3] = sprite_load("rom:/gfx/sprites/8.rgba32.sprite");
+    maps[4] = sprite_load("rom:/gfx/sprites/16.rgba32.sprite");
+    maps[5] = sprite_load("rom:/gfx/sprites/32.rgba32.sprite");
+    maps[6] = sprite_load("rom:/gfx/sprites/64.rgba32.sprite");
+    maps[7] = sprite_load("rom:/gfx/sprites/128.rgba32.sprite");
+    maps[8] = sprite_load("rom:/gfx/sprites/256.rgba32.sprite");
+    maps[9] = sprite_load("rom:/gfx/sprites/512.rgba32.sprite");
+    maps[10] = sprite_load("rom:/gfx/sprites/1024.rgba32.sprite");
+    maps[11] = sprite_load("rom:/gfx/sprites/2048.rgba32.sprite");
+    maps[12] = sprite_load("rom:/gfx/sprites/4096.rgba32.sprite");
+    maps[13] = sprite_load("rom:/gfx/sprites/8192.rgba32.sprite");
+    maps[14] = sprite_load("rom:/gfx/sprites/16384.rgba32.sprite");
+    maps[15] = sprite_load("rom:/gfx/sprites/32768.rgba32.sprite");
     game_reset();
-    game.best = game.score;
+    game_set_best(game.score);
 }
 
 void game_reset()
 {
-    bgm_play_pause();
+    bgm_play();
     memset(game.cells, 0, sizeof(int) * 16);
     game.won = false;
 
@@ -88,7 +85,7 @@ void game_reset()
     } while (r1 == r2);
     game.cells[r1] = game_new_cell();
     game.cells[r2] = game_new_cell();
-    game.score = game.cells[r1] / 10 + game.cells[r2] / 10;
+    game_set_score(game.cells[r1] / 10 + game.cells[r2] / 10);
 }
 
 void game_random()
@@ -252,6 +249,7 @@ status_t game_play(control_t keys)
 {
     status_t status = game_none;
     uint8_t move = 10;
+    uint16_t new_score = 0;
 
     switch (keys.direction)
     {
@@ -275,7 +273,7 @@ status_t game_play(control_t keys)
     {
         if (keys.rumble)
         {
-            rumble_start(0);
+            joypad_set_rumble_active(JOYPAD_PORT_1, true);
             game.rumble = 4;
         }
         return status;
@@ -285,7 +283,6 @@ status_t game_play(control_t keys)
     int empty[16] = {0};
 
     // compute score
-    game.score = 0;
     for (int i = 0; i < 16; i++)
     {
         int score = game.cells[i] / 10;
@@ -299,15 +296,17 @@ status_t game_play(control_t keys)
             status = game_win;
             game.won = true;
         }
-        game.score += score;
+        new_score += score;
     }
 
     int new = game_new_cell();
     game.cells[empty[rand() % (nbEmpty)]] = new;
-    game.score += new / 10;
+    new_score += new / 10;
+
+    game_set_score(new_score);
 
     if (game.score > game.best)
-        game.best = game.score;
+        game_set_best(game.score);
 
     // if there was only 1 empty cell, the grid is now full, is it game over ?
     if (nbEmpty == 1 && is_gameover())
@@ -317,10 +316,28 @@ status_t game_play(control_t keys)
 }
 
 // return current score
-int game_score() { return game.score; }
+const char *game_score() { return game.score_str; }
 
 // return best score
-int game_best() { return game.best; }
+const char *game_best() { return game.best_str; }
+
+void game_set_best(uint16_t best)
+{
+    if (game.best == best && game.best_str[0] != '\0')
+        return;
+
+    game.best = best;
+    snprintf(game.best_str, sizeof(game.best_str), "%u", game.best);
+}
+
+void game_set_score(uint16_t score)
+{
+    if (game.score == score && game.score_str[0] != '\0')
+        return;
+
+    game.score = score;
+    snprintf(game.score_str, sizeof(game.score_str), "%u", game.score);
+}
 
 static inline uint8_t game_log2(int n)
 {
@@ -363,7 +380,7 @@ static inline uint8_t game_log2(int n)
 void game_draw(display_context_t disp, int grid_x, int grid_y)
 {
     int flags = (konami_enabled() ? MIRROR_XY : 0);
-    rdp_draw_filled_rectangle_size(grid_x, grid_y, 360, 360, colors[COLOR_GRID_BG]);
+    rdpq_draw_filled_rectangle_size(grid_x, grid_y, 360, 360, colors[COLOR_GRID_BG]);
     for (int x = 0; x < 4; x++)
     {
         for (int y = 0; y < 4; y++)
@@ -385,26 +402,26 @@ void game_draw(display_context_t disp, int grid_x, int grid_y)
             case 5:
                 game.cells[x + y * 4] = value * 10;
             case 0:
-                rdp_draw_filled_rectangle_size(xx, yy, 80, 80, colors[(score > 12 ? 12 : score)]);
+                rdpq_draw_filled_rectangle_size(xx, yy, 80, 80, colors[(score > 12 ? 12 : score)]);
                 break;
             case 1 ... 4:
-                rdp_draw_filled_rectangle_size(xx + diff * 4, yy + diff * 4,
-                                               80 - diff * 8, 80 - diff * 8,
-                                               colors[(score > 12 ? 12 : score)]);
+                rdpq_draw_filled_rectangle_size(xx + diff * 4, yy + diff * 4,
+                                                80 - diff * 8, 80 - diff * 8,
+                                                colors[(score > 12 ? 12 : score)]);
                 game.cells[x + y * 4] -= 1;
                 score = 0;
                 break;
             case 6 ... 9:
-                rdp_draw_filled_rectangle_size(xx - diff, yy - diff, 80 + diff * 2,
-                                               80 + diff * 2, colors[(score > 12 ? 12 : score)]);
+                rdpq_draw_filled_rectangle_size(xx - diff, yy - diff, 80 + diff * 2,
+                                                80 + diff * 2, colors[(score > 12 ? 12 : score)]);
                 game.cells[x + y * 4] -= 1;
                 break;
             }
 
-            map_t *map = maps[score];
+            sprite_t *map = maps[score];
             if (map != NULL)
-                rdp_draw_sprite_with_texture_map(map, xx + 40 - map->width / 2,
-                                                 yy + 40 - map->height / 2, flags);
+                rdpq_draw_sprite(map, xx + 40 - map->width / 2,
+                                 yy + 40 - map->height / 2, flags);
         }
     }
 }
